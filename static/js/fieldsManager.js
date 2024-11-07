@@ -2,6 +2,7 @@ import {
   addFieldDictionaryEntry,
   downloadFieldsDictionary,
   uploadFieldsDictionary,
+  getFieldsDictionary,
   entities,
   fields,
 } from '/js/dictionary.js';
@@ -9,45 +10,41 @@ import {
 export default function fieldsManager() {
   return {
     fieldQuery: '',
-    selectedEntity: entities[0],
+    selectedEntity: null,
     selectedField: fields[0],
     entities: entities,
     fields: fields,
     x: 0,
     y: 0,
+    id: '', // New ID field
+    isIdUnique: true, // Flag to track ID uniqueness
 
-    addEntry() {
-      if (this.fieldQuery.trim()) {
-        addFieldDictionaryEntry(this.fieldQuery, this.selectedEntity, this.selectedField, this.x, this.y);
-        alert('Entry added successfully (fieldsManager)!');
-
-        // Reset form fields except x and y
-        this.fieldQuery = '';
-        this.selectedEntity = '';
-        this.selectedField = '';
-
-        // Trigger an update for fieldsEditor
-        window.dispatchEvent(new Event('refreshFieldsEditor'));
-      } else {
-        alert('Code Name is required.');
-      }
+    // Watch for changes in selectedEntity and reset ID input when entity changes
+    checkUniqueId() {
+      this.isIdUnique = !getFieldsDictionary().some(
+        (entry) => entry.entity === this.selectedEntity && entry.id === this.id,
+      );
     },
 
-    xxx_addEntry() {
-      if (this.fieldQuery.trim()) {
-        addFieldDictionaryEntry(this.fieldQuery, this.selectedEntity, this.selectedField, this.x, this.y);
+    addEntry() {
+      if (this.fieldQuery.trim() && this.id.trim() && this.isIdUnique) {
+        addFieldDictionaryEntry(this.fieldQuery, this.selectedEntity, this.selectedField, this.x, this.y, this.id);
         alert('Entry added successfully!');
 
         // Reset form fields
         this.fieldQuery = '';
-        this.selectedEntity = '';
-        this.selectedField = '';
+        this.selectedEntity = null; // Reset selectedEntity
+        this.selectedField = fields[0];
+        this.id = '';
         this.x = 0;
         this.y = 0;
+        this.isIdUnique = true;
 
         window.dispatchEvent(new Event('refreshFieldsEditor')); // Trigger an update for fieldsEditor
+      } else if (!this.isIdUnique) {
+        alert('ID must be unique within the selected entity.');
       } else {
-        alert('Code Name is required.');
+        alert('ID are required.');
       }
     },
 

@@ -46,14 +46,14 @@ export function getFieldsDictionary() {
 }
 
 // Function to add a new entry to the fields dictionary
-export function addFieldDictionaryEntry(fieldQuery, entity, field, x, y) {
+export function addFieldDictionaryEntry(fieldQuery, entity, field, x, y, id) {
   if (!entities.includes(entity) || !fields.includes(field)) {
     console.error('Invalid entity or field value');
     return;
   }
 
   const dictionary = getFieldsDictionary();
-  dictionary.push({ fieldQuery, entity, field, x, y });
+  dictionary.push({ fieldQuery, entity, field, x, y, id });
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(dictionary));
 }
