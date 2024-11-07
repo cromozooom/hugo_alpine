@@ -16,7 +16,7 @@ export default function fieldsEditor() {
     },
 
     addEntry() {
-      this.entries.push({ codeName: '', entity: this.entities[0], field: this.fields[0] });
+      this.entries.push({ fieldQuery: '', entity: this.entities[0], field: this.fields[0], x: 0, y: 0 });
       localStorage.setItem('fieldsDictionary', JSON.stringify(this.entries));
     },
 

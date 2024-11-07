@@ -6,99 +6,39 @@
       {{ .Title }}
     </title>
     <meta name="description" content="{{ .Description }}" />
-    {{/* styles */}}
-    {{ $options := dict "inlineImports" true }}
-    {{ $styles := resources.Get "css/styles.css" }}
-    {{ $styles = $styles | resources.PostCSS $options }}
-    {{ if hugo.IsProduction }}
-      {{ $styles = $styles | minify | fingerprint | resources.PostProcess }}
-    {{ end }}
-    <link href="{{ $styles.RelPermalink }}" rel="stylesheet" />
 
-    {{ $app := resources.Get "js/app.js" | resources.Minify | resources.Fingerprint }}
-    <script type="module" src="{{ $app.Permalink }}" defer></script>
+    {{ if .Params.tailwind }}
+      {{/* styles */}}
+      {{ $options := dict "inlineImports" true }}
+      {{ $styles := resources.Get "css/tw.css" }}
+      {{ $styles = $styles | css.PostCSS $options }}
+      {{ if hugo.IsProduction }}
+        {{ $styles = $styles | minify | fingerprint | resources.PostProcess }}
+      {{ end }}
+      <link href="{{ $styles.RelPermalink }}" rel="stylesheet" />
+    {{ end }}
+
+    {{ if .Params.bootstrap }}
+      {{/* Load Bootstrap SCSS. */}}
+      {{ $optionsB := dict "enableSourceMap" true }}
+      {{ if hugo.IsProduction }}
+        {{ $optionsB := dict "enableSourceMap" false "outputStyle" "compressed" }}
+      {{ end }}
+      {{ $stylesB := resources.Get "scss/bootstrap.scss" }}
+      {{ $stylesB = $stylesB | css.Sass $optionsB }}
+      {{ if hugo.IsProduction }}
+        {{ $stylesB = $stylesB | fingerprint }}
+      {{ end }}
+      <link href="{{ $stylesB.RelPermalink }}" rel="stylesheet" />
+    {{ end }}
+
+    {{ $alpine := .Params.alpine }}
+    {{ if $alpine }}
+      {{ $app := resources.Get $alpine | resources.Minify | resources.Fingerprint }}
+      <script type="module" src="{{ $app.Permalink }}" defer></script>
+    {{ end }}
   </head>
   <body class="my-10">
-    <div x-data="fieldsManager">
-      <h2>Add New Field Entry</h2>
-      <form @submit.prevent="addEntry">
-        <label for="codeName">Code Name:</label>
-        <input type="text" id="codeName" x-model="codeName" required />
-
-        <label for="entity">Entity:</label>
-        <select id="entity" x-model="selectedEntity">
-          <option value="">Select entity</option>
-          <template x-for="entity in entities" :key="entity">
-            <option x-bind:value="entity" x-text="entity"></option>
-          </template>
-        </select>
-
-        <label for="field">Field:</label>
-        <select id="field" x-model="selectedField">
-          <option value="">Select fields</option>
-          <template x-for="field in fields" :key="field">
-            <option x-bind:value="field" x-text="field"></option>
-          </template>
-        </select>
-
-        <button type="submit">Add Entry</button>
-      </form>
-
-      <h2>Manage Fields Dictionary</h2>
-      <button @click="downloadDictionary">Download JSON</button>
-      <input type="file" @change="uploadDictionary" accept="application/json" />
-    </div>
-
-    <hr />
-
-    <!-- fieldsEditor Component: Displays and allows editing/removal of entries in a table format -->
-    <div x-data="fieldsEditor">
-      <table border="1">
-        <thead>
-          <tr>
-            <th>Code Name</th>
-            <th>Entity</th>
-            <th>Field</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template x-for="(entry, index) in entries" :key="index">
-            <tr>
-              <td>
-                <input type="text" x-model="entry.codeName" />
-              </td>
-              <td>
-                <select x-model="entry.entity">
-                  <template x-for="entity in entities" :key="entity">
-                    <option
-                      :value="entity"
-                      x-text="entity"
-                      :selected="entity === entry.entity"></option>
-                  </template>
-                </select>
-              </td>
-              <td>
-                <select x-model="entry.field">
-                  <template x-for="field in fields" :key="field">
-                    <option
-                      :value="field"
-                      x-text="field"
-                      :selected="field === entry.field"></option>
-                  </template>
-                </select>
-              </td>
-              <td>
-                <button @click="saveEntry(index)">Save</button>
-                <button @click="removeEntry(index)">Delete</button>
-              </td>
-            </tr>
-          </template>
-        </tbody>
-      </table>
-      <button @click="addEntry">Add New Entry</button>
-    </div>
-
     <div class="container px-4 lg:mx-auto">
       {{ block "main" . }}{{ end }}
     </div>

@@ -8,21 +8,42 @@ import {
 
 export default function fieldsManager() {
   return {
-    codeName: '',
+    fieldQuery: '',
     selectedEntity: entities[0],
     selectedField: fields[0],
     entities: entities,
     fields: fields,
+    x: 0,
+    y: 0,
 
     addEntry() {
-      if (this.codeName.trim()) {
-        addFieldDictionaryEntry(this.codeName, this.selectedEntity, this.selectedField);
+      if (this.fieldQuery.trim()) {
+        addFieldDictionaryEntry(this.fieldQuery, this.selectedEntity, this.selectedField, this.x, this.y);
+        alert('Entry added successfully (fieldsManager)!');
+
+        // Reset form fields except x and y
+        this.fieldQuery = '';
+        this.selectedEntity = '';
+        this.selectedField = '';
+
+        // Trigger an update for fieldsEditor
+        window.dispatchEvent(new Event('refreshFieldsEditor'));
+      } else {
+        alert('Code Name is required.');
+      }
+    },
+
+    xxx_addEntry() {
+      if (this.fieldQuery.trim()) {
+        addFieldDictionaryEntry(this.fieldQuery, this.selectedEntity, this.selectedField, this.x, this.y);
         alert('Entry added successfully!');
 
         // Reset form fields
-        this.codeName = '';
+        this.fieldQuery = '';
         this.selectedEntity = '';
         this.selectedField = '';
+        this.x = 0;
+        this.y = 0;
 
         window.dispatchEvent(new Event('refreshFieldsEditor')); // Trigger an update for fieldsEditor
       } else {

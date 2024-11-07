@@ -1,0 +1,116 @@
+{{ define "main" }}
+  <!-- fieldsEditor Component: Displays and allows editing/removal of entries in a table format -->
+  <div x-data="fieldsEditor">
+    library expressions
+    <table class="table table-hover table-responsive">
+      <thead>
+        <tr>
+          <th>Entity</th>
+          <th>Field</th>
+          <th>Query</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="(entry, index) in entries" :key="index">
+          <tr>
+            <td>
+              <select class="form-select" x-model="entry.entity">
+                <template x-for="entity in entities" :key="entity">
+                  <option
+                    :value="entity"
+                    x-text="entity"
+                    :selected="entity === entry.entity"></option>
+                </template>
+              </select>
+            </td>
+            <td>
+              <select class="form-select" x-model="entry.field">
+                <template x-for="field in fields" :key="field">
+                  <option
+                    :value="field"
+                    x-text="field"
+                    :selected="field === entry.field"></option>
+                </template>
+              </select>
+            </td>
+            <td>
+              <input
+                class="form-control"
+                type="text"
+                x-model="entry.fieldQuery" />
+            </td>
+            <td>
+              <div class="btn-group">
+                <button
+                  class="btn btn-outline-primary"
+                  @click="saveEntry(index)">
+                  Save
+                </button>
+                <button
+                  class="btn btn-outline-primary d-flex align-items-center"
+                  @click="removeEntry(index)">
+                  {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+                </button>
+              </div>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+    <button class="btn btn-outline-primary" @click="addEntry">
+      Add New Entry
+    </button>
+  </div>
+
+  <div x-data="fieldsManager" class="border-top py-2 mt-2">
+    <h2 class="h6">Add New Field Entry</h2>
+    <div class="d-flex gap-3 border-bottom pb-2">
+      <div class="">
+        <label class="form-label" for="fieldQuery">Code Name:</label>
+        <input
+          class="form-control"
+          type="text"
+          id="fieldQuery"
+          x-model="fieldQuery"
+          required />
+      </div>
+      <div class="">
+        <label class="form-label" for="entity">Entity:</label>
+        <select class="form-select" id="entity" x-model="selectedEntity">
+          <option value="">Select entity</option>
+          <template x-for="entity in entities" :key="entity">
+            <option x-bind:value="entity" x-text="entity"></option>
+          </template>
+        </select>
+      </div>
+      <div class="">
+        <label class="form-label" for="field">Field:</label>
+        <select class="form-select" id="field" x-model="selectedField">
+          <option value="">Select fields</option>
+          <template x-for="field in fields" :key="field">
+            <option x-bind:value="field" x-text="field"></option>
+          </template>
+        </select>
+      </div>
+      <div class="d-flex align-items-end gap-1">
+        <div class="btn-group">
+          <button class="btn btn-outline-primary text-nowrap" @click="addEntry">
+            Add Entry
+          </button>
+          <button
+            class="btn btn-outline-primary text-nowrap"
+            @click="downloadDictionary">
+            Download JSON
+          </button>
+        </div>
+        <input
+          class="form-control"
+          type="file"
+          @change="uploadDictionary"
+          accept="application/json" />
+      </div>
+    </div>
+    <form @submit.prevent="addEntry"></form>
+  </div>
+{{ end }}
