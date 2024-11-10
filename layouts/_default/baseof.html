@@ -32,9 +32,18 @@
       <link href="{{ $stylesB.RelPermalink }}" rel="stylesheet" />
     {{ end }}
 
-    {{ $alpine := .Params.alpine }}
-    {{ if $alpine }}
-      {{ $app := resources.Get $alpine | resources.Minify | resources.Fingerprint }}
+    {{ $js := .Params.js }}
+    {{ if $js }}
+
+      {{ $options := dict "targetPath" "js/index.js" }}
+      {{ $app := resources.Get $js | js.Build $options | resources.Fingerprint }}
+
+      {{ if hugo.IsProduction }}
+        {{ $options := dict "targetPath" "js/index.js" "minify" true }}
+        {{ $app := resources.Get $js | js.Build $options | resources.Minify | resources.Fingerprint }}
+      {{ end }}
+
+
       <script type="module" src="{{ $app.Permalink }}" defer></script>
     {{ end }}
   </head>

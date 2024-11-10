@@ -1,4 +1,4 @@
-import { getFieldsDictionary, entities, fields } from '/js/dictionary.js';
+import { getFieldsDictionary, entities, fields } from './dictionary.js';
 
 export default function fieldsEditor() {
   return {

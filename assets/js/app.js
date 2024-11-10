@@ -1,4 +1,4 @@
-import Alpine from '/js/module.esm.js';
+import Alpine from './modules/module.esm.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Start Alpine

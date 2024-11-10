@@ -5,7 +5,7 @@ import {
   getFieldsDictionary,
   entities,
   fields,
-} from '/js/dictionary.js';
+} from './dictionary.js';
 
 export default function fieldsManager() {
   return {

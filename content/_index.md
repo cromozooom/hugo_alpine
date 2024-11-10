@@ -2,7 +2,7 @@
 title: Home
 bootstrap: true
 tailwind: true
-alpine: js/app.js
+js: js/app.js
 ---
 
 ## Index
