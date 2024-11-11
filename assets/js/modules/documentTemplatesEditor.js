@@ -1,6 +1,6 @@
 import { languages, collators, generators, pdfSample } from './dictionary.js';
 
-export default function docTemplatesEditor() {
+export default function documentTemplatesEditor() {
   return {
     entries: [],
     languages: languages,
@@ -15,7 +15,7 @@ export default function docTemplatesEditor() {
 
     loadEntries() {
       // Load entries from localStorage or initialize an empty array
-      this.entries = JSON.parse(localStorage.getItem('docTemplates')) || [];
+      this.entries = JSON.parse(localStorage.getItem('documentTemplates')) || [];
     },
 
     addEntry() {
@@ -47,7 +47,7 @@ export default function docTemplatesEditor() {
 
     saveEntries() {
       // Save all entries to localStorage
-      localStorage.setItem('docTemplates', JSON.stringify(this.entries));
+      localStorage.setItem('documentTemplates', JSON.stringify(this.entries));
     },
   };
 }

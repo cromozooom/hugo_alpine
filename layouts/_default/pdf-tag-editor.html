@@ -1,5 +1,155 @@
 {{ define "main" }}
   <div class="d-flex flex-column gap-2">
+    <div x-data="documentTypesEditor" class="pb-4">
+      <div class="badge bg-primary text-white mb-3">Document Types</div>
+
+      <template x-for="(entry, index) in entries" :key="index">
+        <div class="card mb-4 shadow">
+          <div class="card-header d-flex justify-content-between">
+            <h5>Document Type</h5>
+            <button class="btn btn-danger btn-sm" @click="removeEntry(index)">
+              Remove
+            </button>
+          </div>
+          <div class="card-body">
+            <!-- Name Field -->
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                x-model="entry.name"
+                placeholder="Enter Name" />
+            </div>
+
+            <!-- Entity Selector -->
+            <div class="mb-3">
+              <label for="entity" class="form-label">Entity</label>
+              <select class="form-select" x-model="entry.entity">
+                <option value="">Select Entity</option>
+                <template x-for="entity in entities" :key="entity">
+                  <option :value="entity" x-text="entity"></option>
+                </template>
+              </select>
+            </div>
+
+            <!-- Primary Code Field -->
+            <div class="mb-3">
+              <label for="primaryCode" class="form-label">Primary Code</label>
+              <input
+                type="text"
+                class="form-control"
+                x-model="entry.primaryCode"
+                placeholder="Enter Primary Code" />
+            </div>
+
+            <!-- Enabled for Search Switch -->
+            <div class="mb-3 form-check form-switch">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                x-model="entry.enabledForSearch"
+                id="enabledForSearch" />
+              <label class="form-check-label" for="enabledForSearch"
+                >Enabled for Search</label
+              >
+            </div>
+
+            <!-- Category Selector -->
+            <div class="mb-3">
+              <label for="category" class="form-label">Category</label>
+              <select class="form-select" x-model="entry.category">
+                <option value="">Select Category</option>
+                <template
+                  x-for="category in categories"
+                  :key="category.primaryCode">
+                  <option
+                    :value="category.primaryCode"
+                    x-text="category.name"></option>
+                </template>
+              </select>
+            </div>
+
+            <!-- Templates Multi-Selector -->
+            <div class="mb-3">
+              <label for="template" class="form-label">Templates</label>
+              <div class="input-group mb-2">
+                <select class="form-select" x-model="entry.selectedTemplate">
+                  <option value="">Select Template</option>
+                  <template x-for="template in templates" :key="template.key">
+                    <option
+                      :value="template.key"
+                      x-text="template.name"></option>
+                  </template>
+                </select>
+                <button class="btn btn-secondary" @click="addTemplate(entry)">
+                  Add Template
+                </button>
+              </div>
+              <!-- Display selected templates -->
+              <ul class="list-group">
+                <template
+                  x-for="(templateKey, templateIndex) in entry.templates"
+                  :key="templateKey">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center">
+                    <span x-text="getTemplateName(templateKey)"></span>
+                    <button
+                      class="btn btn-sm btn-danger"
+                      @click="removeTemplate(entry, templateIndex)">
+                      Remove
+                    </button>
+                  </li>
+                </template>
+              </ul>
+            </div>
+
+            <!-- Rules Section -->
+            <div class="mb-3">
+              <h6>Rules</h6>
+              <label class="form-label">Display Condition</label>
+              <input
+                type="text"
+                class="form-control mb-2"
+                x-model="entry.rules.displayCondition"
+                placeholder="Enter Display Condition" />
+
+              <label class="form-label">Mandatory Condition</label>
+              <input
+                type="text"
+                class="form-control mb-2"
+                x-model="entry.rules.mandatoryCondition"
+                placeholder="Enter Mandatory Condition" />
+
+              <label class="form-label">Mee Display Condition</label>
+              <input
+                type="text"
+                class="form-control mb-2"
+                x-model="entry.rules.meeDisplayCondition"
+                placeholder="Enter Mee Display Condition" />
+
+              <label class="form-label">Approval Condition</label>
+              <input
+                type="text"
+                class="form-control"
+                x-model="entry.rules.approvalCondition"
+                placeholder="Enter Approval Condition" />
+            </div>
+
+            <!-- Save Button -->
+            <button class="btn btn-success" @click="saveEntry(index)">
+              Save
+            </button>
+          </div>
+        </div>
+      </template>
+
+      <!-- Add New Entry Button -->
+      <button class="btn btn-primary" @click="addEntry">
+        Add Document Type
+      </button>
+    </div>
+
     <div x-data="documentCategoriesEditor" class="pb-2 border-bottom card">
       <div class="p-2">
         <div class="badge text-bg-primary">Document Categories</div>
@@ -95,7 +245,7 @@
       </div>
     </div>
 
-    <div x-data="docTemplatesEditor" class="pb-2 border-bottom card">
+    <div x-data="documentTemplatesEditor" class="pb-2 border-bottom card">
       <div class="p-2">
         <div class="badge text-bg-primary">Document Templates</div>
       </div>
