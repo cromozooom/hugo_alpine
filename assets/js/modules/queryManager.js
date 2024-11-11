@@ -7,7 +7,7 @@ import {
   fields,
 } from './dictionary.js';
 
-export default function fieldsManager() {
+export default function queryManager() {
   return {
     query: '',
     selectedEntity: null,

@@ -1,6 +1,6 @@
 import { getQueryLibrary, entities } from './dictionary.js';
 
-export default function fieldsEditor() {
+export default function queryEditor() {
   return {
     entries: [],
     entities: entities,
