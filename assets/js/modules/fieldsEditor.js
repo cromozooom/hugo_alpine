@@ -1,4 +1,4 @@
-import { getFieldsDictionary, entities, fields } from './dictionary.js';
+import { getQueryLibrary, entities, fields } from './dictionary.js';
 
 export default function fieldsEditor() {
   return {
@@ -12,7 +12,7 @@ export default function fieldsEditor() {
     },
 
     loadEntries() {
-      this.entries = getFieldsDictionary() || [];
+      this.entries = getQueryLibrary() || [];
     },
 
     addEntry() {

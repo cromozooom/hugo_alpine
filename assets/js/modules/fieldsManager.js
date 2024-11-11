@@ -2,7 +2,7 @@ import {
   addFieldDictionaryEntry,
   downloadFieldsDictionary,
   uploadFieldsDictionary,
-  getFieldsDictionary,
+  getQueryLibrary,
   entities,
   fields,
 } from './dictionary.js';
@@ -21,7 +21,7 @@ export default function fieldsManager() {
 
     // Watch for changes in selectedEntity and reset ID input when entity changes
     checkUniqueId() {
-      this.isIdUnique = !getFieldsDictionary().some(
+      this.isIdUnique = !getQueryLibrary().some(
         (entry) => entry.entity === this.selectedEntity && entry.id === this.id,
       );
     },

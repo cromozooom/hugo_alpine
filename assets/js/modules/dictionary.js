@@ -40,27 +40,27 @@ export const entities = [
 const STORAGE_KEY = 'fieldsDictionary';
 
 // Function to initialize or get the fields dictionary from localStorage
-export function getFieldsDictionary() {
+export function getQueryLibrary() {
   const storedData = localStorage.getItem(STORAGE_KEY);
   return storedData ? JSON.parse(storedData) : [];
 }
 
 // Function to add a new entry to the fields dictionary
-export function addFieldDictionaryEntry(fieldQuery, entity, field, x, y, id) {
-  if (!entities.includes(entity) || !fields.includes(field)) {
+export function addFieldDictionaryEntry(fieldQuery, entity, id) {
+  if (!entities.includes(entity)) {
     console.error('Invalid entity or field value');
     return;
   }
 
-  const dictionary = getFieldsDictionary();
-  dictionary.push({ fieldQuery, entity, field, x, y, id });
+  const dictionary = getQueryLibrary();
+  dictionary.push({ fieldQuery, entity, id });
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(dictionary));
 }
 
 // Function to download the fields dictionary as a JSON file
 export function downloadFieldsDictionary() {
-  const data = getFieldsDictionary();
+  const data = getQueryLibrary();
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
 
