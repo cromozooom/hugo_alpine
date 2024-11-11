@@ -19,13 +19,3 @@ export function getLocalStorage(key) {
     return null;
   }
 }
-
-// Function to set user data in localStorage
-export function setUserData(name, surname) {
-  setLocalStorage('user', { name, surname });
-}
-
-// Function to get user data from localStorage
-export function getUserData() {
-  return getLocalStorage('user');
-}

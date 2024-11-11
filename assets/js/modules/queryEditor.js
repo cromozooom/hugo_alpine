@@ -1,10 +1,9 @@
-import { getQueryLibrary, entities, fields } from './dictionary.js';
+import { getQueryLibrary, entities } from './dictionary.js';
 
 export default function fieldsEditor() {
   return {
     entries: [],
     entities: entities,
-    fields: fields,
 
     init() {
       this.loadEntries();
@@ -16,18 +15,18 @@ export default function fieldsEditor() {
     },
 
     addEntry() {
-      this.entries.push({ fieldQuery: '', entity: this.entities[0], field: this.fields[0], x: 0, y: 0 });
-      localStorage.setItem('fieldsDictionary', JSON.stringify(this.entries));
+      this.entries.push({ query: '', entity: this.entities[0], queryId: '' });
+      localStorage.setItem('queryLibrary', JSON.stringify(this.entries));
     },
 
     saveEntry(index) {
-      localStorage.setItem('fieldsDictionary', JSON.stringify(this.entries));
+      localStorage.setItem('queryLibrary', JSON.stringify(this.entries));
       alert('Entry saved!');
     },
 
     removeEntry(index) {
       this.entries.splice(index, 1);
-      localStorage.setItem('fieldsDictionary', JSON.stringify(this.entries));
+      localStorage.setItem('queryLibrary', JSON.stringify(this.entries));
       window.dispatchEvent(new Event('refreshFieldsEditor'));
     },
   };

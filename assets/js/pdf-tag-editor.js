@@ -1,6 +1,6 @@
 import Alpine from './modules/module.esm.js';
-import fieldsManager from './modules/fieldsManager.js';
-import fieldsEditor from './modules/fieldsEditor.js';
+import fieldsManager from './modules/queryManager.js';
+import fieldsEditor from './modules/queryEditor.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   Alpine.data('fieldsManager', fieldsManager);

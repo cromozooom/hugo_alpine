@@ -6,8 +6,7 @@
       <thead>
         <tr>
           <th>Entity</th>
-          <th>Id</th>
-          <th>Field</th>
+          <th>Name</th>
           <th>Query</th>
           <th>Actions</th>
         </tr>
@@ -26,23 +25,11 @@
               </select>
             </td>
             <td>
-              <input class="form-control" type="text" x-model="entry.id" />
+              <input class="form-control" type="text" x-model="entry.queryId" />
             </td>
+
             <td>
-              <select class="form-select" x-model="entry.field">
-                <template x-for="field in fields" :key="field">
-                  <option
-                    :value="field"
-                    x-text="field"
-                    :selected="field === entry.field"></option>
-                </template>
-              </select>
-            </td>
-            <td>
-              <input
-                class="form-control"
-                type="text"
-                x-model="entry.fieldQuery" />
+              <input class="form-control" type="text" x-model="entry.query" />
             </td>
             <td>
               <div class="btn-group">
@@ -98,7 +85,7 @@
           <select
             class="form-select"
             x-model="selectedEntity"
-            @change="id = ''; isIdUnique = true;">
+            @change="idQuery = ''; isIdUnique = true;">
             <option value="">Select entity</option>
             <template x-for="entity in entities" :key="entity">
               <option x-bind:value="entity" x-text="entity"></option>
@@ -106,35 +93,28 @@
           </select>
         </div>
         <div>
-          <label class="form-label" for="id">Id</label>
+          <label class="form-label" for="idQuery">Name</label>
           <input
             :disabled="!selectedEntity"
             class="form-control"
             type="text"
-            id="id"
+            id="idQuery"
             @input="checkUniqueId"
-            x-model="id"
+            x-model="idQuery"
             required />
+
+          <span x-text="isIdUnique"></span>
           <span x-show="!isIdUnique" style="color: red;"
             >must be unique/entity.</span
           >
         </div>
         <div class="">
-          <label class="form-label" for="field">Field</label>
-          <select class="form-select" id="field" x-model="selectedField">
-            <option value="">Select fields</option>
-            <template x-for="field in fields" :key="field">
-              <option x-bind:value="field" x-text="field"></option>
-            </template>
-          </select>
-        </div>
-        <div class="">
-          <label class="form-label" for="fieldQuery">Query</label>
+          <label class="form-label" for="query">Query</label>
           <input
             class="form-control"
             type="text"
-            id="fieldQuery"
-            x-model="fieldQuery"
+            id="query"
+            x-model="query"
             required />
         </div>
         <div class="d-flex flex-column xalign-items-end">

@@ -71,7 +71,9 @@
       "field",
       "fieldQuery",
       "id",
-      "index"
+      "idQuery",
+      "index",
+      "query"
     ]
   }
 }

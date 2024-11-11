@@ -37,7 +37,7 @@ export const entities = [
 ];
 
 // Utility to set and get fields dictionary from localStorage
-const STORAGE_KEY = 'fieldsDictionary';
+const STORAGE_KEY = 'queryLibrary';
 
 // Function to initialize or get the fields dictionary from localStorage
 export function getQueryLibrary() {
@@ -46,34 +46,34 @@ export function getQueryLibrary() {
 }
 
 // Function to add a new entry to the fields dictionary
-export function addFieldDictionaryEntry(fieldQuery, entity, id) {
+export function addQueryLibraryEntry(query, entity, queryId) {
   if (!entities.includes(entity)) {
     console.error('Invalid entity or field value');
     return;
   }
 
   const dictionary = getQueryLibrary();
-  dictionary.push({ fieldQuery, entity, id });
+  dictionary.push({ query, entity, queryId });
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(dictionary));
 }
 
 // Function to download the fields dictionary as a JSON file
-export function downloadFieldsDictionary() {
+export function downloadQueryLibrary() {
   const data = getQueryLibrary();
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
 
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'fieldsDictionary.json';
+  link.download = 'queryLibrary.json';
   link.click();
 
   URL.revokeObjectURL(url); // Clean up the URL object
 }
 
 // Function to upload and parse a JSON file to update the fields dictionary
-export function uploadFieldsDictionary(event) {
+export function uploadqueryLibrary(event) {
   const file = event.target.files[0];
   if (!file) return;
 

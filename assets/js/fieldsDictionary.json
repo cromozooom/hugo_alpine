@@ -1,46 +1,46 @@
 [
   {
-    "fieldQuery": "sxas",
+    "query": "sxas",
     "entity": "Contact",
     "field": "Address"
   },
   {
-    "fieldQuery": "azaAXASXSA",
+    "query": "azaAXASXSA",
     "entity": "Private Foundations",
     "field": "Email Address"
   },
   {
-    "fieldQuery": "asxasxsa",
+    "query": "asxasxsa",
     "entity": "Private Foundations",
     "field": "Email Address"
   },
   {
-    "fieldQuery": "123456",
+    "query": "123456",
     "entity": "Family Offices",
     "field": "Current Assets"
   },
   {
-    "fieldQuery": "dcdscdssdcsdcsd",
+    "query": "dcdscdssdcsdcsd",
     "entity": "Pension Funds",
     "field": "Date of Birth"
   },
   {
-    "fieldQuery": "scdcds12345",
+    "query": "scdcds12345",
     "entity": "Investment Firms",
     "field": "Email Address"
   },
   {
-    "fieldQuery": "AXAs",
+    "query": "AXAs",
     "entity": "Contact",
     "field": "Annual Income"
   },
   {
-    "fieldQuery": "solopx",
+    "query": "solopx",
     "entity": "Investment Firms",
     "field": "Beneficiary Name"
   },
   {
-    "fieldQuery": "AXSAX",
+    "query": "AXSAX",
     "entity": "Family Offices",
     "field": "Date of Birth"
   }
