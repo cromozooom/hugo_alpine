@@ -4,6 +4,7 @@ export default function queryEditor() {
   return {
     entries: [],
     entities: entities,
+    isIdUnique: true,
 
     init() {
       this.loadEntries();
@@ -11,17 +12,40 @@ export default function queryEditor() {
     },
 
     loadEntries() {
-      this.entries = getQueryLibrary() || [];
+      // Initialize each entry with an `isIdUnique` property to track uniqueness
+      this.entries = getQueryLibrary().map((entry) => ({ ...entry, isIdUnique: true })) || [];
     },
 
-    addEntry() {
-      this.entries.push({ query: '', entity: this.entities[0], queryId: '' });
-      localStorage.setItem('queryLibrary', JSON.stringify(this.entries));
+    checkUniqueId(entry) {
+      const queryLibrary = getQueryLibrary();
+
+      // Check if any entry in queryLibrary has the same entity and queryId as the current entry, excluding itself
+      entry.isIdUnique = !queryLibrary.some(
+        (existingEntry) =>
+          existingEntry.entity === entry.entity && existingEntry.queryId === entry.queryId && existingEntry !== entry, // Exclude itself from the check
+      );
+
+      console.log('Is ID Unique for entry:', entry.queryId, entry.isIdUnique); // Log to verify
     },
 
     saveEntry(index) {
+      const entry = this.entries[index];
+
+      // Check for uniqueness before saving
+      if (entry.isIdUnique) {
+        // If unique, proceed with saving
+        localStorage.setItem('queryLibrary', JSON.stringify(this.entries));
+        alert('Entry saved!');
+        window.dispatchEvent(new Event('refreshFieldsEditor'));
+      } else {
+        // If not unique, show an error
+        alert('ID must be unique within the selected entity.');
+      }
+    },
+
+    addEntry() {
+      this.entries.push({ query: '', entity: this.entities[0], queryId: '', isIdUnique: true });
       localStorage.setItem('queryLibrary', JSON.stringify(this.entries));
-      alert('Entry saved!');
     },
 
     removeEntry(index) {

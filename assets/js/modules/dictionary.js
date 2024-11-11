@@ -26,6 +26,10 @@ export const fields = [
   'KYC Information',
 ];
 
+export const languages = {
+  RO: 'Romanian',
+  EN: 'English',
+};
 export const entities = [
   'Contact',
   'Family Offices',
@@ -35,13 +39,37 @@ export const entities = [
   'Investment Firms',
   'Pension Funds',
 ];
+export const collators = [
+  'collators_Contact',
+  'collators_Family Offices',
+  'collators_Hedge Funds',
+  'collators_Private Foundations',
+  'collators_Holding Companies',
+  'collators_Investment Firms',
+  'collators_Pension Funds',
+];
+export const generators = [
+  'generators_Contact',
+  'generators_Family Offices',
+  'generators_Hedge Funds',
+  'generators_Private Foundations',
+  'generators_Holding Companies',
+  'generators_Investment Firms',
+  'generators_Pension Funds',
+];
+export const pdfSample = ['1.pdf', '2.pdf'];
 
 // Utility to set and get fields dictionary from localStorage
-const STORAGE_KEY = 'queryLibrary';
+const QUERY_LIBRARY_STORAGE_KEY = 'queryLibrary';
+const DOC_CATEGORIES_STORAGE_KEY = 'documentCategories';
 
 // Function to initialize or get the fields dictionary from localStorage
 export function getQueryLibrary() {
-  const storedData = localStorage.getItem(STORAGE_KEY);
+  const storedData = localStorage.getItem(QUERY_LIBRARY_STORAGE_KEY);
+  return storedData ? JSON.parse(storedData) : [];
+}
+export function getdocTemplates() {
+  const storedData = localStorage.getItem(DOC_CATEGORIES_STORAGE_KEY);
   return storedData ? JSON.parse(storedData) : [];
 }
 
@@ -55,7 +83,7 @@ export function addQueryLibraryEntry(query, entity, queryId) {
   const dictionary = getQueryLibrary();
   dictionary.push({ query, entity, queryId });
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(dictionary));
+  localStorage.setItem(QUERY_LIBRARY_STORAGE_KEY, JSON.stringify(dictionary));
 }
 
 // Function to download the fields dictionary as a JSON file
@@ -84,7 +112,7 @@ export function uploadqueryLibrary(event) {
 
       // Validate the uploaded data (Optional)
       if (Array.isArray(uploadedData)) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(uploadedData));
+        localStorage.setItem(QUERY_LIBRARY_STORAGE_KEY, JSON.stringify(uploadedData));
         console.log('Fields dictionary updated successfully');
       } else {
         console.error('Invalid data format');

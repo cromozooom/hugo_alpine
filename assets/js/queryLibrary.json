@@ -1,0 +1,12 @@
+[
+  {
+    "query": "q1",
+    "entity": "Contact",
+    "queryId": "x"
+  },
+  {
+    "query": "",
+    "entity": "Contact",
+    "queryId": ""
+  }
+]
