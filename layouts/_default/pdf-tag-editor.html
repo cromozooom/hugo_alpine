@@ -1,477 +1,766 @@
 {{ define "main" }}
-  <div class="d-flex flex-column gap-2">
-    <div x-data="documentTypesEditor" class="pb-4">
-      <div class="badge bg-primary text-white mb-3">Document Types</div>
+  <div class="d-flex align-items-center justify-content-center">
+    <!-- Tabs -->
+    <div
+      x-data="{
+selectedId: null,
+init() {
+// Set the first available tab on the page on page load.
+this.$nextTick(() => this.select(this.$id('tab', 1)))
+},
+select(id) {
+this.selectedId = id
+},
+isSelected(id) {
+return this.selectedId === id
+},
+whichChild(el, parent) {
+return Array.from(parent.children).indexOf(el) + 1
+}
+}"
+      x-id="['tab']"
+      class="mx-auto w-100">
+      <!-- Tab List -->
+      <ul
+        x-ref="tablist"
+        @keydown.right.prevent.stop="$focus.wrap().next()"
+        @keydown.home.prevent.stop="$focus.first()"
+        @keydown.page-up.prevent.stop="$focus.first()"
+        @keydown.left.prevent.stop="$focus.wrap().prev()"
+        @keydown.end.prevent.stop="$focus.last()"
+        @keydown.page-down.prevent.stop="$focus.last()"
+        role="tablist"
+        class="d-flex mx-0 px-0">
+        <!-- Tab -->
+        <li>
+          <button
+            :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+            @click="select($el.id)"
+            @mousedown.prevent=""
+            @focus="select($el.id)"
+            type="button"
+            :tabindex="isSelected($el.id) ? 0 : -1"
+            :aria-selected="isSelected($el.id)"
+            :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
+            class="d-inline-flex px-4 py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            role="tab"
+            id="tab-1-1"
+            tabindex="0"
+            aria-selected="true">
+            Query Library
+          </button>
+        </li>
 
-      <template x-for="(entry, index) in entries" :key="index">
-        <div class="card mb-4 shadow">
-          <div class="card-header d-flex justify-content-between">
-            <h5>Document Type</h5>
-            <button class="btn btn-danger btn-sm" @click="removeEntry(index)">
-              Remove
-            </button>
+        <li>
+          <button
+            :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+            @click="select($el.id)"
+            @mousedown.prevent=""
+            @focus="select($el.id)"
+            type="button"
+            :tabindex="isSelected($el.id) ? 0 : -1"
+            :aria-selected="isSelected($el.id)"
+            :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
+            class="d-inline-flex px-4 py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            role="tab"
+            id="tab-1-2"
+            tabindex="-1"
+            aria-selected="false">
+            Document template
+          </button>
+        </li>
+        <li>
+          <button
+            :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+            @click="select($el.id)"
+            @mousedown.prevent=""
+            @focus="select($el.id)"
+            type="button"
+            :tabindex="isSelected($el.id) ? 0 : -1"
+            :aria-selected="isSelected($el.id)"
+            :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
+            class="d-inline-flex px-4 py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            role="tab"
+            id="tab-1-2"
+            tabindex="-1"
+            aria-selected="false">
+            Doc Categories
+          </button>
+        </li>
+        <li>
+          <button
+            :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+            @click="select($el.id)"
+            @mousedown.prevent=""
+            @focus="select($el.id)"
+            type="button"
+            :tabindex="isSelected($el.id) ? 0 : -1"
+            :aria-selected="isSelected($el.id)"
+            :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
+            class="d-inline-flex px-4 py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            role="tab"
+            id="tab-1-2"
+            tabindex="-1"
+            aria-selected="false">
+            File Metadata Editor
+          </button>
+        </li>
+        <li>
+          <button
+            :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+            @click="select($el.id)"
+            @mousedown.prevent=""
+            @focus="select($el.id)"
+            type="button"
+            :tabindex="isSelected($el.id) ? 0 : -1"
+            :aria-selected="isSelected($el.id)"
+            :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
+            class="d-inline-flex px-4 py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            role="tab"
+            id="tab-1-2"
+            tabindex="-1"
+            aria-selected="false">
+            Doc Types
+          </button>
+        </li>
+      </ul>
+
+      <!-- Panels -->
+      <div role="tabpanels" class=" w-100">
+        <!-- Panel -->
+        <section
+          x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+          :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+          role="tabpanel"
+          class="w-100 px-2"
+          aria-labelledby="tab-1-1"
+          style="">
+          <!-- fieldsEditor Component: Displays and allows editing/removal of entries in a table format -->
+          <div x-data="queryEditor" class="pb-2 border-bottom card">
+            <div class="p-2">
+              <div class="badge text-bg-primary">Query library</div>
+            </div>
+            <table class="table table-hover table-responsive mb-2">
+              <thead>
+                <tr>
+                  <th>Entity</th>
+                  <th>Name</th>
+                  <th>Query</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="(entry, index) in entries" :key="index">
+                  <tr>
+                    <td>
+                      <select
+                        class="form-select"
+                        x-model="entry.entity"
+                        @change="checkUniqueId(entry)">
+                        <template x-for="entity in entities" :key="entity">
+                          <option :value="entity" x-text="entity"></option>
+                        </template>
+                      </select>
+                    </td>
+
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        x-model="entry.queryId"
+                        @input="checkUniqueId(entry)" />
+                      <span x-show="!entry.isIdUnique" style="color: red;"
+                        >must be unique/entity.</span
+                      >
+                    </td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        x-model="entry.query" />
+                    </td>
+                    <td>
+                      <div class="btn-group">
+                        <button
+                          class="btn btn-outline-primary"
+                          @click="saveEntry(index)">
+                          Save
+                        </button>
+                        <button
+                          class="btn btn-outline-primary d-flex align-items-center"
+                          @click="removeEntry(index)">
+                          {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+            <div class="px-2">
+              <button
+                class="btn btn-outline-primary d-flex align-items-center gap-2"
+                @click="addEntry">
+                {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }}
+                Entry
+              </button>
+            </div>
           </div>
-          <div class="card-body">
-            <!-- Name Field -->
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                x-model="entry.name"
-                placeholder="Enter Name" />
-            </div>
 
-            <!-- Entity Selector -->
+          <div x-data="queryManager">
+            <div>
+              <div class="badge text-bg-primary">Add new Query in library</div>
+            </div>
+            <div class="card mt-2 shadow">
+              <div class="d-flex align-items-center border-bottom p-2">
+                <div class="flex-grow-1">
+                  <h2 class="h6 mb-0">Add New Entry</h2>
+                </div>
+                <div class="d-flex gap-1">
+                  <button
+                    class="btn btn-outline-primary text-nowrap"
+                    @click="downloadDictionary">
+                    Download JSON
+                  </button>
+                  <input
+                    class="form-control"
+                    type="file"
+                    @change="uploadDictionary"
+                    accept="application/json" />
+                </div>
+              </div>
+              <div class="d-flex gap-3 p-2">
+                <div class="">
+                  <label class="form-label" for="entity">Entity</label>
+                  <select
+                    class="form-select"
+                    x-model="selectedEntity"
+                    @change="idQuery = ''; isIdUnique = true;">
+                    <option value="">Select entity</option>
+                    <template x-for="entity in entities" :key="entity">
+                      <option x-bind:value="entity" x-text="entity"></option>
+                    </template>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label" for="idQuery">Name</label>
+                  <input
+                    :disabled="!selectedEntity"
+                    class="form-control"
+                    type="text"
+                    id="idQuery"
+                    @input="checkUniqueId"
+                    x-model="idQuery"
+                    required />
+
+                  <span x-show="!isIdUnique" style="color: red;"
+                    >must be unique/entity.</span
+                  >
+                </div>
+                <div class="">
+                  <label class="form-label" for="query">Query</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="query"
+                    x-model="query"
+                    required />
+                </div>
+                <div class="d-flex flex-column xalign-items-end">
+                  <label class="form-label text-muted" for="field">Add</label>
+
+                  <button
+                    class="btn btn-outline-primary text-nowrap d-flex align-items-center gap-2
+              "
+                    @click="addEntry">
+                    {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }}
+                    Entry
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+          :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+          role="tabpanel"
+          class="w-100 px-2"
+          aria-labelledby="tab-1-2"
+          style="display: none;">
+          <div x-data="documentTemplatesEditor" class="pb-2 border-bottom card">
+            <div class="p-2">
+              <div class="badge text-bg-primary">Document Templates</div>
+            </div>
+            <table class="table table-hover table-responsive mb-2">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Key</th>
+                  <th>Language</th>
+                  <th>Collator</th>
+                  <th>Generator</th>
+                  <th>File Upload</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="(entry, index) in entries" :key="index">
+                  <tr>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        x-model="entry.name" />
+                    </td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        x-model="entry.key" />
+                    </td>
+
+                    <td>
+                      <select class="form-select" x-model="entry.language">
+                        <template x-for="(name, code) in languages" :key="code">
+                          <option :value="code" x-text="name"></option>
+                        </template>
+                      </select>
+                    </td>
+
+                    <td>
+                      <select class="form-select" x-model="entry.collator">
+                        <template x-for="collator in collators" :key="collator">
+                          <option :value="collator" x-text="collator"></option>
+                        </template>
+                      </select>
+                    </td>
+
+                    <td>
+                      <select class="form-select" x-model="entry.generator">
+                        <template
+                          x-for="generator in generators"
+                          :key="generator">
+                          <option
+                            :value="generator"
+                            x-text="generator"></option>
+                        </template>
+                      </select>
+                    </td>
+
+                    <td>
+                      <select class="form-select" x-model="entry.fileUpload">
+                        <template x-for="file in pdfSample" :key="file">
+                          <option :value="file" x-text="file"></option>
+                        </template>
+                      </select>
+                    </td>
+
+                    <td>
+                      <div class="btn-group">
+                        <button
+                          class="btn btn-outline-primary"
+                          @click="saveEntry(index)">
+                          Save
+                        </button>
+                        <button
+                          class="btn btn-outline-primary d-flex align-items-center"
+                          @click="removeEntry(index)">
+                          {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+            <div class="px-2">
+              <button
+                class="btn btn-outline-primary d-flex align-items-center gap-2"
+                @click="addEntry">
+                {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }}
+                Add Entry
+              </button>
+            </div>
+          </div>
+        </section>
+        <section
+          x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+          :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+          role="tabpanel"
+          class="w-100 px-2"
+          aria-labelledby="tab-1-3"
+          style="display: none;">
+          <div
+            x-data="documentCategoriesEditor"
+            class="pb-2 border-bottom card">
+            <div class="p-2">
+              <div class="badge text-bg-primary">Document Categories</div>
+            </div>
+            <table class="table table-hover table-responsive mb-2">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Primary Code</th>
+                  <th>Can Hold Document Templates</th>
+                  <th>Enabled for Search</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="(entry, index) in entries" :key="index">
+                  <tr>
+                    <!-- Name field -->
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        x-model="entry.name" />
+                    </td>
+
+                    <!-- Primary Code field -->
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        x-model="entry.primaryCode" />
+                    </td>
+
+                    <!-- Can Hold Document Templates switch -->
+                    <td>
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          role="switch"
+                          :id="'holdTemplatesSwitch' + index"
+                          x-model="entry.canHoldDocumentTemplates" />
+                        <label
+                          class="form-check-label"
+                          :for="'holdTemplatesSwitch' + index"
+                          >Hold Templates</label
+                        >
+                      </div>
+                    </td>
+
+                    <!-- Enabled for Search switch -->
+                    <td>
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          role="switch"
+                          :id="'searchEnabledSwitch' + index"
+                          x-model="entry.enabledForSearch" />
+                        <label
+                          class="form-check-label"
+                          :for="'searchEnabledSwitch' + index"
+                          >Enabled for Search</label
+                        >
+                      </div>
+                    </td>
+
+                    <!-- Actions -->
+                    <td>
+                      <div class="btn-group">
+                        <button
+                          class="btn btn-outline-primary"
+                          @click="saveEntry(index)">
+                          Save
+                        </button>
+                        <button
+                          class="btn btn-outline-primary d-flex align-items-center"
+                          @click="removeEntry(index)">
+                          {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+
+            <div class="px-2">
+              <!-- Add Entry Button -->
+              <button
+                class="btn btn-outline-primary d-flex align-items-center gap-2"
+                @click="addEntry">
+                {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }}
+                Add Entry
+              </button>
+            </div>
+          </div>
+        </section>
+        <section
+          x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+          :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+          role="tabpanel"
+          class="w-100 px-2"
+          aria-labelledby="tab-1-4"
+          style="display: none;">
+          <div x-data="fileMetadataEditor" class="pb-4">
+            <!-- File Upload Selector -->
             <div class="mb-3">
-              <label for="entity" class="form-label">Entity</label>
-              <select class="form-select" x-model="entry.entity">
-                <option value="">Select Entity</option>
-                <template x-for="entity in entities" :key="entity">
-                  <option :value="entity" x-text="entity"></option>
+              <label for="fileUpload" class="form-label">Select File</label>
+              <select
+                class="form-select"
+                x-model="selectedFile"
+                @change="loadFileMetadata()">
+                <option value="">Select a PDF File</option>
+                <template x-for="pdf in pdfSample" :key="pdf">
+                  <option :value="pdf" x-text="pdf"></option>
                 </template>
               </select>
             </div>
 
-            <!-- Primary Code Field -->
-            <div class="mb-3">
-              <label for="primaryCode" class="form-label">Primary Code</label>
-              <input
-                type="text"
-                class="form-control"
-                x-model="entry.primaryCode"
-                placeholder="Enter Primary Code" />
-            </div>
+            <!-- Fields Section -->
+            <template x-if="selectedFile">
+              <div>
+                <h5>Fields for <span x-text="selectedFile"></span></h5>
+                <button class="btn btn-secondary mb-2" @click="addField()">
+                  Add Field
+                </button>
 
-            <!-- Enabled for Search Switch -->
-            <div class="mb-3 form-check form-switch">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                x-model="entry.enabledForSearch"
-                id="enabledForSearch" />
-              <label class="form-check-label" for="enabledForSearch"
-                >Enabled for Search</label
-              >
-            </div>
+                <!-- Field List -->
+                <template x-for="(field, index) in fields" :key="index">
+                  <div class="card mb-3 shadow">
+                    <div class="card-header d-flex justify-content-between">
+                      <h6>Field</h6>
+                      <button
+                        class="btn btn-danger btn-sm"
+                        @click="removeField(index)">
+                        Remove
+                      </button>
+                    </div>
+                    <div class="card-body">
+                      <!-- Field Id -->
+                      <div class="mb-3">
+                        <label for="fieldId" class="form-label">Field Id</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          x-model="field.id"
+                          placeholder="Enter Field Id" />
+                      </div>
 
-            <!-- Category Selector -->
-            <div class="mb-3">
-              <label for="category" class="form-label">Category</label>
-              <select class="form-select" x-model="entry.category">
-                <option value="">Select Category</option>
-                <template
-                  x-for="category in categories"
-                  :key="category.primaryCode">
-                  <option
-                    :value="category.primaryCode"
-                    x-text="category.name"></option>
+                      <!-- Field Type -->
+                      <div class="mb-3">
+                        <label for="fieldType" class="form-label"
+                          >Field Type</label
+                        >
+                        <select class="form-select" x-model="field.fieldType">
+                          <template x-for="type in fieldTypes" :key="type">
+                            <option :value="type" x-text="type"></option>
+                          </template>
+                        </select>
+                      </div>
+
+                      <!-- X Coordinate -->
+                      <div class="mb-3">
+                        <label for="xCoord" class="form-label"
+                          >X Coordinate</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control"
+                          x-model="field.xCoord"
+                          placeholder="Enter X Coordinate" />
+                      </div>
+
+                      <!-- Y Coordinate -->
+                      <div class="mb-3">
+                        <label for="yCoord" class="form-label"
+                          >Y Coordinate</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control"
+                          x-model="field.yCoord"
+                          placeholder="Enter Y Coordinate" />
+                      </div>
+                    </div>
+                  </div>
                 </template>
-              </select>
-            </div>
 
-            <!-- Templates Multi-Selector -->
-            <div class="mb-3">
-              <label for="template" class="form-label">Templates</label>
-              <div class="input-group mb-2">
-                <select class="form-select" x-model="entry.selectedTemplate">
-                  <option value="">Select Template</option>
-                  <template x-for="template in templates" :key="template.key">
-                    <option
-                      :value="template.key"
-                      x-text="template.name"></option>
-                  </template>
-                </select>
-                <button class="btn btn-secondary" @click="addTemplate(entry)">
-                  Add Template
+                <!-- Save Button -->
+                <button class="btn btn-primary" @click="saveFileMetadata()">
+                  Save Metadata
                 </button>
               </div>
-              <!-- Display selected templates -->
-              <ul class="list-group">
-                <template
-                  x-for="(templateKey, templateIndex) in entry.templates"
-                  :key="templateKey">
-                  <li
-                    class="list-group-item d-flex justify-content-between align-items-center">
-                    <span x-text="getTemplateName(templateKey)"></span>
-                    <button
-                      class="btn btn-sm btn-danger"
-                      @click="removeTemplate(entry, templateIndex)">
-                      Remove
-                    </button>
-                  </li>
-                </template>
-              </ul>
-            </div>
-
-            <!-- Rules Section -->
-            <div class="mb-3">
-              <h6>Rules</h6>
-              <label class="form-label">Display Condition</label>
-              <input
-                type="text"
-                class="form-control mb-2"
-                x-model="entry.rules.displayCondition"
-                placeholder="Enter Display Condition" />
-
-              <label class="form-label">Mandatory Condition</label>
-              <input
-                type="text"
-                class="form-control mb-2"
-                x-model="entry.rules.mandatoryCondition"
-                placeholder="Enter Mandatory Condition" />
-
-              <label class="form-label">Mee Display Condition</label>
-              <input
-                type="text"
-                class="form-control mb-2"
-                x-model="entry.rules.meeDisplayCondition"
-                placeholder="Enter Mee Display Condition" />
-
-              <label class="form-label">Approval Condition</label>
-              <input
-                type="text"
-                class="form-control"
-                x-model="entry.rules.approvalCondition"
-                placeholder="Enter Approval Condition" />
-            </div>
-
-            <!-- Save Button -->
-            <button class="btn btn-success" @click="saveEntry(index)">
-              Save
-            </button>
+            </template>
           </div>
-        </div>
-      </template>
+        </section>
+        <section
+          x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+          :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+          role="tabpanel"
+          class="w-100 px-2"
+          aria-labelledby="tab-1-5"
+          style="display: none;">
+          <div x-data="documentTypesEditor" class="pb-4">
+            <div class="badge bg-primary text-white mb-3">Document Types</div>
 
-      <!-- Add New Entry Button -->
-      <button class="btn btn-primary" @click="addEntry">
-        Add Document Type
-      </button>
-    </div>
-
-    <div x-data="documentCategoriesEditor" class="pb-2 border-bottom card">
-      <div class="p-2">
-        <div class="badge text-bg-primary">Document Categories</div>
-      </div>
-      <table class="table table-hover table-responsive mb-2">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Primary Code</th>
-            <th>Can Hold Document Templates</th>
-            <th>Enabled for Search</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template x-for="(entry, index) in entries" :key="index">
-            <tr>
-              <!-- Name field -->
-              <td>
-                <input class="form-control" type="text" x-model="entry.name" />
-              </td>
-
-              <!-- Primary Code field -->
-              <td>
-                <input
-                  class="form-control"
-                  type="text"
-                  x-model="entry.primaryCode" />
-              </td>
-
-              <!-- Can Hold Document Templates switch -->
-              <td>
-                <div class="form-check form-switch">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    role="switch"
-                    :id="'holdTemplatesSwitch' + index"
-                    x-model="entry.canHoldDocumentTemplates" />
-                  <label
-                    class="form-check-label"
-                    :for="'holdTemplatesSwitch' + index"
-                    >Hold Templates</label
-                  >
-                </div>
-              </td>
-
-              <!-- Enabled for Search switch -->
-              <td>
-                <div class="form-check form-switch">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    role="switch"
-                    :id="'searchEnabledSwitch' + index"
-                    x-model="entry.enabledForSearch" />
-                  <label
-                    class="form-check-label"
-                    :for="'searchEnabledSwitch' + index"
-                    >Enabled for Search</label
-                  >
-                </div>
-              </td>
-
-              <!-- Actions -->
-              <td>
-                <div class="btn-group">
+            <template x-for="(entry, index) in entries" :key="index">
+              <div class="card mb-4 shadow">
+                <div class="card-header d-flex justify-content-between">
+                  <h5>Document Type</h5>
                   <button
-                    class="btn btn-outline-primary"
-                    @click="saveEntry(index)">
+                    class="btn btn-danger btn-sm"
+                    @click="removeEntry(index)">
+                    Remove
+                  </button>
+                </div>
+                <div class="card-body">
+                  <!-- Name Field -->
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      x-model="entry.name"
+                      placeholder="Enter Name" />
+                  </div>
+
+                  <!-- Entity Selector -->
+                  <div class="mb-3">
+                    <label for="entity" class="form-label">Entity</label>
+                    <select class="form-select" x-model="entry.entity">
+                      <option value="">Select Entity</option>
+                      <template x-for="entity in entities" :key="entity">
+                        <option :value="entity" x-text="entity"></option>
+                      </template>
+                    </select>
+                  </div>
+
+                  <!-- Primary Code Field -->
+                  <div class="mb-3">
+                    <label for="primaryCode" class="form-label"
+                      >Primary Code</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      x-model="entry.primaryCode"
+                      placeholder="Enter Primary Code" />
+                  </div>
+
+                  <!-- Enabled for Search Switch -->
+                  <div class="mb-3 form-check form-switch">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      x-model="entry.enabledForSearch"
+                      id="enabledForSearch" />
+                    <label class="form-check-label" for="enabledForSearch"
+                      >Enabled for Search</label
+                    >
+                  </div>
+
+                  <!-- Category Selector -->
+                  <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" x-model="entry.category">
+                      <option value="">Select Category</option>
+                      <template
+                        x-for="category in categories"
+                        :key="category.primaryCode">
+                        <option
+                          :value="category.primaryCode"
+                          x-text="category.name"></option>
+                      </template>
+                    </select>
+                  </div>
+
+                  <!-- Templates Multi-Selector -->
+                  <div class="mb-3">
+                    <label for="template" class="form-label">Templates</label>
+                    <div class="input-group mb-2">
+                      <select
+                        class="form-select"
+                        x-model="entry.selectedTemplate">
+                        <option value="">Select Template</option>
+                        <template
+                          x-for="template in templates"
+                          :key="template.key">
+                          <option
+                            :value="template.key"
+                            x-text="template.name"></option>
+                        </template>
+                      </select>
+                      <button
+                        class="btn btn-secondary"
+                        @click="addTemplate(entry)">
+                        Add Template
+                      </button>
+                    </div>
+                    <!-- Display selected templates -->
+                    <ul class="list-group">
+                      <template
+                        x-for="(templateKey, templateIndex) in entry.templates"
+                        :key="templateKey">
+                        <li
+                          class="list-group-item d-flex justify-content-between align-items-center">
+                          <span x-text="getTemplateName(templateKey)"></span>
+                          <button
+                            class="btn btn-sm btn-danger"
+                            @click="removeTemplate(entry, templateIndex)">
+                            Remove
+                          </button>
+                        </li>
+                      </template>
+                    </ul>
+                  </div>
+
+                  <!-- Rules Section -->
+                  <div class="mb-3">
+                    <h6>Rules</h6>
+                    <label class="form-label">Display Condition</label>
+                    <input
+                      type="text"
+                      class="form-control mb-2"
+                      x-model="entry.rules.displayCondition"
+                      placeholder="Enter Display Condition" />
+
+                    <label class="form-label">Mandatory Condition</label>
+                    <input
+                      type="text"
+                      class="form-control mb-2"
+                      x-model="entry.rules.mandatoryCondition"
+                      placeholder="Enter Mandatory Condition" />
+
+                    <label class="form-label">Mee Display Condition</label>
+                    <input
+                      type="text"
+                      class="form-control mb-2"
+                      x-model="entry.rules.meeDisplayCondition"
+                      placeholder="Enter Mee Display Condition" />
+
+                    <label class="form-label">Approval Condition</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      x-model="entry.rules.approvalCondition"
+                      placeholder="Enter Approval Condition" />
+                  </div>
+
+                  <!-- Save Button -->
+                  <button class="btn btn-success" @click="saveEntry(index)">
                     Save
                   </button>
-                  <button
-                    class="btn btn-outline-primary d-flex align-items-center"
-                    @click="removeEntry(index)">
-                    {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
-                  </button>
                 </div>
-              </td>
-            </tr>
-          </template>
-        </tbody>
-      </table>
+              </div>
+            </template>
 
-      <div class="px-2">
-        <!-- Add Entry Button -->
-        <button
-          class="btn btn-outline-primary d-flex align-items-center gap-2"
-          @click="addEntry">
-          {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }} Add
-          Entry
-        </button>
-      </div>
-    </div>
-
-    <div x-data="documentTemplatesEditor" class="pb-2 border-bottom card">
-      <div class="p-2">
-        <div class="badge text-bg-primary">Document Templates</div>
-      </div>
-      <table class="table table-hover table-responsive mb-2">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Key</th>
-            <th>Language</th>
-            <th>Collator</th>
-            <th>Generator</th>
-            <th>File Upload</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template x-for="(entry, index) in entries" :key="index">
-            <tr>
-              <td>
-                <input class="form-control" type="text" x-model="entry.name" />
-              </td>
-              <td>
-                <input class="form-control" type="text" x-model="entry.key" />
-              </td>
-
-              <td>
-                <select class="form-select" x-model="entry.language">
-                  <template x-for="(name, code) in languages" :key="code">
-                    <option :value="code" x-text="name"></option>
-                  </template>
-                </select>
-              </td>
-
-              <td>
-                <select class="form-select" x-model="entry.collator">
-                  <template x-for="collator in collators" :key="collator">
-                    <option :value="collator" x-text="collator"></option>
-                  </template>
-                </select>
-              </td>
-
-              <td>
-                <select class="form-select" x-model="entry.generator">
-                  <template x-for="generator in generators" :key="generator">
-                    <option :value="generator" x-text="generator"></option>
-                  </template>
-                </select>
-              </td>
-
-              <td>
-                <select class="form-select" x-model="entry.fileUpload">
-                  <template x-for="file in pdfSample" :key="file">
-                    <option :value="file" x-text="file"></option>
-                  </template>
-                </select>
-              </td>
-
-              <td>
-                <div class="btn-group">
-                  <button
-                    class="btn btn-outline-primary"
-                    @click="saveEntry(index)">
-                    Save
-                  </button>
-                  <button
-                    class="btn btn-outline-primary d-flex align-items-center"
-                    @click="removeEntry(index)">
-                    {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </template>
-        </tbody>
-      </table>
-      <div class="px-2">
-        <button
-          class="btn btn-outline-primary d-flex align-items-center gap-2"
-          @click="addEntry">
-          {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }} Add
-          Entry
-        </button>
-      </div>
-    </div>
-
-    <!-- fieldsEditor Component: Displays and allows editing/removal of entries in a table format -->
-    <div x-data="queryEditor" class="pb-2 border-bottom card">
-      <div class="p-2">
-        <div class="badge text-bg-primary">Query library</div>
-      </div>
-      <table class="table table-hover table-responsive mb-2">
-        <thead>
-          <tr>
-            <th>Entity</th>
-            <th>Name</th>
-            <th>Query</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template x-for="(entry, index) in entries" :key="index">
-            <tr>
-              <td>
-                <select
-                  class="form-select"
-                  x-model="entry.entity"
-                  @change="checkUniqueId(entry)">
-                  <template x-for="entity in entities" :key="entity">
-                    <option :value="entity" x-text="entity"></option>
-                  </template>
-                </select>
-              </td>
-
-              <td>
-                <input
-                  class="form-control"
-                  type="text"
-                  x-model="entry.queryId"
-                  @input="checkUniqueId(entry)" />
-                <span x-show="!entry.isIdUnique" style="color: red;"
-                  >must be unique/entity.</span
-                >
-              </td>
-              <td>
-                <input class="form-control" type="text" x-model="entry.query" />
-              </td>
-              <td>
-                <div class="btn-group">
-                  <button
-                    class="btn btn-outline-primary"
-                    @click="saveEntry(index)">
-                    Save
-                  </button>
-                  <button
-                    class="btn btn-outline-primary d-flex align-items-center"
-                    @click="removeEntry(index)">
-                    {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </template>
-        </tbody>
-      </table>
-      <div class="px-2">
-        <button
-          class="btn btn-outline-primary d-flex align-items-center gap-2"
-          @click="addEntry">
-          {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }}
-          Entry
-        </button>
-      </div>
-    </div>
-
-    <div x-data="queryManager">
-      <div>
-        <div class="badge text-bg-primary">Add new Query in library</div>
-      </div>
-      <div class="card mt-2 shadow">
-        <div class="d-flex align-items-center border-bottom p-2">
-          <div class="flex-grow-1">
-            <h2 class="h6 mb-0">Add New Entry</h2>
-          </div>
-          <div class="d-flex gap-1">
-            <button
-              class="btn btn-outline-primary text-nowrap"
-              @click="downloadDictionary">
-              Download JSON
-            </button>
-            <input
-              class="form-control"
-              type="file"
-              @change="uploadDictionary"
-              accept="application/json" />
-          </div>
-        </div>
-        <div class="d-flex gap-3 p-2">
-          <div class="">
-            <label class="form-label" for="entity">Entity</label>
-            <select
-              class="form-select"
-              x-model="selectedEntity"
-              @change="idQuery = ''; isIdUnique = true;">
-              <option value="">Select entity</option>
-              <template x-for="entity in entities" :key="entity">
-                <option x-bind:value="entity" x-text="entity"></option>
-              </template>
-            </select>
-          </div>
-          <div>
-            <label class="form-label" for="idQuery">Name</label>
-            <input
-              :disabled="!selectedEntity"
-              class="form-control"
-              type="text"
-              id="idQuery"
-              @input="checkUniqueId"
-              x-model="idQuery"
-              required />
-
-            <span x-show="!isIdUnique" style="color: red;"
-              >must be unique/entity.</span
-            >
-          </div>
-          <div class="">
-            <label class="form-label" for="query">Query</label>
-            <input
-              class="form-control"
-              type="text"
-              id="query"
-              x-model="query"
-              required />
-          </div>
-          <div class="d-flex flex-column xalign-items-end">
-            <label class="form-label text-muted" for="field">Add</label>
-
-            <button
-              class="btn btn-outline-primary text-nowrap d-flex align-items-center gap-2
-              "
-              @click="addEntry">
-              {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }}
-              Entry
+            <!-- Add New Entry Button -->
+            <button class="btn btn-primary" @click="addEntry">
+              Add Document Type
             </button>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   </div>
+
+  <div class="d-flex flex-column gap-2"></div>
 {{ end }}

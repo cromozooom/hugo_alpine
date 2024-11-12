@@ -59,6 +59,8 @@ export const generators = [
 ];
 export const pdfSample = ['1.pdf', '2.pdf'];
 
+export const fieldTypes = ['string', 'textblock', 'selector', 'boolean', 'radio'];
+
 // Utility to set and get fields dictionary from localStorage
 const QUERY_LIBRARY_STORAGE_KEY = 'queryLibrary';
 const DOC_CATEGORIES_STORAGE_KEY = 'documentCategories';
