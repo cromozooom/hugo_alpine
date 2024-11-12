@@ -1,0 +1,83 @@
+<div x-data="fileMetadataEditor" class="pb-4">
+  <!-- File Upload Selector -->
+  <div class="mb-3">
+    <label for="fileUpload" class="form-label">Select File</label>
+    <select
+      class="form-select"
+      x-model="selectedFile"
+      @change="loadFileMetadata()">
+      <option value="">Select a PDF File</option>
+      <template x-for="pdf in pdfSample" :key="pdf">
+        <option :value="pdf" x-text="pdf"></option>
+      </template>
+    </select>
+  </div>
+
+  <!-- Fields Section -->
+  <template x-if="selectedFile">
+    <div>
+      <h5>Fields for <span x-text="selectedFile"></span></h5>
+      <button class="btn btn-secondary mb-2" @click="addField()">
+        Add Field
+      </button>
+
+      <!-- Field List -->
+      <template x-for="(field, index) in fields" :key="index">
+        <div class="card mb-3 shadow">
+          <div class="card-header d-flex justify-content-between">
+            <h6>Field</h6>
+            <button class="btn btn-danger btn-sm" @click="removeField(index)">
+              Remove
+            </button>
+          </div>
+          <div class="card-body">
+            <!-- Field Id -->
+            <div class="mb-3">
+              <label for="fieldId" class="form-label">Field Id</label>
+              <input
+                type="text"
+                class="form-control"
+                x-model="field.id"
+                placeholder="Enter Field Id" />
+            </div>
+
+            <!-- Field Type -->
+            <div class="mb-3">
+              <label for="fieldType" class="form-label">Field Type</label>
+              <select class="form-select" x-model="field.fieldType">
+                <template x-for="type in fieldTypes" :key="type">
+                  <option :value="type" x-text="type"></option>
+                </template>
+              </select>
+            </div>
+
+            <!-- X Coordinate -->
+            <div class="mb-3">
+              <label for="xCoord" class="form-label">X Coordinate</label>
+              <input
+                type="number"
+                class="form-control"
+                x-model="field.xCoord"
+                placeholder="Enter X Coordinate" />
+            </div>
+
+            <!-- Y Coordinate -->
+            <div class="mb-3">
+              <label for="yCoord" class="form-label">Y Coordinate</label>
+              <input
+                type="number"
+                class="form-control"
+                x-model="field.yCoord"
+                placeholder="Enter Y Coordinate" />
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- Save Button -->
+      <button class="btn btn-primary" @click="saveFileMetadata()">
+        Save Metadata
+      </button>
+    </div>
+  </template>
+</div>

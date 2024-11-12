@@ -1,0 +1,242 @@
+<div x-data="documentTypesEditor" class="pb-4">
+  <template x-for="(entry, index) in entries" :key="index">
+    <div class="card mb-4 shadow">
+      <div class="card-header d-flex justify-content-between">
+        <h5>Document Type</h5>
+        <button class="btn btn-danger btn-sm" @click="removeEntry(index)">
+          Remove
+        </button>
+      </div>
+      <div class="card-body">
+        <!-- Name Field -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            x-model="entry.name"
+            placeholder="Enter Name" />
+        </div>
+
+        <div class="mb-3">
+          <label for="entity" class="form-label"> Entity </label>
+          <select class="form-select" x-model="entry.entity">
+            <option value="">Select Entity</option>
+            <template x-for="entity in entities" :key="entity">
+              <option
+                :value="entity"
+                x-text="entity"
+                :selected="entity === entry.entity"></option>
+            </template>
+          </select>
+        </div>
+
+        <!-- Primary Code Field -->
+        <div class="mb-3">
+          <label for="primaryCode" class="form-label">Primary Code</label>
+          <input
+            type="text"
+            class="form-control"
+            x-model="entry.primaryCode"
+            placeholder="Enter Primary Code" />
+        </div>
+
+        <!-- Enabled for Search Switch -->
+        <div class="mb-3 form-check form-switch">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            x-model="entry.enabledForSearch"
+            :id="'enabledForSearch' + index" />
+          <label class="form-check-label" :for="'enabledForSearch' + index">
+            Enabled for Search
+          </label>
+        </div>
+
+        <!-- Category Selector -->
+        <div class="mb-3">
+          <div class="d-flex w-100 align-items-center justify-content-between">
+            <label for="category" class="form-label">Category</label>
+            <div>
+              <button
+                class="btn btn-link btn-sm text-decoration-none text-nowrap d-flex align-items-center gap-2
+            "
+                @click="select($id('tab', 3))">
+                {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }}
+                Categories
+              </button>
+            </div>
+          </div>
+          <select class="form-select" x-model="entry.category">
+            <option value="">Select Category</option>
+            <template
+              x-for="category in categories"
+              :key="category.primaryCode">
+              <option
+                :value="category.primaryCode"
+                x-text="category.name"></option>
+            </template>
+          </select>
+        </div>
+
+        <!-- Templates Multi-Selector -->
+        <div class="mb-3">
+          <div class="d-flex w-100 align-items-center justify-content-between">
+            <label for="template" class="form-label mb-0"> Templates </label>
+            <div>
+              <button
+                @click="select($id('tab', 2))"
+                class="btn btn-link btn-sm text-decoration-none text-nowrap d-flex align-items-center gap-2
+            ">
+                {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }}
+                Templates
+              </button>
+            </div>
+          </div>
+          <div class="input-group mb-2">
+            <select class="form-select" x-model="entry.selectedTemplate">
+              <option value="">Select Template</option>
+              <template x-for="template in templates" :key="template.key">
+                <option :value="template.key" x-text="template.name"></option>
+              </template>
+            </select>
+            <button class="btn btn-secondary" @click="addTemplate(entry)">
+              Add Template
+            </button>
+          </div>
+        </div>
+
+        <ul class="list-group">
+          <template
+            x-for="(templateKey, templateIndex) in entry.templates"
+            :key="templateKey">
+            <li class="list-group-item">
+              <div
+                class="d-flex justify-content-between align-items-center mb-2">
+                <span x-text="getTemplateName(templateKey)"></span>
+                <button
+                  class="btn btn-sm btn-danger"
+                  @click="removeTemplate(entry, templateIndex)">
+                  Remove
+                </button>
+              </div>
+
+              <div class="mb-2">
+                <h6>
+                  Custom Metadata for
+                  <span x-text="getTemplateName(templateKey)"></span>
+                </h6>
+
+                <!-- Add Field Button -->
+                <button
+                  class="btn btn-primary btn-sm mb-3"
+                  @click="addMetadataField(entry, templateKey)">
+                  Add Field
+                </button>
+
+                <template
+                  x-for="(field, fieldIndex) in entry.customFileMetadata[templateKey]"
+                  :key="fieldIndex">
+                  <div class="card mb-3 p-2">
+                    <div class="mb-1">
+                      <label class="form-label">Field Id</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        x-model="field.id" />
+                    </div>
+
+                    <div class="mb-1">
+                      <label class="form-label">Field Type</label>
+                      <select
+                        class="form-select form-select-sm"
+                        x-model="field.fieldType">
+                        <option value="">Select fieldType</option>
+                        <template x-for="type in fieldTypes" :key="type">
+                          <option :value="type" x-text="type"></option>
+                        </template>
+                      </select>
+                    </div>
+
+                    <div class="mb-1">
+                      <label class="form-label">X Coordinate</label>
+                      <input
+                        type="number"
+                        class="form-control form-control-sm"
+                        x-model="field.xCoord" />
+                    </div>
+
+                    <div class="mb-1">
+                      <label class="form-label">Y Coordinate</label>
+                      <input
+                        type="number"
+                        class="form-control form-control-sm"
+                        x-model="field.yCoord" />
+                    </div>
+
+                    <!-- Query Selector -->
+                    <div class="mb-1">
+                      <label class="form-label">Query</label>
+                      <select
+                        class="form-select form-select-sm"
+                        x-model="field.query"
+                        @change="logSelectedQuery(field.query)">
+                        <option value="">Select query</option>
+                        <template
+                          x-for="query in getQueryForEntity(entry.entity)"
+                          :key="query.queryId">
+                          <option
+                            :selected="field.query === query.queryId"
+                            :value="query.queryId"
+                            x-text="query.queryId"></option>
+                        </template>
+                      </select>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </li>
+          </template>
+        </ul>
+
+        <!-- Rules Section -->
+        <div class="mb-3">
+          <h6>Rules</h6>
+          <label class="form-label">Display Condition</label>
+          <input
+            type="text"
+            class="form-control mb-2"
+            x-model="entry.rules.displayCondition"
+            placeholder="Enter Display Condition" />
+
+          <label class="form-label">Mandatory Condition</label>
+          <input
+            type="text"
+            class="form-control mb-2"
+            x-model="entry.rules.mandatoryCondition"
+            placeholder="Enter Mandatory Condition" />
+
+          <label class="form-label">Mee Display Condition</label>
+          <input
+            type="text"
+            class="form-control mb-2"
+            x-model="entry.rules.meeDisplayCondition"
+            placeholder="Enter Mee Display Condition" />
+
+          <label class="form-label">Approval Condition</label>
+          <input
+            type="text"
+            class="form-control"
+            x-model="entry.rules.approvalCondition"
+            placeholder="Enter Approval Condition" />
+        </div>
+
+        <!-- Save Button -->
+        <button class="btn btn-success" @click="saveEntry(index)">Save</button>
+      </div>
+    </div>
+  </template>
+
+  <!-- Add New Entry Button -->
+  <button class="btn btn-primary" @click="addEntry">Add Document Type</button>
+</div>

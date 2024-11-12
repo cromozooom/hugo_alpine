@@ -1,0 +1,83 @@
+<div x-data="documentTemplatesEditor" class="pb-2 border-bottom card">
+  <div class="p-2">
+    <div class="badge text-bg-primary">Document Templates</div>
+  </div>
+  <table class="table table-hover table-responsive mb-2">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Language</th>
+        <th>Collator</th>
+        <th>Generator</th>
+        <th>File Upload</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template x-for="(entry, index) in entries" :key="index">
+        <tr>
+          <td>
+            <input class="form-control" type="text" x-model="entry.name" />
+          </td>
+          <td>
+            <input class="form-control" type="text" x-model="entry.key" />
+          </td>
+
+          <td>
+            <select class="form-select" x-model="entry.language">
+              <template x-for="(name, code) in languages" :key="code">
+                <option :value="code" x-text="name"></option>
+              </template>
+            </select>
+          </td>
+
+          <td>
+            <select class="form-select" x-model="entry.collator">
+              <template x-for="collator in collators" :key="collator">
+                <option :value="collator" x-text="collator"></option>
+              </template>
+            </select>
+          </td>
+
+          <td>
+            <select class="form-select" x-model="entry.generator">
+              <template x-for="generator in generators" :key="generator">
+                <option :value="generator" x-text="generator"></option>
+              </template>
+            </select>
+          </td>
+
+          <td>
+            <select class="form-select" x-model="entry.fileUpload">
+              <template x-for="file in pdfSample" :key="file">
+                <option :value="file" x-text="file"></option>
+              </template>
+            </select>
+          </td>
+
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-outline-primary" @click="saveEntry(index)">
+                Save
+              </button>
+              <button
+                class="btn btn-outline-primary d-flex align-items-center"
+                @click="removeEntry(index)">
+                {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+              </button>
+            </div>
+          </td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
+  <div class="px-2">
+    <button
+      class="btn btn-outline-primary d-flex align-items-center gap-2"
+      @click="addEntry">
+      {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }}
+      Add Entry
+    </button>
+  </div>
+</div>

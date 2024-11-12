@@ -1,0 +1,65 @@
+<div x-data="queryEditor" class="pb-2 border-bottom card mb-4">
+  <div class="p-2">
+    <div class="badge text-bg-primary">Query library</div>
+  </div>
+  <table class="table table-hover table-responsive mb-2">
+    <thead>
+      <tr>
+        <th>Entity</th>
+        <th>Name</th>
+        <th>Query</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template x-for="(entry, index) in entries" :key="index">
+        <tr>
+          <td>
+            <select
+              class="form-select"
+              x-model="entry.entity"
+              @change="checkUniqueId(entry)">
+              <template x-for="entity in entities" :key="entity">
+                <option :value="entity" x-text="entity"></option>
+              </template>
+            </select>
+          </td>
+
+          <td>
+            <input
+              class="form-control"
+              type="text"
+              x-model="entry.queryId"
+              @input="checkUniqueId(entry)" />
+            <span x-show="!entry.isIdUnique" class="text-danger"
+              >must be unique/entity.</span
+            >
+          </td>
+          <td>
+            <input class="form-control" type="text" x-model="entry.query" />
+          </td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-outline-primary" @click="saveEntry(index)">
+                Save
+              </button>
+              <button
+                class="btn btn-outline-primary d-flex align-items-center"
+                @click="removeEntry(index)">
+                {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+              </button>
+            </div>
+          </td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
+  <div class="px-2">
+    <button
+      class="btn btn-outline-primary d-flex align-items-center gap-2"
+      @click="addEntry">
+      {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }}
+      Entry
+    </button>
+  </div>
+</div>

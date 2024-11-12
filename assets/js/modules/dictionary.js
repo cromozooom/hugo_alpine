@@ -57,7 +57,7 @@ export const generators = [
   'generators_Investment Firms',
   'generators_Pension Funds',
 ];
-export const pdfSample = ['1.pdf', '2.pdf'];
+export const pdfSample = ['1.pdf', '2.pdf', '3.pdf', '4.pdf', '5.pdf'];
 
 export const fieldTypes = ['string', 'textblock', 'selector', 'boolean', 'radio'];
 
