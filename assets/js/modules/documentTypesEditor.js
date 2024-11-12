@@ -14,7 +14,6 @@ export default function documentTypesEditor() {
       // Load all document types from localStorage
       this.entries = JSON.parse(localStorage.getItem('documentTypes')) || [];
       window.addEventListener('refreshDocumentTypesEditor', this.loadEntries.bind(this));
-      console.log('Loaded entries:', this.entries); // For debugging
     },
 
     loadEntries() {

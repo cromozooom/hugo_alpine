@@ -7,9 +7,12 @@ export default function storageManager() {
       // Populate storageKeys with all items in localStorage
       this.storageKeys = Object.keys(localStorage);
 
-      // Initialize each item as deselected by default
+      // Initialize each item as deselected by default and ensure each key exists
       this.storageKeys.forEach((key) => {
-        this.selectedKeys[key] = false;
+        if (!localStorage.getItem(key)) {
+          localStorage.setItem(key, JSON.stringify([])); // Default to empty array
+        }
+        this.selectedKeys[key] = false; // Initialize each toggle as deselected
       });
     },
 
@@ -41,15 +44,14 @@ export default function storageManager() {
         try {
           const data = JSON.parse(e.target.result);
 
-          // Update each selected item in localStorage
+          // Update each item in localStorage from the uploaded JSON
           for (const key in data) {
-            if (this.selectedKeys[key]) {
-              localStorage.setItem(key, JSON.stringify(data[key]));
-            }
+            localStorage.setItem(key, JSON.stringify(data[key]));
           }
 
           alert('Data uploaded successfully!');
-          window.location.reload(); // Refresh to apply new data if necessary
+          // Reload the storage keys in the component to reflect changes
+          this.init();
         } catch (error) {
           console.error('Error parsing JSON file:', error);
           alert('Invalid JSON file.');
