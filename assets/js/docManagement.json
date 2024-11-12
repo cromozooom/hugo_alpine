@@ -1,0 +1,213 @@
+{
+  "documentTemplates": [
+    {
+      "name": "T1",
+      "key": "KT1",
+      "language": "RO",
+      "collator": "collators_Contact",
+      "generator": "generators_Contact",
+      "fileUpload": "1.pdf"
+    },
+    {
+      "name": "T2",
+      "key": "KT2",
+      "language": "RO",
+      "collator": "collators_Contact",
+      "generator": "generators_Contact",
+      "fileUpload": "2.pdf"
+    }
+  ],
+  "fileMetadata": [
+    {
+      "fileName": "1.pdf",
+      "fields": [
+        {
+          "id": "sacxsa",
+          "fieldType": "selector",
+          "xCoord": 0,
+          "yCoord": 0
+        }
+      ]
+    },
+    {
+      "fileName": "2.pdf",
+      "fields": [
+        {
+          "id": "",
+          "fieldType": "string",
+          "xCoord": 0,
+          "yCoord": 0
+        },
+        {
+          "id": "",
+          "fieldType": "string",
+          "xCoord": 0,
+          "yCoord": 0
+        },
+        {
+          "id": "",
+          "fieldType": "string",
+          "xCoord": 0,
+          "yCoord": 0
+        },
+        {
+          "id": "",
+          "fieldType": "string",
+          "xCoord": 0,
+          "yCoord": 0
+        },
+        {
+          "id": "",
+          "fieldType": "string",
+          "xCoord": 0,
+          "yCoord": 0
+        }
+      ]
+    }
+  ],
+  "documentTypes": [
+    {
+      "name": "DOCUMENT TYPE 1",
+      "entity": "Contact",
+      "primaryCode": "xsaxa",
+      "enabledForSearch": false,
+      "category": "Code 1",
+      "templates": [
+        "KT1"
+      ],
+      "customFileMetadata": {
+        "KT1": [
+          {
+            "id": "sacxsa",
+            "fieldType": "string",
+            "xCoord": 0,
+            "yCoord": 0,
+            "query": "Name 3"
+          },
+          {
+            "id": "axASXASXSA",
+            "fieldType": "selector",
+            "xCoord": 0,
+            "yCoord": 0,
+            "query": "Name 2"
+          }
+        ]
+      },
+      "rules": {
+        "displayCondition": "",
+        "mandatoryCondition": "",
+        "meeDisplayCondition": "",
+        "approvalCondition": ""
+      },
+      "selectedTemplate": "KT1"
+    },
+    {
+      "name": "DOCUMENT TYPE 2",
+      "entity": "Family Offices",
+      "primaryCode": "",
+      "enabledForSearch": true,
+      "category": "Code 3",
+      "templates": [
+        "KT2"
+      ],
+      "customFileMetadata": {
+        "KT2": [
+          {
+            "id": "",
+            "fieldType": "string",
+            "xCoord": 0,
+            "yCoord": 0,
+            "query": "FName 1"
+          },
+          {
+            "id": "",
+            "fieldType": "string",
+            "xCoord": 0,
+            "yCoord": 0,
+            "query": "FName 1"
+          },
+          {
+            "id": "",
+            "fieldType": "string",
+            "xCoord": 0,
+            "yCoord": 0,
+            "query": ""
+          },
+          {
+            "id": "",
+            "fieldType": "string",
+            "xCoord": 0,
+            "yCoord": 0,
+            "query": ""
+          },
+          {
+            "id": "",
+            "fieldType": "string",
+            "xCoord": 0,
+            "yCoord": 0,
+            "query": ""
+          }
+        ]
+      },
+      "rules": {
+        "displayCondition": "",
+        "mandatoryCondition": "",
+        "meeDisplayCondition": "",
+        "approvalCondition": ""
+      },
+      "selectedTemplate": "KT2"
+    }
+  ],
+  "documentCategories": [
+    {
+      "name": "CAT 1",
+      "primaryCode": "Code 1",
+      "canHoldDocumentTemplates": true,
+      "enabledForSearch": true
+    },
+    {
+      "name": "CAT 2",
+      "primaryCode": "Code 2",
+      "canHoldDocumentTemplates": false,
+      "enabledForSearch": true
+    },
+    {
+      "name": "Cat 3",
+      "primaryCode": "Code 3",
+      "canHoldDocumentTemplates": false,
+      "enabledForSearch": false
+    }
+  ],
+  "queryLibrary": [
+    {
+      "query": "Q1",
+      "entity": "Contact",
+      "queryId": "Contact Name 1 ",
+      "isIdUnique": true
+    },
+    {
+      "query": "Q2",
+      "entity": "Contact",
+      "queryId": "Contact Name 2",
+      "isIdUnique": true
+    },
+    {
+      "query": "Q3",
+      "entity": "Contact",
+      "queryId": "Contact Name 3",
+      "isIdUnique": true
+    },
+    {
+      "query": "Q4",
+      "entity": "Family Offices",
+      "queryId": "Family Offices Name 1",
+      "isIdUnique": true
+    },
+    {
+      "query": "Q5",
+      "entity": "Hedge Funds",
+      "queryId": "Hedge Founds Name 1",
+      "isIdUnique": true
+    }
+  ]
+}

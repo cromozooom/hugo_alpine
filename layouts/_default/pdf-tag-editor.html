@@ -42,12 +42,13 @@ return Array.from(parent.children).indexOf(el) + 1
             :tabindex="isSelected($el.id) ? 0 : -1"
             :aria-selected="isSelected($el.id)"
             :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
-            class="d-inline-flex px-4 bg-white py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            class="d-inline-flex align-items-center gap-2 px-5 bg-white py-2 border-top-0 border-4 border-start-0 border-bottom border-end-0"
             role="tab"
             id="tab-1-1"
             tabindex="0"
             aria-selected="true">
-            Query Library
+            {{ partial "svg/fa/regular-life-ring.svg" (dict "class" "size1") }}
+            Query Lib
           </button>
         </li>
 
@@ -61,12 +62,13 @@ return Array.from(parent.children).indexOf(el) + 1
             :tabindex="isSelected($el.id) ? 0 : -1"
             :aria-selected="isSelected($el.id)"
             :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
-            class="d-inline-flex px-4 bg-white py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            class="d-inline-flex align-items-center gap-2 px-5 bg-white py-2 border-top-0 border-4 border-start-0 border-bottom border-end-0"
             role="tab"
             id="tab-1-2"
             tabindex="-1"
             aria-selected="false">
-            Document template
+            {{ partial "svg/fa/regular-ghost.svg" (dict "class" "size1") }}
+            Doc. Template
           </button>
         </li>
         <li>
@@ -79,12 +81,12 @@ return Array.from(parent.children).indexOf(el) + 1
             :tabindex="isSelected($el.id) ? 0 : -1"
             :aria-selected="isSelected($el.id)"
             :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
-            class="d-inline-flex px-4 bg-white py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            class="d-inline-flex align-items-center gap-2 px-5 bg-white py-2 border-top-0 border-4 border-start-0 border-bottom border-end-0"
             role="tab"
             id="tab-1-2"
             tabindex="-1"
             aria-selected="false">
-            Doc Categories
+            Doc. Categories
           </button>
         </li>
         <li>
@@ -97,12 +99,13 @@ return Array.from(parent.children).indexOf(el) + 1
             :tabindex="isSelected($el.id) ? 0 : -1"
             :aria-selected="isSelected($el.id)"
             :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
-            class="d-inline-flex px-4 bg-white py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            class="d-inline-flex align-items-center gap-2 px-5 bg-white py-2 border-top-0 border-4 border-start-0 border-bottom border-end-0"
             role="tab"
             id="tab-1-2"
             tabindex="-1"
             aria-selected="false">
-            File Metadata Editor
+            {{ partial "svg/fa/regular-ghost.svg" (dict "class" "size1") }}
+            FileMetadataEditor
           </button>
         </li>
         <li>
@@ -115,7 +118,7 @@ return Array.from(parent.children).indexOf(el) + 1
             :tabindex="isSelected($el.id) ? 0 : -1"
             :aria-selected="isSelected($el.id)"
             :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
-            class="d-inline-flex px-4 bg-white py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            class="d-inline-flex align-items-center gap-2 px-5 bg-white py-2 border-top-0 border-4 border-start-0 border-bottom border-end-0"
             role="tab"
             id="tab-1-2"
             tabindex="-1"
@@ -133,13 +136,31 @@ return Array.from(parent.children).indexOf(el) + 1
             :tabindex="isSelected($el.id) ? 0 : -1"
             :aria-selected="isSelected($el.id)"
             :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
-            class="d-inline-flex px-4 bg-white py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            class="d-inline-flex align-items-center gap-2 px-5 bg-white py-2 border-top-0 border-4 border-start-0 border-bottom border-end-0"
             role="tab"
             id="tab-1-2"
             tabindex="-1"
             aria-selected="false">
             Query/Document Dictionary
-            <i class="text-muted ps-2"> (Matrix) </i>
+            <i class="text-muted ps-2"> (Matrix / AG-grid) </i>
+          </button>
+        </li>
+        <li>
+          <button
+            :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+            @click="select($el.id)"
+            @mousedown.prevent=""
+            @focus="select($el.id)"
+            type="button"
+            :tabindex="isSelected($el.id) ? 0 : -1"
+            :aria-selected="isSelected($el.id)"
+            :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
+            class="d-inline-flex align-items-center gap-2 px-5 bg-white py-2 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            role="tab"
+            id="tab-1-2"
+            tabindex="-1"
+            aria-selected="false">
+            Data Management
           </button>
         </li>
       </ul>
@@ -283,6 +304,45 @@ return Array.from(parent.children).indexOf(el) + 1
                 </template>
               </tbody>
             </table>
+          </div>
+        </section>
+
+        <section
+          x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+          :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+          role="tabpanel"
+          class="w-100 px-2"
+          aria-labelledby="tab-1-6"
+          style="display: none;">
+          <div x-data="storageManager()" x-init="init()">
+            <h3>Select Data to Export or Import</h3>
+
+            <!-- Form for toggling localStorage items -->
+            <form class="mb-3">
+              <template x-for="(key, index) in storageKeys" :key="index">
+                <div class="form-check form-switch">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    x-model="selectedKeys[key]"
+                    :id="'toggle-' + key" />
+                  <label
+                    class="form-check-label"
+                    :for="'toggle-' + key"
+                    x-text="key"></label>
+                </div>
+              </template>
+            </form>
+
+            <!-- Download and Upload buttons -->
+            <button class="btn btn-primary me-2" @click="downloadSelectedData">
+              Download Selected Data
+            </button>
+            <input
+              type="file"
+              class="form-control"
+              @change="uploadData"
+              accept="application/json" />
           </div>
         </section>
       </div>
