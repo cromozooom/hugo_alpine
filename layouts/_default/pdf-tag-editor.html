@@ -30,7 +30,7 @@ return Array.from(parent.children).indexOf(el) + 1
         @keydown.end.prevent.stop="$focus.last()"
         @keydown.page-down.prevent.stop="$focus.last()"
         role="tablist"
-        class="d-flex mx-0 px-0">
+        class="d-flex mx-0 px-0 list-unstyled">
         <!-- Tab -->
         <li>
           <button
@@ -42,7 +42,7 @@ return Array.from(parent.children).indexOf(el) + 1
             :tabindex="isSelected($el.id) ? 0 : -1"
             :aria-selected="isSelected($el.id)"
             :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
-            class="d-inline-flex px-4 py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            class="d-inline-flex px-4 bg-white py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
             role="tab"
             id="tab-1-1"
             tabindex="0"
@@ -61,7 +61,7 @@ return Array.from(parent.children).indexOf(el) + 1
             :tabindex="isSelected($el.id) ? 0 : -1"
             :aria-selected="isSelected($el.id)"
             :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
-            class="d-inline-flex px-4 py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            class="d-inline-flex px-4 bg-white py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
             role="tab"
             id="tab-1-2"
             tabindex="-1"
@@ -79,7 +79,7 @@ return Array.from(parent.children).indexOf(el) + 1
             :tabindex="isSelected($el.id) ? 0 : -1"
             :aria-selected="isSelected($el.id)"
             :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
-            class="d-inline-flex px-4 py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            class="d-inline-flex px-4 bg-white py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
             role="tab"
             id="tab-1-2"
             tabindex="-1"
@@ -97,7 +97,7 @@ return Array.from(parent.children).indexOf(el) + 1
             :tabindex="isSelected($el.id) ? 0 : -1"
             :aria-selected="isSelected($el.id)"
             :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
-            class="d-inline-flex px-4 py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            class="d-inline-flex px-4 bg-white py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
             role="tab"
             id="tab-1-2"
             tabindex="-1"
@@ -115,12 +115,30 @@ return Array.from(parent.children).indexOf(el) + 1
             :tabindex="isSelected($el.id) ? 0 : -1"
             :aria-selected="isSelected($el.id)"
             :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
-            class="d-inline-flex px-4 py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            class="d-inline-flex px-4 bg-white py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
             role="tab"
             id="tab-1-2"
             tabindex="-1"
             aria-selected="false">
             Doc Types
+          </button>
+        </li>
+        <li>
+          <button
+            :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+            @click="select($el.id)"
+            @mousedown.prevent=""
+            @focus="select($el.id)"
+            type="button"
+            :tabindex="isSelected($el.id) ? 0 : -1"
+            :aria-selected="isSelected($el.id)"
+            :class="isSelected($el.id) ? 'border-primary text-primary border-opacity-75' : 'border-opacity-10'"
+            class="d-inline-flex px-4 bg-white py-3 border-top-0 border-4 border-start-0 border-bottom border-end-0"
+            role="tab"
+            id="tab-1-2"
+            tabindex="-1"
+            aria-selected="false">
+            Matrix
           </button>
         </li>
       </ul>
@@ -136,7 +154,7 @@ return Array.from(parent.children).indexOf(el) + 1
           aria-labelledby="tab-1-1"
           style="">
           <!-- fieldsEditor Component: Displays and allows editing/removal of entries in a table format -->
-          <div x-data="queryEditor" class="pb-2 border-bottom card">
+          <div x-data="queryEditor" class="pb-2 border-bottom card mb-4">
             <div class="p-2">
               <div class="badge text-bg-primary">Query library</div>
             </div>
@@ -744,6 +762,14 @@ return Array.from(parent.children).indexOf(el) + 1
                             Custom Metadata for
                             <span x-text="getTemplateName(templateKey)"></span>
                           </h6>
+
+                          <!-- Add Field Button -->
+                          <button
+                            class="btn btn-primary btn-sm mb-3"
+                            @click="addMetadataField(entry, templateKey)">
+                            Add Field
+                          </button>
+
                           <template
                             x-for="(field, fieldIndex) in entry.customFileMetadata[templateKey]"
                             :key="fieldIndex">
@@ -761,6 +787,7 @@ return Array.from(parent.children).indexOf(el) + 1
                                 <select
                                   class="form-select form-select-sm"
                                   x-model="field.fieldType">
+                                  <option value="">Select fieldType</option>
                                   <template
                                     x-for="type in fieldTypes"
                                     :key="type">
@@ -778,6 +805,7 @@ return Array.from(parent.children).indexOf(el) + 1
                                   class="form-control form-control-sm"
                                   x-model="field.xCoord" />
                               </div>
+
                               <div class="mb-1">
                                 <label class="form-label">Y Coordinate</label>
                                 <input
@@ -791,11 +819,14 @@ return Array.from(parent.children).indexOf(el) + 1
                                 <label class="form-label">Query</label>
                                 <select
                                   class="form-select form-select-sm"
-                                  x-model="field.query">
+                                  x-model="field.query"
+                                  @change="logSelectedQuery(field.query)">
+                                  <option value="">Select query</option>
                                   <template
                                     x-for="query in getQueryForEntity(entry.entity)"
                                     :key="query.queryId">
                                     <option
+                                      :selected="field.query === query.queryId"
                                       :value="query.queryId"
                                       x-text="query.queryId"></option>
                                   </template>
@@ -852,6 +883,95 @@ return Array.from(parent.children).indexOf(el) + 1
             <button class="btn btn-primary" @click="addEntry">
               Add Document Type
             </button>
+          </div>
+        </section>
+
+        <section
+          x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+          :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+          role="tabpanel"
+          class="w-100 px-2"
+          aria-labelledby="tab-1-5"
+          style="display: none;">
+          <div x-data="docTypesMatrix()" x-init="init()">
+            <h6 class="">Document Types Matrix</h6>
+
+            <!-- Group By Selector -->
+            <div class="mb-4">
+              <label class="form-label">Group By:</label>
+              <select class="form-select" x-model="groupBy">
+                <option value="">None</option>
+                <option value="name">Doc Type Name</option>
+                <option value="entity">Entity</option>
+                <option value="queries">Queries</option>
+                <option value="category">Doc Categ</option>
+              </select>
+            </div>
+
+            <!-- Matrix Table -->
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Doc Type Name</th>
+                  <th scope="col">Entity</th>
+                  <th scope="col">Queries</th>
+                  <th scope="col">Doc Categ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Grouped Rows -->
+                <template
+                  x-for="(group, groupKey) in groupedData"
+                  :key="groupKey">
+                  <!-- Display Group Header if Grouping is Applied -->
+                  <tr x-show="groupBy">
+                    <td colspan="4" x-text="groupKey"></td>
+                  </tr>
+
+                  <!-- Display Each Item in the Group -->
+                  <template
+                    x-for="item in group"
+                    :key="item.name + item.entity">
+                    <tr>
+                      <td x-text="item.name"></td>
+                      <td x-text="item.entity"></td>
+                      <td>
+                        <div class="d-flex gap-1">
+                          <template x-for="query in item.queries" :key="query">
+                            <span
+                              x-text="query"
+                              class="badge text-bg-primary"></span>
+                          </template>
+                        </div>
+                      </td>
+                      <td x-text="item.category"></td>
+                    </tr>
+                  </template>
+                </template>
+
+                <!-- Display Rows Without Grouping -->
+                <template x-if="!groupBy">
+                  <template
+                    x-for="item in docTypes"
+                    :key="item.name + item.entity">
+                    <tr>
+                      <td x-text="item.name"></td>
+                      <td x-text="item.entity"></td>
+                      <td>
+                        <div class="d-flex gap-1">
+                          <template x-for="query in item.queries" :key="query">
+                            <span
+                              x-text="query"
+                              class="badge text-bg-primary"></span>
+                          </template>
+                        </div>
+                      </td>
+                      <td x-text="item.category"></td>
+                    </tr>
+                  </template>
+                </template>
+              </tbody>
+            </table>
           </div>
         </section>
       </div>

@@ -5,6 +5,7 @@ import documentTemplatesEditor from './modules/documentTemplatesEditor.js';
 import documentCategoriesEditor from './modules/documentCategoriesEditor.js';
 import documentTypesEditor from './modules/documentTypesEditor.js';
 import fileMetadataEditor from './modules/fileMetadataEditor.js';
+import docTypesMatrix from './modules/docTypesMatrix.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   Alpine.data('queryManager', queryManager);
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Alpine.data('documentCategoriesEditor', documentCategoriesEditor);
   Alpine.data('documentTypesEditor', documentTypesEditor);
   Alpine.data('fileMetadataEditor', fileMetadataEditor);
+  Alpine.data('docTypesMatrix', docTypesMatrix);
 
   // Start Alpine
   Alpine.start();

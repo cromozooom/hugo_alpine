@@ -32,6 +32,23 @@ export default function documentTypesEditor() {
       return metadata ? JSON.parse(JSON.stringify(metadata.fields)) : [];
     },
 
+    logSelectedQuery(query) {
+      console.log('Selected query:', query);
+    },
+
+    addMetadataField(entry, templateKey) {
+      entry.customFileMetadata = entry.customFileMetadata || {};
+      entry.customFileMetadata[templateKey] = entry.customFileMetadata[templateKey] || [];
+
+      entry.customFileMetadata[templateKey].push({
+        id: '',
+        fieldType: 'string',
+        xCoord: 0,
+        yCoord: 0,
+        query: '', // Initialize with no query selected
+      });
+    },
+
     addTemplate(entry) {
       const templateKey = entry.selectedTemplate;
 
@@ -64,26 +81,36 @@ export default function documentTypesEditor() {
       return this.queryLibrary.filter((query) => query.entity === entity);
     },
 
-    addMetadataField(metadata) {
-      metadata.push({
+    addMetadataField(entry, templateKey) {
+      // Initialize customFileMetadata if it doesn't exist for the template
+      entry.customFileMetadata = entry.customFileMetadata || {};
+      entry.customFileMetadata[templateKey] = entry.customFileMetadata[templateKey] || [];
+
+      // Add a new field with default values
+      entry.customFileMetadata[templateKey].push({
         id: '',
         fieldType: 'string',
         xCoord: 0,
         yCoord: 0,
-        query: '', // No initial query, user selects one if needed
+        query: '', // Initialize with no query selected
       });
     },
-
     saveEntries() {
       localStorage.setItem('documentTypes', JSON.stringify(this.entries));
     },
 
     saveEntry(index) {
       // Update the entire documentTypes array in localStorage after modifying a single entry
+      console.log('Saving entry:', this.entries[index]);
       if (this.entries[index]) {
         localStorage.setItem('documentTypes', JSON.stringify(this.entries));
         alert(`Document type ${index + 1} saved successfully!`);
       }
+    },
+
+    getQueryForEntity(entity) {
+      const queryLibrary = JSON.parse(localStorage.getItem('queryLibrary')) || [];
+      return queryLibrary.filter((query) => query.entity === entity);
     },
 
     addEntry() {
