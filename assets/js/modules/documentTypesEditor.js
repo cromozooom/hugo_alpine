@@ -1,91 +1,111 @@
-import { entities } from './dictionary.js';
+import { entities, fieldTypes } from './dictionary.js';
 
 export default function documentTypesEditor() {
   return {
-    entries: [],
-    entities: [],
-    categories: [],
-    templates: [],
+    entries: [], // List of document types
+    fieldTypes: fieldTypes,
+    entities: entities,
+    templates: JSON.parse(localStorage.getItem('documentTemplates')) || [],
+    categories: JSON.parse(localStorage.getItem('documentCategories')) || [],
+    fileMetadata: JSON.parse(localStorage.getItem('fileMetadata')) || [],
+    queryLibrary: JSON.parse(localStorage.getItem('queryLibrary')) || [],
 
     init() {
-      // Load data from localStorage or provide fallback data
-      this.entities = JSON.parse(localStorage.getItem('entities')) || entities;
-
-      // Filter out duplicate categories based on primaryCode
-      this.categories = (JSON.parse(localStorage.getItem('documentCategories')) || []).filter(
-        (category, index, self) => index === self.findIndex((c) => c.primaryCode === category.primaryCode),
-      );
-
-      // Filter out duplicate templates based on key
-      this.templates = (JSON.parse(localStorage.getItem('documentTemplates')) || []).filter(
-        (template, index, self) => index === self.findIndex((t) => t.key === template.key),
-      );
-
-      this.loadEntries();
+      // Load all document types from localStorage
+      this.entries = JSON.parse(localStorage.getItem('documentTypes')) || [];
       window.addEventListener('refreshDocumentTypesEditor', this.loadEntries.bind(this));
+      console.log('Loaded entries:', this.entries); // For debugging
     },
 
     loadEntries() {
-      // Load entries from localStorage or initialize an empty array if none exist
+      // Reload entries from localStorage
       this.entries = JSON.parse(localStorage.getItem('documentTypes')) || [];
     },
 
+    getTemplateName(templateKey) {
+      const template = this.templates.find((t) => t.key === templateKey);
+      return template ? template.name : 'Unknown Template';
+    },
+
+    getTemplateFields(fileUpload) {
+      const metadata = this.fileMetadata.find((item) => item.fileName === fileUpload);
+      return metadata ? JSON.parse(JSON.stringify(metadata.fields)) : [];
+    },
+
+    addTemplate(entry) {
+      const templateKey = entry.selectedTemplate;
+
+      if (!templateKey || entry.templates.includes(templateKey)) {
+        return; // Skip if template is not selected or already added
+      }
+
+      entry.templates.push(templateKey);
+
+      // Load metadata for the associated file in `fileUpload`
+      const template = this.templates.find((t) => t.key === templateKey);
+      const fields = this.getTemplateFields(template.fileUpload).map((field) => ({
+        ...field,
+        query: '', // Initialize with an empty query selection
+      }));
+
+      entry.customFileMetadata = entry.customFileMetadata || {}; // Ensure it exists
+      entry.customFileMetadata[templateKey] = fields;
+    },
+
+    removeTemplate(entry, templateIndex) {
+      const templateKey = entry.templates[templateIndex];
+      entry.templates.splice(templateIndex, 1);
+      if (entry.customFileMetadata) {
+        delete entry.customFileMetadata[templateKey];
+      }
+    },
+
+    getQueryForEntity(entity) {
+      return this.queryLibrary.filter((query) => query.entity === entity);
+    },
+
+    addMetadataField(metadata) {
+      metadata.push({
+        id: '',
+        fieldType: 'string',
+        xCoord: 0,
+        yCoord: 0,
+        query: '', // No initial query, user selects one if needed
+      });
+    },
+
+    saveEntries() {
+      localStorage.setItem('documentTypes', JSON.stringify(this.entries));
+    },
+
+    saveEntry(index) {
+      // Update the entire documentTypes array in localStorage after modifying a single entry
+      if (this.entries[index]) {
+        localStorage.setItem('documentTypes', JSON.stringify(this.entries));
+        alert(`Document type ${index + 1} saved successfully!`);
+      }
+    },
+
     addEntry() {
-      // Add a new entry with default values
-      this.entries.push({
+      // Add a new document type with default values
+      const newEntry = {
         name: '',
-        entity: this.entities.length > 0 ? this.entities[0] : '', // default to first entity if exists
+        entity: this.entities.length > 0 ? this.entities[0] : '', // Default to the first entity if available
         primaryCode: '',
-        enabledForSearch: false, // default to false
-        category: this.categories.length > 0 ? this.categories[0].primaryCode : '', // default to first category if exists
-        selectedTemplate: '', // holds selected template for adding
-        templates: [], // empty array to hold multiple templates
+        enabledForSearch: false,
+        category: '',
+        templates: [],
+        customFileMetadata: {},
         rules: {
           displayCondition: '',
           mandatoryCondition: '',
           meeDisplayCondition: '',
           approvalCondition: '',
         },
-      });
-      this.saveEntries(); // Save immediately to localStorage
-    },
+      };
 
-    addTemplate(entry) {
-      // Add selected template if it is not already in the templates list
-      if (entry.selectedTemplate && !entry.templates.includes(entry.selectedTemplate)) {
-        entry.templates.push(entry.selectedTemplate);
-      }
-      entry.selectedTemplate = ''; // Reset selected template after adding
-    },
-
-    removeTemplate(entry, templateIndex) {
-      // Remove a template at the specified index
-      entry.templates.splice(templateIndex, 1);
-    },
-
-    saveEntry(index) {
-      // Save the current state of all entries
-      this.saveEntries();
-      alert('Entry saved!');
-      window.dispatchEvent(new Event('refreshDocumentTypesEditor')); // Refresh any listeners
-    },
-
-    removeEntry(index) {
-      // Remove the entry at the specified index
-      this.entries.splice(index, 1);
-      this.saveEntries();
-      window.dispatchEvent(new Event('refreshDocumentTypesEditor'));
-    },
-
-    saveEntries() {
-      // Save all entries to localStorage
-      localStorage.setItem('documentTypes', JSON.stringify(this.entries));
-    },
-
-    getTemplateName(templateKey) {
-      // Retrieve the template name by key
-      const template = this.templates.find((t) => t.key === templateKey);
-      return template ? template.name : 'Unknown Template';
+      this.entries.push(newEntry);
+      this.saveEntries(); // Save all entries to persist new entry
     },
   };
 }

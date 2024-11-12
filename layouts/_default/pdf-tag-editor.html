@@ -599,8 +599,6 @@ return Array.from(parent.children).indexOf(el) + 1
           aria-labelledby="tab-1-5"
           style="display: none;">
           <div x-data="documentTypesEditor" class="pb-4">
-            <div class="badge bg-primary text-white mb-3">Document Types</div>
-
             <template x-for="(entry, index) in entries" :key="index">
               <div class="card mb-4 shadow">
                 <div class="card-header d-flex justify-content-between">
@@ -622,13 +620,15 @@ return Array.from(parent.children).indexOf(el) + 1
                       placeholder="Enter Name" />
                   </div>
 
-                  <!-- Entity Selector -->
                   <div class="mb-3">
-                    <label for="entity" class="form-label">Entity</label>
+                    <label for="entity" class="form-label"> Entity </label>
                     <select class="form-select" x-model="entry.entity">
                       <option value="">Select Entity</option>
                       <template x-for="entity in entities" :key="entity">
-                        <option :value="entity" x-text="entity"></option>
+                        <option
+                          :value="entity"
+                          x-text="entity"
+                          :selected="entity === entry.entity"></option>
                       </template>
                     </select>
                   </div>
@@ -651,15 +651,29 @@ return Array.from(parent.children).indexOf(el) + 1
                       type="checkbox"
                       class="form-check-input"
                       x-model="entry.enabledForSearch"
-                      id="enabledForSearch" />
-                    <label class="form-check-label" for="enabledForSearch"
-                      >Enabled for Search</label
-                    >
+                      :id="'enabledForSearch' + index" />
+                    <label
+                      class="form-check-label"
+                      :for="'enabledForSearch' + index">
+                      Enabled for Search
+                    </label>
                   </div>
 
                   <!-- Category Selector -->
                   <div class="mb-3">
-                    <label for="category" class="form-label">Category</label>
+                    <div
+                      class="d-flex w-100 align-items-center justify-content-between">
+                      <label for="category" class="form-label">Category</label>
+                      <div>
+                        <button
+                          class="btn btn-link btn-sm text-decoration-none text-nowrap d-flex align-items-center gap-2
+                      "
+                          @click="select($id('tab', 3))">
+                          {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }}
+                          Categories
+                        </button>
+                      </div>
+                    </div>
                     <select class="form-select" x-model="entry.category">
                       <option value="">Select Category</option>
                       <template
@@ -674,7 +688,21 @@ return Array.from(parent.children).indexOf(el) + 1
 
                   <!-- Templates Multi-Selector -->
                   <div class="mb-3">
-                    <label for="template" class="form-label">Templates</label>
+                    <div
+                      class="d-flex w-100 align-items-center justify-content-between">
+                      <label for="template" class="form-label mb-0">
+                        Templates
+                      </label>
+                      <div>
+                        <button
+                          @click="select($id('tab', 2))"
+                          class="btn btn-link btn-sm text-decoration-none text-nowrap d-flex align-items-center gap-2
+                      ">
+                          {{ partial "svg/fa/regular-plus.svg" (dict "class" "size1") }}
+                          Templates
+                        </button>
+                      </div>
+                    </div>
                     <div class="input-group mb-2">
                       <select
                         class="form-select"
@@ -694,23 +722,91 @@ return Array.from(parent.children).indexOf(el) + 1
                         Add Template
                       </button>
                     </div>
-                    <!-- Display selected templates -->
-                    <ul class="list-group">
-                      <template
-                        x-for="(templateKey, templateIndex) in entry.templates"
-                        :key="templateKey">
-                        <li
-                          class="list-group-item d-flex justify-content-between align-items-center">
+                  </div>
+
+                  <ul class="list-group">
+                    <template
+                      x-for="(templateKey, templateIndex) in entry.templates"
+                      :key="templateKey">
+                      <li class="list-group-item">
+                        <div
+                          class="d-flex justify-content-between align-items-center mb-2">
                           <span x-text="getTemplateName(templateKey)"></span>
                           <button
                             class="btn btn-sm btn-danger"
                             @click="removeTemplate(entry, templateIndex)">
                             Remove
                           </button>
-                        </li>
-                      </template>
-                    </ul>
-                  </div>
+                        </div>
+
+                        <div class="mb-2">
+                          <h6>
+                            Custom Metadata for
+                            <span x-text="getTemplateName(templateKey)"></span>
+                          </h6>
+                          <template
+                            x-for="(field, fieldIndex) in entry.customFileMetadata[templateKey]"
+                            :key="fieldIndex">
+                            <div class="card mb-3 p-2">
+                              <div class="mb-1">
+                                <label class="form-label">Field Id</label>
+                                <input
+                                  type="text"
+                                  class="form-control form-control-sm"
+                                  x-model="field.id" />
+                              </div>
+
+                              <div class="mb-1">
+                                <label class="form-label">Field Type</label>
+                                <select
+                                  class="form-select form-select-sm"
+                                  x-model="field.fieldType">
+                                  <template
+                                    x-for="type in fieldTypes"
+                                    :key="type">
+                                    <option
+                                      :value="type"
+                                      x-text="type"></option>
+                                  </template>
+                                </select>
+                              </div>
+
+                              <div class="mb-1">
+                                <label class="form-label">X Coordinate</label>
+                                <input
+                                  type="number"
+                                  class="form-control form-control-sm"
+                                  x-model="field.xCoord" />
+                              </div>
+                              <div class="mb-1">
+                                <label class="form-label">Y Coordinate</label>
+                                <input
+                                  type="number"
+                                  class="form-control form-control-sm"
+                                  x-model="field.yCoord" />
+                              </div>
+
+                              <!-- Query Selector -->
+                              <div class="mb-1">
+                                <label class="form-label">Query</label>
+                                <select
+                                  class="form-select form-select-sm"
+                                  x-model="field.query">
+                                  <template
+                                    x-for="query in getQueryForEntity(entry.entity)"
+                                    :key="query.queryId">
+                                    <option
+                                      :value="query.queryId"
+                                      x-text="query.queryId"></option>
+                                  </template>
+                                </select>
+                              </div>
+                            </div>
+                          </template>
+                        </div>
+                      </li>
+                    </template>
+                  </ul>
 
                   <!-- Rules Section -->
                   <div class="mb-3">
