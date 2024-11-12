@@ -53,6 +53,7 @@
 @import "bootstrap/utilities/api";
 // scss-docs-end import-stack
 
+@import "stuff.scss";
 .bd-placeholder-img-lg {
   @include font-size(5.5rem);
 }

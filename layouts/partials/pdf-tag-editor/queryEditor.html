@@ -1,7 +1,5 @@
 <div x-data="queryEditor" class="pb-2 border-bottom card mb-4">
-  <div class="p-2">
-    <div class="badge text-bg-primary">Query library</div>
-  </div>
+  <!-- Query library -->
   <table class="table table-hover table-responsive mb-2">
     <thead>
       <tr>
@@ -14,30 +12,76 @@
     <tbody>
       <template x-for="(entry, index) in entries" :key="index">
         <tr>
-          <td>
+          <td
+            @click.outside="showSelect = false"
+            x-data="{ showSelect: false }">
+            <span
+              class="form-select form-select_noBg border-transparent"
+              x-text="entry.entity"
+              x-show="!showSelect"
+              @click="showSelect = true"
+              x-cloak
+              style="display: inline-block;">
+            </span>
             <select
               class="form-select"
               x-model="entry.entity"
-              @change="checkUniqueId(entry)">
+              x-show="showSelect"
+              @change="checkUniqueId(entry); showSelect = false"
+              @blur="showSelect = false"
+              x-cloak>
               <template x-for="entity in entities" :key="entity">
                 <option :value="entity" x-text="entity"></option>
               </template>
             </select>
           </td>
 
-          <td>
+          <td @click.outside="showInput = false" x-data="{ showInput: false }">
+            <!-- Displayed span that toggles to input on click -->
+            <span
+              class="form-select form-select_noBg border-transparent"
+              x-text="entry.queryId || 'Click to edit'"
+              x-show="!showInput"
+              @click="showInput = true; $nextTick(() => $refs.inputField.focus())"
+              x-cloak>
+            </span>
+
+            <!-- Input field with auto-focus when toggled -->
             <input
               class="form-control"
               type="text"
               x-model="entry.queryId"
-              @input="checkUniqueId(entry)" />
-            <span x-show="!entry.isIdUnique" class="text-danger"
-              >must be unique/entity.</span
-            >
+              x-show="showInput"
+              @input="checkUniqueId(entry)"
+              @blur="showInput = false"
+              x-cloak
+              placeholder="Enter unique ID"
+              x-ref="inputField" />
+
+            <!-- Unique warning message -->
+            <span x-show="!entry.isIdUnique && !showInput" class="text-danger">
+              must be unique/entity.
+            </span>
           </td>
-          <td>
-            <input class="form-control" type="text" x-model="entry.query" />
+
+          <td @click.outside="showInput = false" x-data="{ showInput: false }">
+            <span
+              class="form-select form-select_noBg border-transparent"
+              x-text="entry.query || 'Click to edit'"
+              x-show="!showInput"
+              @click="showInput = true"
+              x-cloak>
+            </span>
+            <input
+              class="form-control"
+              type="text"
+              x-model="entry.query"
+              x-show="showInput"
+              @blur="showInput = false"
+              x-cloak
+              placeholder="Enter query" />
           </td>
+
           <td>
             <div class="btn-group">
               <button class="btn btn-outline-primary" @click="saveEntry(index)">
