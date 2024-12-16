@@ -1,12 +1,12 @@
-<div x-data="queryEditor" class="pb-2 border-bottom card mb-4">
+<div x-data="queryEditor" class="card mb-4">
   <!-- Query library -->
-  <table class="table table-hover table-responsive mb-2">
-    <thead>
-      <tr>
-        <th>Entity</th>
-        <th>Name</th>
-        <th>Query</th>
-        <th>Actions</th>
+  <table class="table table-hover table-responsive mb-2 rounded">
+    <thead class="rounded rounded-top">
+      <tr class="rounded rounded-top">
+        <th class="rounded rounded-top">Entity</th>
+        <th class="rounded rounded-top">Name</th>
+        <th class="rounded rounded-top">Query</th>
+        <th class="rounded rounded-top">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -98,7 +98,7 @@
       </template>
     </tbody>
   </table>
-  <div class="px-2">
+  <div class="px-2 pb-2">
     <button
       class="btn btn-outline-primary d-flex align-items-center gap-2"
       @click="addEntry">

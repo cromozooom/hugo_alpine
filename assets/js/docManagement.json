@@ -11,10 +11,26 @@
     {
       "name": "T2",
       "key": "KT2",
-      "language": "RO",
+      "language": "EN",
       "collator": "collators_Contact",
       "generator": "generators_Contact",
       "fileUpload": "2.pdf"
+    },
+    {
+      "name": "T3",
+      "key": "KT3",
+      "language": "HI",
+      "collator": "collators_Private Foundations",
+      "generator": "generators_Investment Firms",
+      "fileUpload": "4.pdf"
+    },
+    {
+      "name": "T4",
+      "key": "K74",
+      "language": "IT",
+      "collator": "collators_Holding Companies",
+      "generator": "generators_Investment Firms",
+      "fileUpload": "3.pdf"
     }
   ],
   "fileMetadata": [
@@ -79,17 +95,17 @@
         "KT1": [
           {
             "id": "sacxsa",
-            "fieldType": "string",
+            "fieldType": "textblock",
             "xCoord": 0,
             "yCoord": 0,
-            "query": "Name 3"
+            "query": "Contact Name 1"
           },
           {
             "id": "axASXASXSA",
             "fieldType": "selector",
             "xCoord": 0,
             "yCoord": 0,
-            "query": "Name 2"
+            "query": "Contact Name 2"
           }
         ]
       },
@@ -182,7 +198,7 @@
     {
       "query": "Q1",
       "entity": "Contact",
-      "queryId": "Contact Name 1 ",
+      "queryId": "Contact Name 1",
       "isIdUnique": true
     },
     {

@@ -1,0 +1,91 @@
+<div x-data="docTypesMatrix()" x-init="init()">
+  <h6 class="">Document Types Matrix</h6>
+
+  <!-- Group By Selector -->
+  <div class="mb-4">
+    <label class="form-label">Group By:</label>
+    <select class="form-select" x-model="groupBy">
+      <option value="">None</option>
+      <option value="name">Doc Type Name</option>
+      <option value="entity">Entity</option>
+      <option value="queries">Queries</option>
+      <option value="category">Doc Categ</option>
+    </select>
+  </div>
+
+  <!-- Matrix Table -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Doc Type Name</th>
+        <th scope="col">Entity</th>
+        <th scope="col">Queries</th>
+        <th scope="col">Template</th>
+        <th scope="col">Doc Categ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Grouped Rows -->
+      <template x-for="(group, groupKey) in groupedData" :key="groupKey">
+        <!-- Display Group Header if Grouping is Applied -->
+        <tr x-show="groupBy">
+          <td colspan="4" x-text="groupKey"></td>
+        </tr>
+
+        <!-- Display Each Item in the Group -->
+        <template x-for="item in group" :key="item.name + item.entity">
+          <tr>
+            <td x-text="item.name"></td>
+            <td x-text="item.entity"></td>
+            <td>
+              <div class="d-flex gap-1">
+                <template x-for="query in item.queries" :key="query">
+                  <span x-text="query" class="badge text-bg-primary"></span>
+                </template>
+              </div>
+            </td>
+            <td>
+              sss
+              <template
+                x-for="fileTemplates in item.customFileMetadata"
+                :key="customFileMetadata">
+                <template x-for="fileTemplate in fileTemplates" :key="template">
+                  <span>span</span>
+                </template>
+              </template>
+            </td>
+            <td x-text="item.category"></td>
+          </tr>
+        </template>
+      </template>
+
+      <!-- Display Rows Without Grouping -->
+      <template x-if="!groupBy">
+        <template x-for="item in docTypes" :key="item.name + item.entity">
+          <tr>
+            <td x-text="item.name"></td>
+            <td x-text="item.entity"></td>
+            <td>
+              <div class="d-flex gap-1">
+                <template x-for="query in item.queries" :key="query">
+                  <span x-text="query" class="badge text-bg-primary"></span>
+                </template>
+              </div>
+            </td>
+            <td>
+              sss
+              <template
+                x-for="fileTemplates in item.customFileMetadata"
+                :key="customFileMetadata">
+                <template x-for="fileTemplate in fileTemplates" :key="template">
+                  <span>span</span>
+                </template>
+              </template>
+            </td>
+            <td x-text="item.category"></td>
+          </tr>
+        </template>
+      </template>
+    </tbody>
+  </table>
+</div>

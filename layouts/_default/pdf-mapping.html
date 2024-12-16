@@ -1,0 +1,531 @@
+{{ define "main" }}
+  <div x-data="fieldManager" class="d-flex flex-column h-100 w-100">
+    <header class="border-bottom flex-grow-0">
+      <strong class="p-2">
+        Header
+        <!-- <span x-text="pdfSupport"></span> -->
+      </strong>
+      <button
+        class="btn btn-link text-decoration-none"
+        @click="pdfSupport = !pdfSupport">
+        <!-- <template x-if="pdfSupport">+</template>
+        <template x-if="!pdfSupport">-</template> -->
+        <span x-text="pdfSupport ? '-' : '+'"></span>
+        PDF Support
+      </button>
+    </header>
+    <section class="flex-grow-1 d-flex overflow-hidden">
+      <side class="border-end min-width-30rem d-flex overflow-hidden">
+        <div
+          id="fields"
+          class="flex-grow-1 overflow-y-scroll scrollbar-width__thin w-100">
+          <ul class="list-unstyled w-100">
+            <template
+              x-for="(file, fileIndex) in fileMetadata"
+              :key="fileIndex">
+              <section>
+                <h4
+                  :id="'file-heading-' + fileIndex"
+                  :class="{ 'text-bg-light': file.active, 'bg-white': !file.active,  }"
+                  class="mb-0 p-2 sticky-top shadow-sm"
+                  x-text="'Page ' + (fileIndex + 1)"></h4>
+                <ul class="list-unstyled" x-sort x-sort:group="todos">
+                  <template
+                    x-for="(item, fieldIndex) in file.fields"
+                    :key="fieldIndex">
+                    <!-- x-sort:item="x-sort:item" -->
+                    <li
+                      x-sort:item="fieldIndex"
+                      :id="'field-heading-' + fileIndex + fieldIndex"
+                      class="d-flex border-bottom align-items-center"
+                      @click="setActive(fileIndex, fieldIndex), toggleSelection(fileIndex, fieldIndex, event )">
+                      <div
+                        class="w-100 d-flex align-items-center border-start border-4"
+                        :class="{ 'border-info bg-info-subtle': item.active, '': !item.active }">
+                        <div
+                          class="start d-flex align-items-center flex-grow-1 px-1 py-3">
+                          <span
+                            x-sort:handle
+                            class="cursor-move px-1 text-muted">
+                            {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
+                          </span>
+
+                          <template
+                            x-if="item.draftState || !item.draftState && item.type === 'WDX'">
+                            <button
+                              class="text-muted-custom btn btn-sm"
+                              x-data=""
+                              x-tooltip="Draft"
+                              @click="item.draftState = !item.draftState"
+                              :class="{ 'text-success': !item.draftState, 'text-muted opacity-25': item.draftState }">
+                              {{ partial "svg/fa/regular-check.svg" (dict "class" "size1") }}
+                            </button>
+                          </template>
+                          <template
+                            x-if="!item.draftState && item.type === 'embedded'">
+                            <span
+                              class="text-muted-custom btn btn-sm text-muted opacity-50"
+                              x-data=""
+                              x-tooltip="Embedded">
+                              {{ partial "svg/fa/regular-lock.svg" (dict "class" "size1") }}
+                            </span>
+                          </template>
+                          <button
+                            class="btn btn-sm text-success"
+                            x-data=""
+                            x-tooltip="Query"
+                            x-show="item.mapping === 'query'">
+                            {{ partial "svg/fa/solid-plug.svg" (dict "class" "size1") }}
+                          </button>
+                          <button
+                            class="btn btn-sm text-danger"
+                            x-data=""
+                            x-tooltip="Mapped"
+                            x-show="item.mapping === 'text'">
+                            {{ partial "svg/fa/regular-plug.svg" (dict "class" "size1") }}
+                          </button>
+                          <button
+                            class="btn btn-sm text-danger"
+                            x-data=""
+                            x-tooltip="No Mapping"
+                            x-show="!item.mapping || item.mapping === null || item.mapping === 'none'">
+                            {{ partial "svg/fa/regular-plug.svg" (dict "class" "size1") }}</button
+                          ><span
+                            class="ps-2"
+                            :class="{ 'text-danger': item.mapping === null || item.mapping === 'none' || !item.mapping || item.mapping === 'text'}"
+                            x-text="item.name"></span>
+                        </div>
+                        <div class="end">
+                          <template x-if="item.type !== 'embedded'">
+                            <button class="btn btn-sm btn-link me-2">
+                              {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+                            </button>
+                          </template>
+                        </div>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+              </section>
+            </template>
+          </ul>
+        </div>
+      </side>
+
+      <template x-if="pdfSupport">
+        <main class="flex-grow-1 d-flex flex-column">
+          <div class="border-bottom p-2 text-center">
+            <div class="btn-group ">
+              <button
+                class="btn btn-outline-primary"
+                :disabled="currentIndex === 0"
+                @click="prev">
+                Prev
+              </button>
+              <template
+                x-for="(file, fileIndex) in fileMetadata"
+                :key="fileIndex">
+                <button
+                  :class="{
+                  'xrounded-start': !fileIndex,
+                  'btn-primary': file.active,
+                  'btn-outline-primary': !file.active,
+                }"
+                  class="btn"
+                  @click="scrollToActiveFile(fileIndex)"
+                  x-text="fileIndex + 1"></button>
+              </template>
+              <button
+                class="btn btn-outline-primary"
+                :disabled="currentIndex === fileMetadata.length "
+                @click="next">
+                Next
+              </button>
+            </div>
+          </div>
+          <div class="flex-grow-1 d-flex">
+            <template
+              x-for="(file, fileIndex) in fileMetadata"
+              :key="fileIndex">
+              <template x-if="file.active">
+                <div
+                  class="m-4 shadow border rounded w-100 d-flex align-items-center justify-content-center">
+                  <span x-text="'PDF page' + (fileIndex + 1)"></span>
+                </div>
+              </template>
+            </template>
+          </div>
+        </main>
+      </template>
+      <side
+        class=" h-100 d-flex"
+        :class="{
+          'border-start min-width-30rem' : pdfSupport,
+          'w-100' : !pdfSupport,
+        }">
+        <div class="d-flex flex-column flex-grow-1">
+          <template x-if="selectedFields.length">
+            <div class="border-bottom shadow-sm p-2">
+              <strong
+                x-text="'Move ' + selectedFields.length + ' fields'"></strong>
+            </div>
+          </template>
+          <template x-if="!selectedFields.length">
+            <div class="border-bottom shadow-sm p-2">
+              <strong>
+                Edit:
+                <template
+                  x-for="(file, fileIndex) in fileMetadata"
+                  :key="fileIndex">
+                  <template
+                    x-for="(item, fieldIndex) in file.fields"
+                    :key="fieldIndex">
+                    <template x-if="item.active">
+                      <span x-text="item.name"></span>
+                    </template>
+                  </template>
+                </template>
+              </strong>
+            </div>
+          </template>
+          <div class="overflow-y-scroll scrollbar-width__thin flex-grow-1">
+            <template x-if="selectedFields.length">
+              <div class="mx-auto">
+                <ul class="list-unstyled mb-0">
+                  <template
+                    x-for="(item, selectedFieldsIndex) in selectedFields">
+                    <li class="border-top p-2">
+                      <span
+                        x-text="fileMetadata[item.fileIndex].fields[item.fieldIndex].name"></span>
+                    </li>
+                  </template>
+                </ul>
+                <template x-teleport="#sidebar-footer">
+                  <div x-show="selectedFields.length > 0">
+                    <div class="row">
+                      <div class="col-auto">
+                        <label for="move" class="col-form-label"
+                          >Move Selected Fields to</label
+                        >
+                      </div>
+                      <div class="col-auto">
+                        <select
+                          id="move"
+                          class="form-select w-auto"
+                          @change="moveSelectedFields($event.target.value - 1)">
+                          <option value="">Page</option>
+                          <template
+                            x-for="(file, targetPageIndex) in fileMetadata"
+                            :key="targetPageIndex">
+                            <option
+                              :value="targetPageIndex + 1"
+                              x-text="'Move to Page ' + (targetPageIndex + 1)"></option>
+                          </template>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </template>
+            <template x-if="!selectedFields.length">
+              <div
+                class="mx-auto"
+                :class="{
+                'max-width-45rem' : !pdfSupport,
+              }">
+                <template
+                  x-for="(file, fileIndex) in fileMetadata"
+                  :key="fileIndex">
+                  <template
+                    x-for="(item, fieldIndex) in file.fields"
+                    :key="fieldIndex">
+                    <template x-if="item.active">
+                      <form>
+                        <!-- Active -->
+                        <!-- <div class="mb-3">
+                        <label class="form-label">Active</label>
+                        <input
+                          type="checkbox"
+                          x-model="item.active"
+                          class="form-check-input" />
+                      </div> -->
+
+                        <!-- Draft State -->
+                        <div class="border-bottom" x-data="{show: true}">
+                          <button
+                            @click.prevent="show = !show"
+                            class="d-flex align-items-center justify-content-between py-2 text-start w-100 bg-transparent border-0">
+                            <strong>
+                              <small> General </small>
+                            </strong>
+                          </button>
+                          <div
+                            x-show="show"
+                            class="form-check form-switch mx-2 mb-3 mt-3">
+                            <input
+                              x-model="item.draftState"
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              :disabled=" item.type === 'embedded'"
+                              id="flexSwitchCheckDefault" />
+                            <label
+                              class="form-check-label"
+                              for="flexSwitchCheckDefault"
+                              x-text=" item.draftState? 'Draft' : 'Published'">
+                            </label>
+                          </div>
+
+                          <!-- Name -->
+                          <div class="mb-3 px-2" x-show="show">
+                            <label class="form-label">Name</label>
+                            <input
+                              type="text"
+                              x-model="item.name"
+                              class="form-control" />
+                          </div>
+                        </div>
+
+                        <div class="border-bottom" x-data="{show: true}">
+                          <button
+                            @click.prevent="show = !show"
+                            class="d-flex align-items-center justify-content-between py-2 text-start w-100 bg-transparent border-0">
+                            <strong>
+                              <small> Mapping </small>
+                            </strong>
+                          </button>
+                          <!-- Mapping -->
+
+                          <!-- <div
+                            x-show="show && item.mapping !== 'query'"
+                            class="mb-3 mx-2 mt-3">
+                            <label class="form-label">
+                              Mapping
+                              <span x-text="item.mapping"></span>
+                            </label>
+                            <select x-model="item.mapping" class="form-select">
+                              <option value="" disabled>Choose mapping</option>
+                              <option value="query">Query</option>
+                              <option value="text">Text</option>
+                              <option value="none">None</option>
+                            </select>
+                          </div> -->
+
+                          <div>
+                            <template x-if="item.newMapping.queryName">
+                              <div class="mx-2 mb-2">
+                                <div
+                                  class="d-flex mb-2 align-items-center gap-2">
+                                  Val:
+                                  <div>
+                                    <span
+                                      class="badge text-bg-primary "
+                                      x-text="item.newMapping.queryName"></span>
+                                  </div>
+                                </div>
+                                <select
+                                  x-model="item.newMapping.queryName"
+                                  @change="updateMapping"
+                                  class="form-select">
+                                  <option value="">Choose mapping</option>
+                                  <template
+                                    x-for="query in queries"
+                                    :key="query.value">
+                                    <option
+                                      :value="query.value"
+                                      x-text="query.name"></option>
+                                  </template>
+                                </select>
+                              </div>
+                            </template>
+                            <template x-if="!item.newMapping.queryName">
+                              <div class="px-2 my-2">
+                                <div
+                                  class="d-flex justify-content-between w-100 align-items-center">
+                                  <label>Switch to quwery mapping</label>
+                                  <div>
+                                    <button class="btn btn-link">
+                                      {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
+                                    </button>
+                                  </div>
+                                </div>
+                                <div class="input-group">
+                                  <button
+                                    class="btn btn-outline-primary"
+                                    type="button"
+                                    id="button-addon2">
+                                    {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
+                                  </button>
+                                  <select
+                                    x-model="item.newMapping.queryName"
+                                    @change="updateMapping"
+                                    class="form-select">
+                                    <option value="">Choose mapping</option>
+                                    <template
+                                      x-for="query in queries"
+                                      :key="query.value">
+                                      <option
+                                        :value="query.value"
+                                        x-text="query.name"></option>
+                                    </template>
+                                  </select>
+                                </div>
+                              </div>
+                            </template>
+
+                            <template x-if="item.mapping === 'text'">
+                              <div
+                                class="px-2 d-flex flex-column gap-2 py-2"
+                                x-show="show && item.mapping !== 'query'">
+                                <div>
+                                  <strong>Original Mapping</strong>
+                                </div>
+                                <div>
+                                  <i
+                                    x-text="'Mapping type: ' + item.mapping"></i>
+                                </div>
+                                <!-- <div class="form-control">
+                                  <i x-text="'Val.: ' + item.mappingValue"></i>
+                                </div> -->
+                                <input
+                                  x-model="item.mappingValue"
+                                  class="form-control" />
+                              </div>
+                            </template>
+
+                            <!-- <div class="px-2">
+                              <div
+                                x-show="item.mappingValue === 'text'"
+                                class="form-control"></div>
+                              <span
+                                x-text="'query ' + item.newMapping.queryName"></span>
+                            </div> -->
+                            <!-- <button
+                                @click.prevent="switchToQuery(fileIndex, fieldIndex)"></button> -->
+                          </div>
+                        </div>
+                        <div class="border-bottom " x-data="{show: false}">
+                          <button
+                            @click.prevent="show = !show"
+                            class="d-flex align-items-center justify-content-between py-2 text-start w-100 bg-transparent border-0">
+                            <strong>
+                              <small> Location & Size </small>
+                            </strong>
+                          </button>
+
+                          <!-- Dimensions -->
+                          <div x-show="show" class="mb-3 px-2 mt-3">
+                            <label class="form-label">Width</label>
+                            <input
+                              type="number"
+                              x-model="item.width"
+                              class="form-control" />
+                          </div>
+                          <div x-show="show" class="mb-3 px-2">
+                            <label class="form-label">Height</label>
+                            <input
+                              type="number"
+                              x-model="item.height"
+                              class="form-control" />
+                          </div>
+
+                          <!-- Coordinates -->
+                          <template x-if="show">
+                            <div class="d-flex mb-3 gap-2 px-2">
+                              <div class="">
+                                <label class="form-label">Page</label>
+                                <select
+                                  class="form-select w-auto"
+                                  @change="moveField(fileIndex, fieldIndex, $event.target.value - 1)"
+                                  :value="getFieldCurrentPage(fileIndex, fieldIndex)">
+                                  <template
+                                    x-for="(targetPage, targetPageIndex) in fileMetadata"
+                                    :key="targetPageIndex">
+                                    <option
+                                      :value="targetPageIndex + 1"
+                                      x-text="targetPageIndex + 1"></option>
+                                  </template>
+                                </select>
+                              </div>
+                              <div class="flex-grow-1 d-flex">
+                                <div class="flex-grow-1">
+                                  <label class="form-label"
+                                    >Pixels from Top</label
+                                  >
+                                  <input
+                                    type="number"
+                                    x-model="item.xCoord"
+                                    class="form-control"
+                                    style="width: 6rem" />
+                                </div>
+                                <div class=" flex-grow-1">
+                                  <label class="form-label"
+                                    >Pixels from Left</label
+                                  >
+                                  <input
+                                    type="number"
+                                    x-model="item.xCoord"
+                                    class="form-control"
+                                    style="width: 6rem" />
+                                </div>
+                              </div>
+                            </div>
+                          </template>
+                        </div>
+
+                        <div x-data="{show: false}">
+                          <button
+                            @click.prevent="show = !show"
+                            class="d-flex align-items-center justify-content-between py-2 text-start w-100 bg-transparent border-0">
+                            <strong>
+                              <small> Formatting </small>
+                            </strong>
+                          </button>
+                          <!-- Font -->
+                          <div x-show="show" class="mb-3 px-2 mt-3">
+                            <label class="form-label">Font Size</label>
+                            <input
+                              type="number"
+                              x-model="item.fontSize"
+                              class="form-control" />
+                          </div>
+                          <div x-show="show" class="mb-3 px-2">
+                            <label class="form-label">Font Name</label>
+                            <select x-model="item.fontName" class="form-select">
+                              <option value="Arial">Arial</option>
+                              <option value="Times New Roman">
+                                Times New Roman
+                              </option>
+                              <option value="Verdana">Verdana</option>
+                              <option value="Courier New">Courier New</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <template x-teleport="#sidebar-footer">
+                          <!-- Submit -->
+                          <button
+                            type="button"
+                            class="btn btn-primary"
+                            @click="console.log(field)">
+                            Save
+                          </button>
+                        </template>
+                      </form>
+
+                      <!-- <span x-text="fieldIndex"></span> -->
+                    </template>
+                  </template>
+                </template>
+              </div>
+            </template>
+          </div>
+          <footer
+            id="sidebar-footer"
+            class="border-top p-2 d-flex justify-content-end"></footer>
+        </div>
+      </side>
+    </section>
+  </div>
+{{ end }}

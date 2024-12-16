@@ -7,19 +7,43 @@ export default function docTypesMatrix() {
     init() {
       this.docTypes = JSON.parse(localStorage.getItem('documentTypes')) || [];
       this.prepareData();
+      // this.flatTemplates();
+    },
+
+    flatTemplates() {
+      // Ensure docTypes is properly initialized
+      if (!this.docTypes.length) {
+        console.warn('No document types available.');
+        return;
+      }
+
+      let result = this.docTypes.flatMap((docType) =>
+        docType.templates.map((template) => ({
+          name: docType.name,
+          templateName: template,
+          entity: docType.entity,
+          primaryCode: docType.primaryCode,
+          enabledForSearch: docType.enabledForSearch,
+          category: docType.category,
+          fields: docType.customFileMetadata[template] || [],
+          rules: docType.rules,
+        })),
+      );
+
+      console.log('Flattened templates:', result);
     },
 
     prepareData() {
       // Process each docType to gather required properties
       this.docTypes = this.docTypes.map((docType) => {
         return {
-          name: docType.name || '',
-          entity: docType.entity || '',
+          ...docType,
           queries: this.getQueriesFromMetadata(docType.customFileMetadata),
-          category: docType.category || '',
         };
       });
-      this.groupData();
+
+      this.groupData(); // Group data by the selected groupBy field
+      this.flatTemplates(); // Generate the flattened templates
     },
 
     getQueriesFromMetadata(customFileMetadata) {
