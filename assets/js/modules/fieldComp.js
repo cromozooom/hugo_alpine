@@ -1,4 +1,4 @@
-export default function field() {
+export default function fieldComp() {
   return {
     _density: 'default',
     density: 'compact',
