@@ -198,7 +198,10 @@
                           {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
                         </button>
                       </template>
-                      <div class="btn btn-sm" x-data x-tooltip="Type">
+                      <div
+                        class="btn btn-sm"
+                        x-data="{ type: field.type }"
+                        @mouseenter="$tooltip('type ' +  field.type)">
                         <template x-if="field.type === 'number'">
                           {{ partial "svg/fa/regular-calculator.svg" (dict "class" "size1") }}
                         </template>
