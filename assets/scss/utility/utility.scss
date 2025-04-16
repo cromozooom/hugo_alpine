@@ -51,3 +51,31 @@ body {
 .border-transparent {
   border: var(--bs-border-width) var(--bs-border-style) transparent !important;
 }
+
+.bg-warning-gradient {
+  background-image: linear-gradient(
+    to right,
+    --bs-primary-border-subtle,
+    white
+  );
+}
+.bg-danger-gradient {
+  background-image: linear-gradient(to left, var(--bs-danger-bg-subtle), white);
+}
+.bg-success-gradient {
+  background-image: linear-gradient(
+    to left,
+    var(--bs-success-bg-subtle),
+    white
+  );
+}
+.bg-warning-gradient {
+  background-image: linear-gradient(
+    to left,
+    var(--bs-warning-bg-subtle),
+    white
+  );
+}
+.bg-info-gradient {
+  background-image: linear-gradient(to left, var(--bs-info-bg-subtle), white);
+}

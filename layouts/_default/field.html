@@ -75,245 +75,252 @@
           :class="{
             ...getClass(field, index),
             'bg-light-subtle': !field.alert,
-            'bg-warning bg-opacity-10': field.alert?.type === 'warning',
-            'bg-danger bg-opacity-10': field.alert?.type === 'danger',
-            'bg-info bg-opacity-10': field.alert?.type === 'info',
-            'bg-success bg-opacity-10': field.alert?.type === 'success',
           }">
-          <template x-if="density !== 'compact'">
-            <div class="row g-0 mb-1 border-bottom">
-              <div class="col-12">
-                <div class="d-flex justify-content-between">
-                  <div class="d-flex">
-                    <div class="p-2">
-                      <template x-if="field.readOnly">
-                        {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "size1 opacity-25") }}
-                      </template>
-                      <template x-if="!field.readOnly">
-                        {{ partial "svg/fa/regular-eye.svg" (dict "class" "size1") }}
+          <div
+            class="container rounded-1 px-0"
+            :class="{
+            'bg-warning-gradient bg-opacity-10': field.alert?.type === 'warning',
+            'bg-danger-gradient bg-opacity-10': field.alert?.type === 'danger',
+            'bg-info-gradient bg-opacity-10': field.alert?.type === 'info',
+            'bg-success-gradient bg-opacity-10': field.alert?.type === 'success',
+          }">
+            <template x-if="density !== 'compact'">
+              <div class="row g-0 mb-1 border-bottom">
+                <div class="col-12">
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                      <div class="p-2">
+                        <template x-if="field.readOnly">
+                          {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "size1 opacity-25") }}
+                        </template>
+                        <template x-if="!field.readOnly">
+                          {{ partial "svg/fa/regular-eye.svg" (dict "class" "size1") }}
+                        </template>
+                      </div>
+                      <template x-if="field.mandatory">
+                        <div
+                          class="p-2 d-flex gap-2 align-items-center text-danger">
+                          {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
+                          <small> mandatory </small>
+                        </div>
                       </template>
                     </div>
-                    <template x-if="field.mandatory">
-                      <div
-                        class="p-2 d-flex gap-2 align-items-center text-danger">
-                        {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
-                        <small> mandatory </small>
+                    <template x-if="devTool">
+                      <div class="d-flex">
+                        <template x-if="!field.valid">
+                          <div class="p-2">
+                            {{ partial "svg/fa/regular-check.svg" (dict "class" "size1 text-danger opacity-50") }}
+                          </div>
+                        </template>
+                        <template x-if="field.valid">
+                          <div class="p-2">
+                            {{ partial "svg/fa/regular-check.svg" (dict "class" "size1 text-success") }}
+                          </div>
+                        </template>
+                        <template x-if="!field.touched">
+                          <div class="p-2">
+                            {{ partial "svg/fa/hand-point-up.svg" (dict "class" "size1 text-danger opacity-50") }}
+                          </div>
+                        </template>
+                        <template x-if="field.touched">
+                          <div class="p-2">
+                            {{ partial "svg/fa/hand-point-up.svg" (dict "class" "size1 text-success") }}
+                          </div>
+                        </template>
+                        <div class="p-2">
+                          <template x-if="!field.link.length">
+                            {{ partial "svg/fa/regular-link-slash.svg" (dict "class" "size1  opacity-25") }}
+
+                          </template>
+                          <template x-if="field.link.length">
+                            {{ partial "svg/fa/regular-link.svg" (dict "class" "size1  text-success") }}
+                          </template>
+                        </div>
+                        <div class="p-2">
+                          <template x-if="!field.sync">
+                            {{ partial "svg/fa/regular-arrows-rotate.svg" (dict "class" "size1 opacity-25") }}
+                          </template>
+                          <template x-if="field.sync">
+                            {{ partial "svg/fa/regular-arrows-rotate.svg" (dict "class" "size1 text-success") }}
+                          </template>
+                        </div>
                       </div>
                     </template>
                   </div>
-                  <template x-if="devTool">
-                    <div class="d-flex">
-                      <template x-if="!field.valid">
-                        <div class="p-2">
-                          {{ partial "svg/fa/regular-check.svg" (dict "class" "size1 text-danger opacity-50") }}
-                        </div>
-                      </template>
-                      <template x-if="field.valid">
-                        <div class="p-2">
-                          {{ partial "svg/fa/regular-check.svg" (dict "class" "size1 text-success") }}
-                        </div>
-                      </template>
-                      <template x-if="!field.touched">
-                        <div class="p-2">
-                          {{ partial "svg/fa/hand-point-up.svg" (dict "class" "size1 text-danger opacity-50") }}
-                        </div>
-                      </template>
-                      <template x-if="field.touched">
-                        <div class="p-2">
-                          {{ partial "svg/fa/hand-point-up.svg" (dict "class" "size1 text-success") }}
-                        </div>
-                      </template>
-                      <div class="p-2">
-                        <template x-if="!field.link.length">
-                          {{ partial "svg/fa/regular-link-slash.svg" (dict "class" "size1  opacity-25") }}
-
-                        </template>
-                        <template x-if="field.link.length">
-                          {{ partial "svg/fa/regular-link.svg" (dict "class" "size1  text-success") }}
-                        </template>
-                      </div>
-                      <div class="p-2">
-                        <template x-if="!field.sync">
-                          {{ partial "svg/fa/regular-arrows-rotate.svg" (dict "class" "size1 opacity-25") }}
-                        </template>
-                        <template x-if="field.sync">
-                          {{ partial "svg/fa/regular-arrows-rotate.svg" (dict "class" "size1 text-success") }}
-                        </template>
-                      </div>
-                    </div>
-                  </template>
                 </div>
               </div>
-            </div>
-          </template>
-          <template x-if="field.type === 'form'">
-            <div class="p-2">inline form</div>
-          </template>
-          <template x-if="field.type !== 'form'">
-            <div
-              class="row g-0 "
-              :class="{
-                'py-1 my-1': density === 'compact',
-                'py-1 mb-1': density === 'default',
-                'py-2 mb-1': density === 'comfortable',
-            }">
-              <label class="col-5 col-form-label" :for="field.name">
-                <div class="d-flex gap-2 align-items-center px-2">
-                  <template x-if="density === 'compact' && field.mandatory">
-                    <div class="btn btn-link btn-sm">
-                      <span class="text-danger">
-                        {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
-                      </span>
-                    </div>
-                  </template>
-                  <div class="d-flex align-items-center text-muted">
-                    <template x-if="advancedTool">
-                      <button class="btn btn-link btn-sm">
-                        {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
-                      </button>
+            </template>
+            <template x-if="field.type === 'form'">
+              <div class="p-2">inline form</div>
+            </template>
+            <template x-if="field.type !== 'form'">
+              <div
+                class="row g-0 "
+                :class="{
+                  'py-2': density === 'compact',
+                  'pt-1 pb-1': density === 'default',
+                  'pt-2 pb-3': density === 'comfortable',
+              }">
+                <label class="col-5 col-form-label" :for="field.name">
+                  <div class="d-flex gap-2 align-items-center px-2">
+                    <template x-if="density === 'compact' && field.mandatory">
+                      <div class="btn btn-link btn-sm">
+                        <span class="text-danger">
+                          {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
+                        </span>
+                      </div>
                     </template>
-                    <div class="btn btn-sm ">
-                      <template x-if="field.type === 'number'">
-                        {{ partial "svg/fa/regular-calculator.svg" (dict "class" "size1") }}
+                    <div class="d-flex align-items-center text-muted">
+                      <template x-if="advancedTool">
+                        <button class="btn btn-link btn-sm">
+                          {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
+                        </button>
                       </template>
-                      <template x-if="field.type === 'selector'">
-                        {{ partial "svg/fa/regular-ghost.svg" (dict "class" "size1") }}
+                      <div class="btn btn-sm ">
+                        <template x-if="field.type === 'number'">
+                          {{ partial "svg/fa/regular-calculator.svg" (dict "class" "size1") }}
+                        </template>
+                        <template x-if="field.type === 'selector'">
+                          {{ partial "svg/fa/regular-ghost.svg" (dict "class" "size1") }}
+                        </template>
+                        <template
+                          x-if="field.type === 'text' || field.type === 'textarea'">
+                          {{ partial "svg/fa/regular-text.svg" (dict "class" "size1") }}
+                        </template>
+                        <template x-if="field.type === 'date'">
+                          {{ partial "svg/fa/regular-calendar.svg" (dict "class" "size1") }}
+                        </template>
+                        <template x-if="field.type === 'switch'">
+                          {{ partial "svg/fa/regular-check.svg" (dict "class" "size1") }}
+                        </template>
+                        <template x-if="field.type === 'password'">
+                          {{ partial "svg/fa/regular-lock.svg" (dict "class" "size1") }}
+                        </template>
+                      </div>
+                    </div>
+                    <span x-text="field.label"></span>
+                  </div>
+                </label>
+                <div class="col-7">
+                  <div class="d-flex w-100 align-items-center px-1">
+                    <div
+                      class="flex-grow-1 d-flex pt-1"
+                      :class="{
+                        'gap-2 flex-column': !field.inline,
+                        'gap-3': field.inline,
+                      }">
+                      <template x-if="field.type === 'checkbox'">
+                        <template x-for="(opt, idx) in field.option" :key="idx">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              :id="`${field.name}-${idx}`"
+                              :checked="opt.checked"
+                              @change="opt.checked = $event.target.checked" />
+                            <label
+                              class="form-check-label"
+                              :for="`${field.name}-${idx}`"
+                              x-text="opt.label"></label>
+                          </div>
+                        </template>
+                      </template>
+                      <template x-if="field.type === 'textarea'">
+                        <textarea
+                          :id="field.name"
+                          :rows="field.rows ?? 5 "
+                          :type="field.type"
+                          :readonly="field.readOnly"
+                          :value="field.value"
+                          @input="field.touched = true"
+                          class="form-control"></textarea>
                       </template>
                       <template
-                        x-if="field.type === 'text' || field.type === 'textarea'">
-                        {{ partial "svg/fa/regular-text.svg" (dict "class" "size1") }}
+                        x-if="field.type === 'text' || field.type === 'date' || field.type === 'password' || field.type === 'number'">
+                        <input
+                          :id="field.name"
+                          :type="field.type"
+                          :readonly="field.readOnly"
+                          :value="field.value"
+                          @input="field.touched = true"
+                          class="form-control"
+                          :class="{
+                            'w-auto' : field.type === 'date' || field.type === 'number' || field.type === 'password',
+                          }" />
                       </template>
-                      <template x-if="field.type === 'date'">
-                        {{ partial "svg/fa/regular-calendar.svg" (dict "class" "size1") }}
+                      <template x-if="field.type === 'selector'">
+                        <select
+                          class="form-select"
+                          aria-label="Default select example"
+                          :id="field.name">
+                          <option disabled selected>Select an option</option>
+                          <template
+                            x-for="opt in field.option"
+                            :key="opt.value">
+                            <option
+                              :value="opt.value"
+                              x-text="opt.label"></option>
+                          </template>
+                        </select>
                       </template>
                       <template x-if="field.type === 'switch'">
-                        {{ partial "svg/fa/regular-check.svg" (dict "class" "size1") }}
-                      </template>
-                      <template x-if="field.type === 'password'">
-                        {{ partial "svg/fa/regular-lock.svg" (dict "class" "size1") }}
-                      </template>
-                    </div>
-                  </div>
-                  <span x-text="field.label"></span>
-                </div>
-              </label>
-              <div class="col-7">
-                <div class="d-flex w-100 align-items-center px-1">
-                  <div
-                    class="flex-grow-1 d-flex pt-1"
-                    :class="{
-                      'gap-2 flex-column': !field.inline,
-                      'gap-3': field.inline,
-                    }">
-                    <template x-if="field.type === 'checkbox'">
-                      <template x-for="(opt, idx) in field.option" :key="idx">
-                        <div class="form-check">
+                        <div class="form-check form-switch mt-2">
                           <input
                             class="form-check-input"
                             type="checkbox"
-                            :id="`${field.name}-${idx}`"
-                            :checked="opt.checked"
-                            @change="opt.checked = $event.target.checked" />
+                            role="switch"
+                            :id="field.name" />
                           <label
                             class="form-check-label"
-                            :for="`${field.name}-${idx}`"
-                            x-text="opt.label"></label>
+                            :for="field.name"
+                            x-text="field.label"></label>
                         </div>
                       </template>
-                    </template>
-                    <template x-if="field.type === 'textarea'">
-                      <textarea
-                        :id="field.name"
-                        :rows="field.rows ?? 5 "
-                        :type="field.type"
-                        :readonly="field.readOnly"
-                        :value="field.value"
-                        @input="field.touched = true"
-                        class="form-control"></textarea>
-                    </template>
-                    <template
-                      x-if="field.type === 'text' || field.type === 'date' || field.type === 'password' || field.type === 'number'">
-                      <input
-                        :id="field.name"
-                        :type="field.type"
-                        :readonly="field.readOnly"
-                        :value="field.value"
-                        @input="field.touched = true"
-                        class="form-control"
-                        :class="{
-                          'w-auto' : field.type === 'date' || field.type === 'number' || field.type === 'password',
-                        }" />
-                    </template>
-                    <template x-if="field.type === 'selector'">
-                      <select
-                        class="form-select"
-                        aria-label="Default select example"
-                        :id="field.name">
-                        <option disabled selected>Select an option</option>
-                        <template x-for="opt in field.option" :key="opt.value">
-                          <option
-                            :value="opt.value"
-                            x-text="opt.label"></option>
-                        </template>
-                      </select>
-                    </template>
-                    <template x-if="field.type === 'switch'">
-                      <div class="form-check form-switch mt-2">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          role="switch"
-                          :id="field.name" />
-                        <label
-                          class="form-check-label"
-                          :for="field.name"
-                          x-text="field.label"></label>
+                    </div>
+                    <template x-if="advancedTool">
+                      <div>
+                        <button class="btn btn-link btn-sm">
+                          {{ partial "svg/fa/regular-message.svg" (dict "class" "size1") }}
+                        </button>
                       </div>
                     </template>
                   </div>
-                  <template x-if="advancedTool">
-                    <div>
-                      <button class="btn btn-link btn-sm">
-                        {{ partial "svg/fa/regular-message.svg" (dict "class" "size1") }}
-                      </button>
-                    </div>
-                  </template>
                 </div>
-              </div>
-              <template x-if="field.help">
-                <div class="col-12">
-                  <div id="emailHelp" class="form-text text-sm px-2">
-                    <small x-text="field.help"> </small>
+                <template x-if="field.help">
+                  <div class="col-12">
+                    <div id="emailHelp" class="form-text text-sm px-2">
+                      <small x-text="field.help"> </small>
+                    </div>
                   </div>
-                </div>
-              </template>
-            </div>
-          </template>
-          <template x-if="field.alert && validateTool">
-            <div class="row g-0">
-              <div class="col p-0">
-                <div
-                  class="alert mb-1 mx-1"
-                  role="alert"
-                  :class="{
-                  'alert-info': field.alert.type === 'info',
-                  'alert-danger': field.alert.type === 'danger',
-                  'alert-warning': field.alert.type === 'warning',
-                  'alert-success': field.alert.type === 'success',
-                  
-                }">
-                  <div class="d-flex gap-2 align-items-start">
-                    <div>
-                      {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1") }}
-                    </div>
-                    <div>
-                      <span x-text="field.alert.message"></span>
+                </template>
+              </div>
+            </template>
+            <template x-if="field.alert && validateTool">
+              <div class="row g-0">
+                <div class="col p-0">
+                  <div
+                    class="alert mb-1 mx-1"
+                    role="alert"
+                    :class="{
+                    'alert-info': field.alert.type === 'info',
+                    'alert-danger': field.alert.type === 'danger',
+                    'alert-warning': field.alert.type === 'warning',
+                    'alert-success': field.alert.type === 'success',
+                    
+                  }">
+                    <div class="d-flex gap-2 align-items-start">
+                      <div>
+                        {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1") }}
+                      </div>
+                      <div>
+                        <span x-text="field.alert.message"></span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </template>
+            </template>
+          </div>
         </div>
       </template>
     </div>

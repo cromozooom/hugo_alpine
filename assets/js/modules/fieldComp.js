@@ -1,7 +1,7 @@
 export default function fieldComp() {
   return {
-    _density: 'default',
-    density: 'compact',
+    density: 'default',
+    _density: 'compact',
     validateTool: false,
     devTool: false,
     advancedTool: false,
@@ -179,45 +179,94 @@ export default function fieldComp() {
     getClass(field, index) {
       const classes = {};
 
-      if (field.readOnly) {
-        if (index === this.currentSelected) {
+      if (this.density === 'compact') {
+        if (field.readOnly) {
           classes['border'] = true;
-          classes[''] = true;
-          classes['bg-light'] = true;
-          classes['shadow-sm'] = true;
+          classes['border-2'] = true;
           classes['border-dashed'] = true;
-          classes['ring-2'] = true;
-          classes['ring-solid'] = true;
-          classes['text-muted'] = true;
-          classes['ring-offset'] = true;
-          classes['ring-selected'] = true;
+          classes['text-body-tertiary'] = true;
+          if (index === this.currentSelected) {
+            classes['ring-2'] = true;
+            classes['ring-solid'] = true;
+            classes['ring-offset'] = true;
+
+            classes['ring-selected'] = true;
+          }
         } else {
           classes['border'] = true;
-          classes['border-dashed'] = true;
-          classes[''] = true;
-          classes['text-muted'] = true;
+          classes['border-2'] = true;
+          classes['border-transparent'] = true;
+          if (index === this.currentSelected) {
+            classes['ring-2'] = true;
+            classes['ring-solid'] = true;
+            classes['ring-offset'] = true;
+
+            classes['ring-selected'] = true;
+          }
         }
       } else {
-        if (index === this.currentSelected) {
+        if (field.readOnly) {
+          classes['border-dashed'] = true;
           classes['border'] = true;
-          classes['bg-light'] = true;
-          classes['shadow-sm'] = true;
-          classes['border-light'] = true;
-          classes['ring-2'] = true;
-          classes['ring-solid'] = true;
-          classes['ring-offset'] = true;
-          classes['ring-selected'] = true;
+          classes['text-body-tertiary'] = true;
+          if (index === this.currentSelected) {
+            classes['ring-2'] = true;
+            classes['ring-solid'] = true;
+            classes['ring-offset'] = true;
+
+            classes['ring-selected'] = true;
+          }
+        } else {
+          classes['border'] = true;
+          if (index === this.currentSelected) {
+            classes['ring-2'] = true;
+            classes['ring-solid'] = true;
+            classes['ring-offset'] = true;
+
+            classes['ring-selected'] = true;
+          }
         }
       }
 
-      // Handle density-specific classes
-      if (this.density === 'compact') {
-        classes['border'] = true;
-        classes['border-transparent'] = true;
-      } else {
-        classes['border'] = true;
-        classes['border-dark-subtle'] = true;
-      }
+      // if (field.readOnly) {
+      //   if (index === this.currentSelected) {
+      //     classes['border'] = true;
+      //     classes[''] = true;
+      //     classes['bg-light'] = true;
+      //     classes['shadow-sm'] = true;
+      //     classes['border-dashed'] = true;
+      //     classes['ring-2'] = true;
+      //     classes['ring-solid'] = true;
+      //     classes['text-muted'] = true;
+      //     classes['ring-offset'] = true;
+      //     classes['ring-selected'] = true;
+      //   } else {
+      //     classes['border'] = true;
+      //     classes['border-dashed'] = true;
+      //     classes['border-2'] = true;
+      //     classes['text-muted'] = true;
+      //   }
+      // } else {
+      //   if (index === this.currentSelected) {
+      //     classes['border'] = true;
+      //     classes['bg-light'] = true;
+      //     classes['shadow-sm'] = true;
+      //     classes['border-light'] = true;
+      //     classes['ring-2'] = true;
+      //     classes['ring-solid'] = true;
+      //     classes['ring-offset'] = true;
+      //     classes['ring-selected'] = true;
+      //   }
+      // }
+
+      // // Handle density-specific classes
+      // if (this.density === 'compact') {
+      //   classes['border'] = true;
+      //   classes['border-transparent'] = true;
+      // } else {
+      //   classes['border'] = true;
+      //   classes['border-dark-subtle'] = true;
+      // }
 
       return classes;
     },
