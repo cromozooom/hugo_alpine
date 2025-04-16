@@ -1,3 +1,7 @@
+xxbody * {
+  outline: 1px solid red;
+}
+
 body {
   height: 100vh;
 }
@@ -19,4 +23,31 @@ body {
 
 .max-width-45rem {
   max-width: 45rem;
+}
+
+.border-dashed {
+  --bs-border-style: dashed;
+}
+
+.ring-2 {
+  outline-width: 2px;
+}
+.ring-solid {
+  outline-style: solid;
+}
+.ring-dashed {
+  outline-style: dashed;
+}
+.ring-offset {
+  outline-offset: 2px;
+}
+.ring-selected {
+  outline-color: var(--bs-info);
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+.border-transparent {
+  border: var(--bs-border-width) var(--bs-border-style) transparent !important;
 }

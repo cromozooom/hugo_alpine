@@ -1,0 +1,48 @@
+{{ define "main" }}
+  <div
+    x-data="docTypes()"
+    x-init="init()"
+    class="d-flex flex-column h-100 w-100">
+    <span x-text="pdfSupport"></span>
+
+    <template x-for="docType in docTypes" :key="docType.id">
+      <div class="doc-type">
+        <h2 x-text="docType.name"></h2>
+
+        <!-- Loop through fieldsGroups inside each docType -->
+        <template
+          x-for="fieldGroup in docType.fieldsGroups"
+          :key="fieldGroup.fieldGroup">
+          <div class="field-group">
+            <h3 x-text="fieldGroup.fieldGroup"></h3>
+
+            <!-- Loop through fields inside each fieldGroup -->
+            <template x-for="field in fieldGroup.fields" :key="field.label">
+              <div class="field">
+                <label x-text="field.label"></label>
+
+                <!-- Handle different input types -->
+                <template x-if="field.type === 'string'">
+                  <input type="text" x-model="field.value" />
+                </template>
+
+                <template x-if="field.type === 'dropdown'">
+                  <select x-model="field.value">
+                    <option value="" disabled selected>Select an option</option>
+                    <template
+                      x-for="option in field.options"
+                      :key="option.id || option">
+                      <option
+                        x-text="option.name || option"
+                        :value="option.id || option"></option>
+                    </template>
+                  </select>
+                </template>
+              </div>
+            </template>
+          </div>
+        </template>
+      </div>
+    </template>
+  </div>
+{{ end }}
