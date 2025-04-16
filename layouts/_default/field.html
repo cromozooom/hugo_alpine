@@ -2,7 +2,7 @@
   <div x-data="fieldComp">
     <div class="container">
       <div class="d-flex justify-content-between align-items-center py-2">
-        <div></div>
+        <div>s</div>
         <div class="d-flex gap-2 align-items-center">
           <span> tools </span>
           <select
@@ -59,6 +59,7 @@
       </div>
     </div>
     <div
+      @click.outside="select(null)"
       class="d-flex flex-column h-100 w-100"
       :class="{
         'compact py-2 gap-2': density === 'compact',
@@ -237,16 +238,18 @@
                       </template>
                       <template
                         x-if="field.type === 'text' || field.type === 'date' || field.type === 'password' || field.type === 'number'">
-                        <input
-                          :id="field.name"
-                          :type="field.type"
-                          :readonly="field.readOnly"
-                          :value="field.value"
-                          @input="field.touched = true"
-                          class="form-control"
-                          :class="{
-                            'w-auto' : field.type === 'date' || field.type === 'number' || field.type === 'password',
-                          }" />
+                        <div class="div">
+                          <input
+                            :id="field.name"
+                            :type="field.type"
+                            :readonly="field.readOnly"
+                            :value="field.value"
+                            @input="field.touched = true"
+                            class="form-control"
+                            :class="{
+                              'w-auto' : field.type === 'date' || field.type === 'number' || field.type === 'password',
+                            }" />
+                        </div>
                       </template>
                       <template x-if="field.type === 'selector'">
                         <select

@@ -5,7 +5,7 @@ export default function fieldComp() {
     validateTool: false,
     devTool: false,
     advancedTool: false,
-    currentSelected: 0,
+    currentSelected: null,
     fields: [
       {
         name: 'Field 01',
@@ -228,87 +228,7 @@ export default function fieldComp() {
         }
       }
 
-      // if (field.readOnly) {
-      //   if (index === this.currentSelected) {
-      //     classes['border'] = true;
-      //     classes[''] = true;
-      //     classes['bg-light'] = true;
-      //     classes['shadow-sm'] = true;
-      //     classes['border-dashed'] = true;
-      //     classes['ring-2'] = true;
-      //     classes['ring-solid'] = true;
-      //     classes['text-muted'] = true;
-      //     classes['ring-offset'] = true;
-      //     classes['ring-selected'] = true;
-      //   } else {
-      //     classes['border'] = true;
-      //     classes['border-dashed'] = true;
-      //     classes['border-2'] = true;
-      //     classes['text-muted'] = true;
-      //   }
-      // } else {
-      //   if (index === this.currentSelected) {
-      //     classes['border'] = true;
-      //     classes['bg-light'] = true;
-      //     classes['shadow-sm'] = true;
-      //     classes['border-light'] = true;
-      //     classes['ring-2'] = true;
-      //     classes['ring-solid'] = true;
-      //     classes['ring-offset'] = true;
-      //     classes['ring-selected'] = true;
-      //   }
-      // }
-
-      // // Handle density-specific classes
-      // if (this.density === 'compact') {
-      //   classes['border'] = true;
-      //   classes['border-transparent'] = true;
-      // } else {
-      //   classes['border'] = true;
-      //   classes['border-dark-subtle'] = true;
-      // }
-
       return classes;
-    },
-
-    __getClass(field, index) {
-      if (field.readOnly) {
-        if (index === this.currentSelected) {
-          return 'border border-2 bg-light shadow-sm border-dashed ring-2 ring-solid text-muted ring-offset ring-selected';
-        }
-        return 'border border-dashed border-2 text-muted';
-      } else {
-        if (index === this.currentSelected) {
-          return 'border bg-light shadow-sm border-light ring-2 ring-solid ring-offset ring-selected';
-        }
-        return 'border-2';
-      }
-    },
-    // if (this.density === 'compact') {
-    //   return 'border border-transparent';
-    // } else {
-    //   return 'border border-dark-subtle';
-    // }
-
-    _getClass(field, index) {
-      if (field.readOnly) {
-        if (index === this.currentSelected) {
-          return 'border-2 bg-light shadow-sm border-dashed ring-2 ring-solid text-muted ring-offset ring-selected';
-        }
-        return ' border-2 border-dashed text-muted';
-      } else {
-        if (index === this.currentSelected) {
-          return 'border bg-light shadow-sm border-light ring-2 ring-solid ring-offset ring-selected';
-        }
-      }
-      // if (this.density === 'compact') {
-      //   if (index === this.currentSelected) {
-      //     return 'border';
-      //   }
-      //   return 'border border-transparent';
-      // } else {
-      //   return 'border border-dark-subtle';
-      // }
     },
 
     init() {},

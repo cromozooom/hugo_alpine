@@ -60,22 +60,30 @@ body {
   );
 }
 .bg-danger-gradient {
-  background-image: linear-gradient(to left, var(--bs-danger-bg-subtle), white);
+  background-image: linear-gradient(
+    to left,
+    var(--bs-danger-bg-subtle),
+    white 30%
+  );
 }
 .bg-success-gradient {
   background-image: linear-gradient(
     to left,
     var(--bs-success-bg-subtle),
-    white
+    white 30%
   );
 }
 .bg-warning-gradient {
   background-image: linear-gradient(
     to left,
     var(--bs-warning-bg-subtle),
-    white
+    white 30%
   );
 }
 .bg-info-gradient {
-  background-image: linear-gradient(to left, var(--bs-info-bg-subtle), white);
+  background-image: linear-gradient(
+    to left,
+    var(--bs-info-bg-subtle),
+    white 30%
+  );
 }
