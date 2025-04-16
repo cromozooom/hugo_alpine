@@ -17,6 +17,7 @@
 	"version": "0.1.0",
 	"dependencies": {
 		"@alpinejs/sort": "^3.14.7",
-		"alpinejs": "^3.14.3"
+		"alpinejs": "^3.14.3",
+		"tippy.js": "^6.3.7"
 	}
 }

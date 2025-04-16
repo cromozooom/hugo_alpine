@@ -165,7 +165,6 @@ export default function fieldComp() {
     ],
     // Method to set the current selected index
     select(index) {
-      console.log('select', index);
       this.currentSelected = index;
     },
 

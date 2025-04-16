@@ -3,15 +3,15 @@
     <div class="container">
       <div class="d-flex justify-content-between align-items-center py-2">
         <div>
-          <strong>
+          <strong class="h4">
             <a href="https://solopx.com" target="_blank"> sPx </a>
             Form editor</strong
           >
         </div>
         <div class="d-flex gap-2 align-items-center">
-          <span> tools </span>
+          <span> Density </span>
           <select
-            class="form-select form-select-sm"
+            class="form-select xform-select-sm"
             aria-label="Select view mode"
             @change="density = $event.target.value"
             :value="density">
@@ -30,8 +30,11 @@
               {{ partial "svg/fa/regular-line-height.svg" (dict "class" "size1") }}
             </button> -->
             <button
+              type="button"
               class="btn btn-link"
               @click="toggleValidate"
+              x-data
+              x-tooltip="Validate"
               :class="{
               'text-success bg-success-subtle': validateTool,
               'text-muted': !validateTool,
@@ -42,6 +45,8 @@
               class="btn btn-link"
               @click="toggleDevTool"
               :disabled="density === 'compact'"
+              x-data
+              x-tooltip="Debug"
               :style="density === 'compact' ? '--bs-border-opacity: .5;' : '--bs-border-opacity: 1;'"
               :class="{
                 'text-success bg-success-subtle': devTool,
@@ -53,6 +58,8 @@
             <button
               class="btn btn-link"
               @click="toggleAdvanced"
+              x-data
+              x-tooltip="Audit"
               :class="{
             'text-success bg-success-subtle': advancedTool,
             'text-muted': !advancedTool,
@@ -97,14 +104,20 @@
                     <div class="d-flex">
                       <div class="p-2">
                         <template x-if="field.readOnly">
-                          {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "size1 opacity-25") }}
+                          <div x-data x-tooltip="ReadOnly">
+                            {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "size1 opacity-25") }}
+                          </div>
                         </template>
                         <template x-if="!field.readOnly">
-                          {{ partial "svg/fa/regular-eye.svg" (dict "class" "size1") }}
+                          <div x-data x-tooltip="Visible">
+                            {{ partial "svg/fa/regular-eye.svg" (dict "class" "size1") }}
+                          </div>
                         </template>
                       </div>
                       <template x-if="field.mandatory">
                         <div
+                          x-data
+                          x-tooltip="Mandatory"
                           class="p-2 d-flex gap-2 align-items-center text-danger">
                           {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
                           <small> mandatory </small>
@@ -114,42 +127,45 @@
                     <template x-if="devTool">
                       <div class="d-flex">
                         <template x-if="!field.valid">
-                          <div class="p-2">
+                          <div class="p-2" x-data x-tooltip="Invalid">
                             {{ partial "svg/fa/regular-check.svg" (dict "class" "size1 text-danger opacity-50") }}
                           </div>
                         </template>
                         <template x-if="field.valid">
-                          <div class="p-2">
+                          <div class="p-2" x-data x-tooltip="Valid">
                             {{ partial "svg/fa/regular-check.svg" (dict "class" "size1 text-success") }}
                           </div>
                         </template>
                         <template x-if="!field.touched">
-                          <div class="p-2">
+                          <div class="p-2" x-data x-tooltip="Untouched">
                             {{ partial "svg/fa/hand-point-up.svg" (dict "class" "size1 text-danger opacity-50") }}
                           </div>
                         </template>
                         <template x-if="field.touched">
-                          <div class="p-2">
+                          <div class="p-2" x-data x-tooltip="Touched">
                             {{ partial "svg/fa/hand-point-up.svg" (dict "class" "size1 text-success") }}
                           </div>
                         </template>
-                        <div class="p-2">
-                          <template x-if="!field.link.length">
+                        <template x-if="!field.link.length">
+                          <div class="p-2" x-data x-tooltip="No link">
                             {{ partial "svg/fa/regular-link-slash.svg" (dict "class" "size1  opacity-25") }}
-
-                          </template>
-                          <template x-if="field.link.length">
+                          </div>
+                        </template>
+                        <template x-if="field.link.length">
+                          <div class="p-2" x-data x-tooltip="Linked">
                             {{ partial "svg/fa/regular-link.svg" (dict "class" "size1  text-success") }}
-                          </template>
-                        </div>
-                        <div class="p-2">
-                          <template x-if="!field.sync">
+                          </div>
+                        </template>
+                        <template x-if="!field.sync">
+                          <div class="p-2" x-data x-tooltip="Not Synced">
                             {{ partial "svg/fa/regular-arrows-rotate.svg" (dict "class" "size1 opacity-25") }}
-                          </template>
-                          <template x-if="field.sync">
+                          </div>
+                        </template>
+                        <template x-if="field.sync">
+                          <div class="p-2" x-data x-tooltip="Synced">
                             {{ partial "svg/fa/regular-arrows-rotate.svg" (dict "class" "size1 text-success") }}
-                          </template>
-                        </div>
+                          </div>
+                        </template>
                       </div>
                     </template>
                   </div>
@@ -182,7 +198,7 @@
                           {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
                         </button>
                       </template>
-                      <div class="btn btn-sm ">
+                      <div class="btn btn-sm" x-data x-tooltip="Type">
                         <template x-if="field.type === 'number'">
                           {{ partial "svg/fa/regular-calculator.svg" (dict "class" "size1") }}
                         </template>
