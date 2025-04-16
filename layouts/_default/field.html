@@ -62,8 +62,8 @@
       @click.outside="select(null)"
       class="d-flex flex-column h-100 w-100"
       :class="{
-        'compact py-2 gap-2': density === 'compact',
-        'default py-2 gap-2': density === 'default',
+        'compact py-2 gap-3': density === 'compact',
+        'default py-2 gap-3': density === 'default',
         'comfortable py-3 gap-3': density === 'comfortable',
       }">
       <template x-for="(field, index) in fields" :key="index">
@@ -191,7 +191,8 @@
                         <template x-if="field.type === 'date'">
                           {{ partial "svg/fa/regular-calendar.svg" (dict "class" "size1") }}
                         </template>
-                        <template x-if="field.type === 'switch'">
+                        <template
+                          x-if="field.type === 'switch' || field.type === 'checkbox'">
                           {{ partial "svg/fa/regular-check.svg" (dict "class" "size1") }}
                         </template>
                         <template x-if="field.type === 'password'">
@@ -199,7 +200,7 @@
                         </template>
                       </div>
                     </div>
-                    <span x-text="field.label"></span>
+                    <strong x-text="field.label"></strong>
                   </div>
                 </label>
                 <div class="col-7">
@@ -291,8 +292,8 @@
                 </div>
                 <template x-if="field.help">
                   <div class="col-12">
-                    <div id="emailHelp" class="form-text text-sm px-2">
-                      <small x-text="field.help"> </small>
+                    <div id="emailHelp" class="form-text text-sm px-3">
+                      <small class="text-info" x-text="field.help"> </small>
                     </div>
                   </div>
                 </template>

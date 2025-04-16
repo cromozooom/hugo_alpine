@@ -8,7 +8,7 @@ export default function fieldComp() {
     currentSelected: null,
     fields: [
       {
-        name: 'Field 01',
+        name: 'Contact Category',
         id: 'field-01',
         readOnly: true,
         type: 'text',
@@ -18,7 +18,7 @@ export default function fieldComp() {
         sync: true,
         mandatory: false,
         help: 'We will never share your email with anyone else.',
-        label: 'Label field 1',
+        label: 'Contact Category',
         value: 'valField01',
         alert: {
           type: 'danger',
@@ -35,7 +35,7 @@ export default function fieldComp() {
         link: '',
         sync: false,
         mandatory: true,
-        label: 'Label field 2',
+        label: 'Date of birth*',
         value: 'valField02',
       },
       {
@@ -48,7 +48,7 @@ export default function fieldComp() {
         link: '',
         sync: false,
         mandatory: false,
-        label: 'Label field 3',
+        label: 'Suitability Review Lookup',
         value: 'valField03',
       },
       {
@@ -77,8 +77,8 @@ export default function fieldComp() {
         touched: false,
         link: '',
         sync: false,
-        mandatory: false,
-        label: 'Label field 4',
+        mandatory: true,
+        label: 'Are you a UK resident for tax purposes?',
         value: 'valField04',
         option: [
           { value: 'val1', label: 'Option 1' },
@@ -111,7 +111,7 @@ export default function fieldComp() {
         link: '',
         sync: false,
         mandatory: false,
-        label: 'Label field 4',
+        label: 'Are you resident in any other country for tax purposes?',
         value: 'valField04',
       },
       {
@@ -124,7 +124,8 @@ export default function fieldComp() {
         link: '',
         sync: false,
         mandatory: false,
-        label: 'Label field 4',
+        label: 'Are you in good health?',
+        help: 'Please provide your tax identification or reference numbers',
         value: 'valField04',
       },
       {
@@ -137,7 +138,8 @@ export default function fieldComp() {
         link: '',
         sync: false,
         mandatory: false,
-        label: 'Label field 4',
+        label: 'Are you in good health?',
+        help: 'Please provide your tax identification or reference numbers',
         inline: true,
         option: [
           { checked: false, label: 'Option 1' },
@@ -156,7 +158,8 @@ export default function fieldComp() {
         link: '',
         sync: false,
         mandatory: false,
-        label: 'Label field 4',
+        label: 'Are you a smoker?',
+        help: 'Please provide additional information if you have answered ‘No’ above:',
         value: 'valField04',
       },
     ],
