@@ -1,6 +1,8 @@
 {{ define "main" }}
-  <div x-data="fieldComp">
-    <div class="container">
+  <div
+    class="d-flex flex-column w-100 h-100 overflow-y-scroll"
+    x-data="fieldComp">
+    <div class="container-fluid bg-light shadow-sm sticky-top border-bottom">
       <div class="d-flex justify-content-between align-items-center py-2">
         <div>
           <strong class="h4">
@@ -19,7 +21,7 @@
             <option value="default">Default</option>
             <option value="comfortable">Comfortable</option>
           </select>
-          <div class="btn-group">
+          <div class="btn-group border">
             <!-- <button
               class="btn btn-link"
               @click="toggleDensity"
@@ -37,7 +39,7 @@
               x-tooltip="Validate"
               :class="{
               'text-success bg-success-subtle': validateTool,
-              'text-muted': !validateTool,
+              'text-muted bg-light': !validateTool,
             }">
               {{ partial "svg/fa/regular-rotate-exclamation.svg" (dict "class" "size1") }}
             </button>
@@ -50,7 +52,7 @@
               :style="density === 'compact' ? '--bs-border-opacity: .5;' : '--bs-border-opacity: 1;'"
               :class="{
                 'text-success bg-success-subtle': devTool,
-                'text-muted': !devTool,
+                'bg-light text-muted': !devTool,
                 'text-muted opacity-25': density === 'compact',
             }">
               {{ partial "svg/fa/regular-code.svg" (dict "class" "size1") }}
@@ -62,7 +64,7 @@
               x-tooltip="Audit"
               :class="{
             'text-success bg-success-subtle': advancedTool,
-            'text-muted': !advancedTool,
+            'bg-light text-muted': !advancedTool,
           }">
               {{ partial "svg/fa/regular-microscope.svg" (dict "class" "size1") }}
             </button>
@@ -72,7 +74,7 @@
     </div>
     <div
       @click.outside="select(null)"
-      class="d-flex flex-column h-100 w-100"
+      class="d-flex flex-column flex-grow-1 w-100 py-3"
       :class="{
         'compact py-2 gap-3': density === 'compact',
         'default py-2 gap-3': density === 'default',
@@ -102,7 +104,7 @@
                 <div class="col-12">
                   <div class="d-flex justify-content-between">
                     <div class="d-flex">
-                      <div class="p-2">
+                      <div class="p-2 ps-3">
                         <template x-if="field.readOnly">
                           <div x-data x-tooltip="ReadOnly">
                             {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "size1 opacity-25") }}
@@ -327,7 +329,7 @@
               <div class="row g-0">
                 <div class="col p-0">
                   <div
-                    class="alert mb-1 mx-1"
+                    class="alert mb-1 ms-2 me-1"
                     role="alert"
                     :class="{
                     'alert-info': field.alert.type === 'info',
