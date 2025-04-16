@@ -1,6 +1,7 @@
 export default function fieldComp() {
   return {
     density: 'default',
+    preview: false,
     validateTool: false,
     devTool: false,
     advancedTool: false,
@@ -17,6 +18,7 @@ export default function fieldComp() {
         this.density = parsedData.density || 'default';
         this.validateTool = parsedData.validateTool || false;
         this.devTool = parsedData.devTool || false;
+        this.preview = parsedData.preview || false;
         this.advancedTool = parsedData.advancedTool || false;
         this.currentSelected = parsedData.currentSelected || null;
       } else {
@@ -127,6 +129,7 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Are you resident in any other country for tax purposes?',
+            help: 'Are you resident in any other country for tax purposes?',
             value: 'valField04',
           },
           {
@@ -183,6 +186,7 @@ export default function fieldComp() {
       // Ensure $watch is called after initialization
       this.$watch('fields', () => this.saveToLocalStorage());
       this.$watch('density', () => this.saveToLocalStorage());
+      this.$watch('preview', () => this.saveToLocalStorage());
       this.$watch('validateTool', () => this.saveToLocalStorage());
       this.$watch('devTool', () => this.saveToLocalStorage());
       this.$watch('advancedTool', () => this.saveToLocalStorage());
@@ -197,6 +201,7 @@ export default function fieldComp() {
         validateTool: this.validateTool,
         devTool: this.devTool,
         advancedTool: this.advancedTool,
+        preview: this.preview,
         currentSelected: this.currentSelected,
       };
       localStorage.setItem('fieldData', JSON.stringify(dataToStore));
@@ -207,6 +212,9 @@ export default function fieldComp() {
       this.currentSelected = index;
     },
 
+    togglePreview() {
+      this.preview = !this.preview;
+    },
     toggleValidate() {
       this.validateTool = !this.validateTool;
     },
@@ -227,12 +235,14 @@ export default function fieldComp() {
           classes['border-dashed'] = true;
           classes['text-body-tertiary'] = true;
           if (index === this.currentSelected) {
+            classes['shadow-sm'] = true;
             classes['ring-2'] = true;
             classes['ring-solid'] = true;
             classes['ring-offset'] = true;
             classes['ring-selected'] = true;
           }
         } else {
+          classes['shadow-sm'] = true;
           classes['border'] = true;
           classes['border-2'] = true;
           classes['border-transparent'] = true;
