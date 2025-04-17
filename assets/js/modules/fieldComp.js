@@ -36,6 +36,7 @@ export default function fieldComp() {
             mandatory: false,
             help: 'We will never share your email with anyone else.',
             label: 'Contact Category',
+            visible: true,
             value: 'valField01',
             alert: {
               type: 'danger',
@@ -53,6 +54,7 @@ export default function fieldComp() {
             sync: false,
             mandatory: true,
             label: 'Date of birth',
+            visible: true,
             value: 'valField02',
           },
           {
@@ -66,6 +68,7 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Suitability Review Lookup',
+            visible: true,
             value: 'valField03',
           },
           {
@@ -79,6 +82,7 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Password',
+            visible: true,
             value: 'valField04',
             alert: {
               type: 'warning',
@@ -96,6 +100,7 @@ export default function fieldComp() {
             sync: false,
             mandatory: true,
             label: 'Are you a UK resident for tax purposes?',
+            visible: true,
             value: 'valField04',
             option: [
               { value: 'val1', label: 'Option 1' },
@@ -115,6 +120,7 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Label field 4',
+            visible: true,
             value: 'valField04',
           },
           {
@@ -129,6 +135,7 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Are you resident in any other country for tax purposes?',
+            visible: true,
             help: 'Are you resident in any other country for tax purposes?',
             value: 'valField04',
             alert: {
@@ -146,7 +153,8 @@ export default function fieldComp() {
             link: '',
             sync: false,
             mandatory: false,
-            label: 'Are you in good health?',
+            label: 'Are you in good health 149?',
+            visible: true,
             help: 'Please provide your tax identification or reference numbers',
             value: 'valField04',
           },
@@ -161,6 +169,7 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Are you in good health? - (inline)',
+            visible: true,
             help: 'This is inline - Please provide your tax identification or reference numbers',
             inline: true,
             option: [
@@ -181,6 +190,7 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Are you in good health ?',
+            visible: true,
             help: 'Please provide your tax identification or reference numbers',
             inline: false,
             option: [
@@ -201,6 +211,7 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Are you a smoker?',
+            visible: true,
             help: 'Please provide additional information if you have answered ‘No’ above:',
             value: 'valField04',
           },

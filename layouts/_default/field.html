@@ -120,67 +120,93 @@
                 'bg-info-gradient bg-opacity-10': field.alert?.type === 'info',
                 'bg-success-gradient bg-opacity-10': field.alert?.type === 'success',
                 }">
-                  <div class="row g-0 mb-2">
-                    <div class="col-5">
-                      <label class="form-label" :for="field.id">
-                        <div class="d-flex align-items-center px-3">
-                          <template x-if="advancedTool">
-                            <button
-                              x-data
-                              x-tooltip="Audit"
-                              class="btn btn-link btn-sm">
-                              {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
-                            </button>
-                          </template>
-                          {{ partial "partials/field/iconTypes.html" . }}
+                  <template x-if="field.type === 'form'">
+                    <div
+                      class="d-flex align-items-center py-2 px-3 border rounded ">
+                      <template x-if="advancedTool">
+                        <button
+                          x-data
+                          x-tooltip="Audit"
+                          class="btn btn-link btn-sm">
+                          {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
+                        </button>
+                      </template>
+                      <strong class="h5 mb-0"> Inline form </strong>
+                      <template x-if="field.mandatory">
+                        <div
+                          class="btn btn-link btn-sm"
+                          x-data
+                          x-tooltip="Mandatory">
+                          <span class="text-danger">
+                            {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
+                          </span>
+                        </div>
+                      </template>
+                    </div>
+                  </template>
+                  <template x-if="field.type !== 'form'">
+                    <div class="row g-0 mb-2">
+                      <div class="col-5">
+                        <label class="form-label" :for="field.id">
+                          <div class="d-flex align-items-center px-3">
+                            <template x-if="advancedTool">
+                              <button
+                                x-data
+                                x-tooltip="Audit"
+                                class="btn btn-link btn-sm">
+                                {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
+                              </button>
+                            </template>
+                            {{ partial "partials/field/iconTypes.html" . }}
 
 
-                          <strong
-                            :class="{
+                            <strong
+                              :class="{
                             'text-info': field.alert.type === 'info' && validateTool,
                             'text-danger': field.alert.type === 'danger' && validateTool,
                             'text-warning': field.alert.type === 'warning' && validateTool,
                             'text-success': field.alert.type === 'success' && validateTool,
                             
                           }"
-                            ><small x-text="field.label"></small>
-                          </strong>
-                          <template x-if="field.mandatory">
-                            <div
-                              class="btn btn-link btn-sm"
-                              x-data
-                              x-tooltip="Mandatory">
-                              <span class="text-danger">
-                                {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
-                              </span>
-                            </div>
-                          </template>
-                        </div>
-                      </label>
-                    </div>
-                    <div class="col-7">
-                      <div class="d-flex w-100 align-items-center">
-                        <div
-                          class="d-flex flex-grow-1"
-                          :class="{
+                              ><small x-text="field.label"></small>
+                            </strong>
+                            <template x-if="field.mandatory">
+                              <div
+                                class="btn btn-link btn-sm"
+                                x-data
+                                x-tooltip="Mandatory">
+                                <span class="text-danger">
+                                  {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
+                                </span>
+                              </div>
+                            </template>
+                          </div>
+                        </label>
+                      </div>
+                      <div class="col-7">
+                        <div class="d-flex w-100 align-items-center">
+                          <div
+                            class="d-flex flex-grow-1"
+                            :class="{
                         'gap-2 flex-column': !field.inline,
                         'gap-3': field.inline,
                       }">
-                          {{ partial "partials/field/fieldTypes.html" . }}
-                        </div>
-                        <template x-if="advancedTool">
-                          <div>
-                            <button
-                              x-data
-                              x-tooltip="Notes"
-                              class="btn btn-link btn-sm">
-                              {{ partial "svg/fa/regular-message.svg" (dict "class" "size1") }}
-                            </button>
+                            {{ partial "partials/field/fieldTypes.html" . }}
                           </div>
-                        </template>
+                          <template x-if="advancedTool">
+                            <div>
+                              <button
+                                x-data
+                                x-tooltip="Notes"
+                                class="btn btn-link btn-sm">
+                                {{ partial "svg/fa/regular-message.svg" (dict "class" "size1") }}
+                              </button>
+                            </div>
+                          </template>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </template>
                   {{ partial "partials/field/help.html" . }}
                   {{ partial "partials/field/alert.html" . }}
                 </div>
