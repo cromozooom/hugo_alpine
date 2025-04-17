@@ -7,6 +7,7 @@ export default function fieldComp() {
     advancedTool: false,
     currentSelected: null,
     fields: [], // Will be initialized from localStorage
+    initialFIelds: [], // Will be initialized from localStorage
 
     // Initialize the component
     init() {
@@ -28,6 +29,8 @@ export default function fieldComp() {
             name: 'Contact Category',
             id: 'field-01',
             readOnly: true,
+            visible: true,
+            disabled: false,
             type: 'text',
             valid: false,
             touched: true,
@@ -36,7 +39,6 @@ export default function fieldComp() {
             mandatory: false,
             help: 'We will never share your email with anyone else.',
             label: 'Contact Category',
-            visible: true,
             value: 'valField01',
             alert: {
               type: 'danger',
@@ -47,6 +49,8 @@ export default function fieldComp() {
             name: 'Field 02',
             id: 'field-02',
             readOnly: false,
+            visible: true,
+            disabled: false,
             type: 'date',
             valid: true,
             touched: false,
@@ -54,13 +58,14 @@ export default function fieldComp() {
             sync: false,
             mandatory: true,
             label: 'Date of birth',
-            visible: true,
             value: 'valField02',
           },
           {
             name: 'Field 03',
             id: 'field-03',
             readOnly: true,
+            visible: true,
+            disabled: false,
             type: 'switch',
             valid: true,
             touched: false,
@@ -68,13 +73,14 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Suitability Review Lookup',
-            visible: true,
             value: 'valField03',
           },
           {
             name: 'Password 04',
             id: 'password-04',
             readOnly: false,
+            visible: true,
+            disabled: false,
             type: 'password',
             valid: true,
             touched: false,
@@ -82,7 +88,6 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Password',
-            visible: true,
             value: 'valField04',
             alert: {
               type: 'warning',
@@ -93,6 +98,8 @@ export default function fieldComp() {
             name: 'Field 05',
             id: 'field-05',
             readOnly: true,
+            visible: true,
+            disabled: false,
             type: 'selector',
             valid: true,
             touched: false,
@@ -100,7 +107,6 @@ export default function fieldComp() {
             sync: false,
             mandatory: true,
             label: 'Are you a UK resident for tax purposes?',
-            visible: true,
             value: 'valField04',
             option: [
               { value: 'val1', label: 'Option 1' },
@@ -113,6 +119,8 @@ export default function fieldComp() {
             name: 'Field 4',
             id: 'field-06',
             readOnly: false,
+            visible: true,
+            disabled: false,
             type: 'number',
             valid: true,
             touched: false,
@@ -120,13 +128,14 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Label field 4',
-            visible: true,
             value: 'valField04',
           },
           {
             name: 'Textarea',
             id: 'field-07',
             readOnly: false,
+            visible: true,
+            disabled: false,
             type: 'textarea',
             rows: 6,
             valid: true,
@@ -135,7 +144,6 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Are you resident in any other country for tax purposes?',
-            visible: true,
             help: 'Are you resident in any other country for tax purposes?',
             value: 'valField04',
             alert: {
@@ -147,6 +155,8 @@ export default function fieldComp() {
             name: 'Field 4',
             id: 'field-08',
             readOnly: false,
+            visible: true,
+            disabled: false,
             type: 'form',
             valid: true,
             touched: false,
@@ -154,7 +164,6 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Are you in good health 149?',
-            visible: true,
             help: 'Please provide your tax identification or reference numbers',
             value: 'valField04',
           },
@@ -162,6 +171,8 @@ export default function fieldComp() {
             name: 'Field 4',
             id: 'field-09',
             readOnly: false,
+            visible: true,
+            disabled: false,
             type: 'checkbox',
             valid: true,
             touched: false,
@@ -169,7 +180,6 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Are you in good health? - (inline)',
-            visible: true,
             help: 'This is inline - Please provide your tax identification or reference numbers',
             inline: true,
             option: [
@@ -183,6 +193,8 @@ export default function fieldComp() {
             name: 'Field 4',
             id: 'field-09',
             readOnly: false,
+            visible: true,
+            disabled: false,
             type: 'checkbox',
             valid: true,
             touched: false,
@@ -190,7 +202,6 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Are you in good health ?',
-            visible: true,
             help: 'Please provide your tax identification or reference numbers',
             inline: false,
             option: [
@@ -204,6 +215,8 @@ export default function fieldComp() {
             name: 'Field 4',
             id: 'field-10',
             readOnly: false,
+            visible: true,
+            disabled: false,
             type: 'text',
             valid: true,
             touched: false,
@@ -211,7 +224,6 @@ export default function fieldComp() {
             sync: false,
             mandatory: false,
             label: 'Are you a smoker?',
-            visible: true,
             help: 'Please provide additional information if you have answered ‘No’ above:',
             value: 'valField04',
           },
@@ -249,6 +261,9 @@ export default function fieldComp() {
 
     togglePreview() {
       this.preview = !this.preview;
+      if (this.currentSelected !== null) {
+        this.currentSelected = null;
+      }
     },
     toggleValidate() {
       this.validateTool = !this.validateTool;

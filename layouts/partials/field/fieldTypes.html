@@ -17,7 +17,7 @@
 <template x-if="field.type === 'textarea'">
   <textarea
     :class="{
-        'is-invalid' : field.alert.type === 'danger' && validateTool,
+        'is-invalid' : field?.alert?.type === 'danger' && validateTool,
     }"
     :id="field.name"
     :rows="field.rows ?? 5 "
@@ -38,7 +38,7 @@
       @input="field.touched = true"
       class="form-control"
       :class="{
-            'is-invalid' : field.alert.type === 'danger' && validateTool,
+            'is-invalid' : field?.alert?.type === 'danger' && validateTool,
             'w-auto' : field.type === 'date' || field.type === 'number' || field.type === 'password',
         }" />
   </div>
@@ -47,7 +47,7 @@
   <select
     class="form-select"
     :class="{
-        'is-invalid' : field.alert.type === 'danger' && validateTool,
+        'is-invalid' : field?.alert?.type === 'danger' && validateTool,
     }"
     aria-label="Default select example"
     :id="field.name">
@@ -61,7 +61,7 @@
   <div
     class="form-check form-switch mt-2"
     :class="{
-        'is-invalid' : field.alert.type === 'danger' && validateTool,
+        'is-invalid' : field?.alert?.type === 'danger' && validateTool,
     }">
     <input
       class="form-check-input"

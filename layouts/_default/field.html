@@ -69,15 +69,41 @@
           <div class="align-self-stretch d-flex border-start ps-3">
             <div class="d-flex align-items-center gap-2">
               <span> Density </span>
-              <select
-                class="form-select xform-select-sm"
-                aria-label="Select view mode"
-                @change="density = $event.target.value"
-                :value="density">
-                <option value="compact">Compact</option>
-                <option value="default">Default</option>
-                <option value="comfortable">Comfortable</option>
-              </select>
+              <div class="btn-group border">
+                <button
+                  class="btn"
+                  x-data
+                  x-tooltip="compact"
+                  :class="{
+                    'text-success bg-success-subtle': density === 'compact',
+                    'bg-light text-muted': density !== 'compact',
+                  }"
+                  @click="density = 'compact'">
+                  S
+                </button>
+                <button
+                  class="btn"
+                  x-data
+                  x-tooltip="default"
+                  :class="{
+                    'text-success bg-success-subtle': density === 'default',
+                    'bg-light text-muted': density !== 'default',
+                  }"
+                  @click="density = 'default'">
+                  M
+                </button>
+                <button
+                  class="btn"
+                  x-data
+                  x-tooltip="comfortable"
+                  :class="{
+                    'text-success bg-success-subtle': density === 'comfortable',
+                    'bg-light text-muted': density !== 'comfortable',
+                  }"
+                  @click="density = 'comfortable'">
+                  L
+                </button>
+              </div>
             </div>
           </div>
           <div class="align-self-stretch d-flex border-start ps-3">
@@ -162,10 +188,10 @@
 
                             <strong
                               :class="{
-                            'text-info': field.alert.type === 'info' && validateTool,
-                            'text-danger': field.alert.type === 'danger' && validateTool,
-                            'text-warning': field.alert.type === 'warning' && validateTool,
-                            'text-success': field.alert.type === 'success' && validateTool,
+                            'text-info': field?.alert?.type === 'info' && validateTool,
+                            'text-danger': field?.alert?.type === 'danger' && validateTool,
+                            'text-warning': field?.alert?.type === 'warning' && validateTool,
+                            'text-success': field?.alert?.type === 'success' && validateTool,
                             
                           }"
                               ><small x-text="field.label"></small>

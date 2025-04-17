@@ -1,14 +1,14 @@
-<template x-if="field.alert && validateTool">
+<template x-if="field?.alert && validateTool">
   <div class="row g-0">
     <div class="col p-0">
       <div
         class="alert mb-1 ms-2 me-1"
         role="alert"
         :class="{
-          'alert-info': field.alert.type === 'info',
-          'alert-danger': field.alert.type === 'danger',
-          'alert-warning': field.alert.type === 'warning',
-          'alert-success': field.alert.type === 'success',
+          'alert-info': field?.alert?.type === 'info',
+          'alert-danger': field?.alert?.type === 'danger',
+          'alert-warning': field?.alert?.type === 'warning',
+          'alert-success': field?.alert?.type === 'success',
           
         }">
         <div class="d-flex gap-2 align-items-start">
@@ -16,7 +16,7 @@
             {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1") }}
           </div>
           <div>
-            <span x-text="field.alert.message"></span>
+            <span x-text="field?.alert?.message"></span>
           </div>
         </div>
       </div>
