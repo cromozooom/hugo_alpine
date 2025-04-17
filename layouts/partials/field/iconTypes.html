@@ -1,0 +1,25 @@
+<div class="d-flex align-items-center text-muted">
+  <div
+    class="btn btn-sm"
+    x-data="{ type: field.type }"
+    @mouseenter="$tooltip('Type ' +  field.type)">
+    <template x-if="field.type === 'number'">
+      {{ partial "svg/fa/regular-calculator.svg" (dict "class" "size1") }}
+    </template>
+    <template x-if="field.type === 'selector'">
+      {{ partial "svg/fa/regular-ghost.svg" (dict "class" "size1") }}
+    </template>
+    <template x-if="field.type === 'text' || field.type === 'textarea'">
+      {{ partial "svg/fa/regular-text.svg" (dict "class" "size1") }}
+    </template>
+    <template x-if="field.type === 'date'">
+      {{ partial "svg/fa/regular-calendar.svg" (dict "class" "size1") }}
+    </template>
+    <template x-if="field.type === 'switch' || field.type === 'checkbox'">
+      {{ partial "svg/fa/regular-check.svg" (dict "class" "size1") }}
+    </template>
+    <template x-if="field.type === 'password'">
+      {{ partial "svg/fa/regular-lock.svg" (dict "class" "size1") }}
+    </template>
+  </div>
+</div>

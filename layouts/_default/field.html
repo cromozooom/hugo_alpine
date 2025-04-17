@@ -3,83 +3,98 @@
     class="d-flex flex-column w-100 h-100 overflow-y-scroll"
     x-data="fieldComp">
     <div class="container-fluid bg-light shadow-sm sticky-top border-bottom">
-      <div class="d-flex justify-content-between align-items-center py-2">
+      <div class="d-flex justify-content-between align-items-center">
         <div>
           <strong class="h4">
             <a href="https://solopx.com" target="_blank"> sPx </a>
             Form editor</strong
           >
         </div>
-        <div class="d-flex gap-2 align-items-center">
-          <span> Density </span>
-          <select
-            class="form-select xform-select-sm"
-            aria-label="Select view mode"
-            @change="density = $event.target.value"
-            :value="density">
-            <option value="compact">Compact</option>
-            <option value="default">Default</option>
-            <option value="comfortable">Comfortable</option>
-          </select>
-          <div class="btn-group border">
-            <!-- <button
-              class="btn btn-link"
-              @click="toggleDensity"
-              :class="{
-                'text-success bg-success-subtle': density,
-                'text-muted': !density,
+        <div class="d-flex gap-3 align-items-stretch">
+          <div class="py-2">
+            <div class="btn-group border ">
+              <!-- <button
+                class="btn btn-link"
+                @click="toggleDensity"
+                :class="{
+                  'text-success bg-success-subtle': density,
+                  'text-muted': !density,
+                }">
+                {{ partial "svg/fa/regular-line-height.svg" (dict "class" "size1") }}
+              </button> -->
+
+              <button
+                type="button"
+                class="btn btn-link"
+                @click="toggleValidate"
+                x-data
+                x-tooltip="Validate"
+                :class="{
+                'text-success bg-success-subtle': validateTool,
+                'text-muted bg-light': !validateTool,
               }">
-              {{ partial "svg/fa/regular-line-height.svg" (dict "class" "size1") }}
-            </button> -->
-            <button
-              type="button"
-              class="btn btn-link"
-              @click="togglePreview"
-              x-data
-              x-tooltip="Preview Form"
-              :class="{
-              'text-success bg-success-subtle': preview,
-              'text-muted bg-light': !preview,
-            }">
-              {{ partial "svg/fa/regular-luchador-mask.svg" (dict "class" "size1") }}
-            </button>
-            <button
-              type="button"
-              class="btn btn-link"
-              @click="toggleValidate"
-              x-data
-              x-tooltip="Validate"
-              :class="{
-              'text-success bg-success-subtle': validateTool,
-              'text-muted bg-light': !validateTool,
-            }">
-              {{ partial "svg/fa/regular-rotate-exclamation.svg" (dict "class" "size1") }}
-            </button>
-            <button
-              class="btn btn-link"
-              @click="toggleDevTool"
-              :disabled="density === 'compact'"
-              x-data
-              x-tooltip="Debug"
-              :style="density === 'compact' ? '--bs-border-opacity: .5;' : '--bs-border-opacity: 1;'"
-              :class="{
-                'text-success bg-success-subtle': devTool,
-                'bg-light text-muted': !devTool,
-                'text-muted opacity-25': density === 'compact',
-            }">
-              {{ partial "svg/fa/regular-code.svg" (dict "class" "size1") }}
-            </button>
-            <button
-              class="btn btn-link"
-              @click="toggleAdvanced"
-              x-data
-              x-tooltip="Audit"
-              :class="{
-            'text-success bg-success-subtle': advancedTool,
-            'bg-light text-muted': !advancedTool,
-          }">
-              {{ partial "svg/fa/regular-microscope.svg" (dict "class" "size1") }}
-            </button>
+                {{ partial "svg/fa/regular-rotate-exclamation.svg" (dict "class" "size1") }}
+              </button>
+              <template x-if="!preview">
+                <button
+                  class="btn btn-link"
+                  @click="toggleDevTool"
+                  :disabled="density === 'compact'"
+                  x-data
+                  x-tooltip="Debug"
+                  :style="density === 'compact' ? '--bs-border-opacity: .5;' : '--bs-border-opacity: 1;'"
+                  :class="{
+                    'text-success bg-success-subtle': devTool,
+                    'bg-light text-muted': !devTool,
+                    'text-muted opacity-25': density === 'compact',
+                }">
+                  {{ partial "svg/fa/regular-code.svg" (dict "class" "size1") }}
+                </button>
+              </template>
+              <template x-if="preview">
+                <button
+                  class="btn btn-link"
+                  @click="toggleAdvanced"
+                  x-data
+                  x-tooltip="Audit"
+                  :class="{
+                'text-success bg-success-subtle': advancedTool,
+                'bg-light text-muted': !advancedTool,
+              }">
+                  {{ partial "svg/fa/regular-microscope.svg" (dict "class" "size1") }}
+                </button>
+              </template>
+            </div>
+          </div>
+          <div class="align-self-stretch d-flex border-start ps-3">
+            <div class="d-flex align-items-center gap-2">
+              <span> Density </span>
+              <select
+                class="form-select xform-select-sm"
+                aria-label="Select view mode"
+                @change="density = $event.target.value"
+                :value="density">
+                <option value="compact">Compact</option>
+                <option value="default">Default</option>
+                <option value="comfortable">Comfortable</option>
+              </select>
+            </div>
+          </div>
+          <div class="align-self-stretch d-flex border-start ps-3">
+            <div class="d-flex align-items-center gap-2">
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="switchPreview"
+                  :checked="preview"
+                  @change="togglePreview" />
+                <label class="form-check-label text-nowrap" for="switchPreview">
+                  Preview Form
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -108,6 +123,15 @@
                   <div class="col-5">
                     <label class="form-label" :for="field.name">
                       <div class="d-flex align-items-center px-3">
+                        <template x-if="advancedTool">
+                          <button
+                            x-data
+                            x-tooltip="Audit"
+                            class="btn btn-link btn-sm">
+                            {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
+                          </button>
+                        </template>
+                        {{ partial "partials/field/iconTypes.html" . }}
                         <strong><small x-text="field.label"></small> </strong>
                         <template x-if="field.mandatory">
                           <div
@@ -123,13 +147,25 @@
                     </label>
                   </div>
                   <div class="col-7">
-                    <div
-                      class="d-flex"
-                      :class="{
-                    'gap-2 flex-column': !field.inline,
-                    'gap-3': field.inline,
-                  }">
-                      {{ partial "partials/field/fieldTypes.html" . }}
+                    <div class="d-flex w-100 align-items-center">
+                      <div
+                        class="d-flex flex-grow-1"
+                        :class="{
+                      'gap-2 flex-column': !field.inline,
+                      'gap-3': field.inline,
+                    }">
+                        {{ partial "partials/field/fieldTypes.html" . }}
+                      </div>
+                      <template x-if="advancedTool">
+                        <div>
+                          <button
+                            x-data
+                            x-tooltip="Notes"
+                            class="btn btn-link btn-sm">
+                            {{ partial "svg/fa/regular-message.svg" (dict "class" "size1") }}
+                          </button>
+                        </div>
+                      </template>
                     </div>
                   </div>
                 </div>
@@ -260,41 +296,7 @@
                           </span>
                         </div>
                       </template>
-                      <div class="d-flex align-items-center text-muted">
-                        <template x-if="advancedTool">
-                          <button
-                            x-data
-                            x-tooltip="Audit"
-                            class="btn btn-link btn-sm">
-                            {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
-                          </button>
-                        </template>
-                        <div
-                          class="btn btn-sm"
-                          x-data="{ type: field.type }"
-                          @mouseenter="$tooltip('Type ' +  field.type)">
-                          <template x-if="field.type === 'number'">
-                            {{ partial "svg/fa/regular-calculator.svg" (dict "class" "size1") }}
-                          </template>
-                          <template x-if="field.type === 'selector'">
-                            {{ partial "svg/fa/regular-ghost.svg" (dict "class" "size1") }}
-                          </template>
-                          <template
-                            x-if="field.type === 'text' || field.type === 'textarea'">
-                            {{ partial "svg/fa/regular-text.svg" (dict "class" "size1") }}
-                          </template>
-                          <template x-if="field.type === 'date'">
-                            {{ partial "svg/fa/regular-calendar.svg" (dict "class" "size1") }}
-                          </template>
-                          <template
-                            x-if="field.type === 'switch' || field.type === 'checkbox'">
-                            {{ partial "svg/fa/regular-check.svg" (dict "class" "size1") }}
-                          </template>
-                          <template x-if="field.type === 'password'">
-                            {{ partial "svg/fa/regular-lock.svg" (dict "class" "size1") }}
-                          </template>
-                        </div>
-                      </div>
+                      {{ partial "partials/field/iconTypes.html" . }}
                       <strong><small x-text="field.label"></small> </strong>
                     </div>
                   </label>
@@ -308,16 +310,6 @@
                         }">
                         {{ partial "partials/field/fieldTypes.html" . }}
                       </div>
-                      <template x-if="advancedTool">
-                        <div>
-                          <button
-                            x-data
-                            x-tooltip="Notes"
-                            class="btn btn-link btn-sm">
-                            {{ partial "svg/fa/regular-message.svg" (dict "class" "size1") }}
-                          </button>
-                        </div>
-                      </template>
                     </div>
                   </div>
                   {{ partial "partials/field/help.html" . }}
