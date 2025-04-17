@@ -52,7 +52,7 @@ export default function fieldComp() {
             link: '',
             sync: false,
             mandatory: true,
-            label: 'Date of birth*',
+            label: 'Date of birth',
             value: 'valField02',
           },
           {

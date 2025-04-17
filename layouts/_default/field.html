@@ -95,26 +95,47 @@
       <template x-if="preview">
         <template x-for="(field, index) in fields" :key="index">
           <template x-if="!field.readOnly ">
-            <div class="container">
-              <div class="row g-0 mb-2">
-                <div class="col-5">
-                  <label class="form-label" :for="field.name">
-                    <strong><small x-text="field.label"></small> </strong>
-                  </label>
-                </div>
-                <div class="col-7">
-                  <div
-                    class="d-flex"
-                    :class="{
+            <div class="container rounded-1 px-0">
+              <div
+                class="container rounded-1 px-0"
+                :class="{
+              'bg-warning-gradient bg-opacity-10': field.alert?.type === 'warning',
+              'bg-danger-gradient bg-opacity-10': field.alert?.type === 'danger',
+              'bg-info-gradient bg-opacity-10': field.alert?.type === 'info',
+              'bg-success-gradient bg-opacity-10': field.alert?.type === 'success',
+              }">
+                <div class="row g-0 mb-2">
+                  <div class="col-5">
+                    <label class="form-label" :for="field.name">
+                      <div class="d-flex align-items-center px-3">
+                        <strong><small x-text="field.label"></small> </strong>
+                        <template x-if="field.mandatory">
+                          <div
+                            class="btn btn-link btn-sm"
+                            x-data
+                            x-tooltip="Mandatory">
+                            <span class="text-danger">
+                              {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
+                            </span>
+                          </div>
+                        </template>
+                      </div>
+                    </label>
+                  </div>
+                  <div class="col-7">
+                    <div
+                      class="d-flex"
+                      :class="{
                     'gap-2 flex-column': !field.inline,
                     'gap-3': field.inline,
                   }">
-                    {{ partial "partials/field/fieldTypes.html" . }}
+                      {{ partial "partials/field/fieldTypes.html" . }}
+                    </div>
                   </div>
                 </div>
+                {{ partial "partials/field/help.html" . }}
+                {{ partial "partials/field/alert.html" . }}
               </div>
-              {{ partial "partials/field/help.html" . }}
-              {{ partial "partials/field/alert.html" . }}
             </div>
           </template>
         </template>
