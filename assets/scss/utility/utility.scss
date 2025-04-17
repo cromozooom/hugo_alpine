@@ -64,3 +64,7 @@ body {
 .bg-info-gradient {
   background-image: linear-gradient(to right, var(--bs-info) 3px, white 3px);
 }
+
+.w-40 {
+  width: 40% !important;
+}
