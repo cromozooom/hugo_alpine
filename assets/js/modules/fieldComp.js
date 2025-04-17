@@ -131,6 +131,10 @@ export default function fieldComp() {
             label: 'Are you resident in any other country for tax purposes?',
             help: 'Are you resident in any other country for tax purposes?',
             value: 'valField04',
+            alert: {
+              type: 'danger',
+              message: 'Message of the alert is this',
+            },
           },
           {
             name: 'Field 4',
