@@ -133,7 +133,18 @@
                             </button>
                           </template>
                           {{ partial "partials/field/iconTypes.html" . }}
-                          <strong><small x-text="field.label"></small> </strong>
+
+
+                          <strong
+                            :class="{
+                            'text-info': field.alert.type === 'info' && validateTool,
+                            'text-danger': field.alert.type === 'danger' && validateTool,
+                            'text-warning': field.alert.type === 'warning' && validateTool,
+                            'text-success': field.alert.type === 'success' && validateTool,
+                            
+                          }"
+                            ><small x-text="field.label"></small>
+                          </strong>
                           <template x-if="field.mandatory">
                             <div
                               class="btn btn-link btn-sm"

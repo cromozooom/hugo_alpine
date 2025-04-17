@@ -16,6 +16,9 @@
 </template>
 <template x-if="field.type === 'textarea'">
   <textarea
+    :class="{
+        'is-invalid' : field.alert.type === 'danger' && validateTool,
+    }"
     :id="field.name"
     :rows="field.rows ?? 5 "
     :type="field.type"
@@ -35,13 +38,17 @@
       @input="field.touched = true"
       class="form-control"
       :class="{
-          'w-auto' : field.type === 'date' || field.type === 'number' || field.type === 'password',
+            'is-invalid' : field.alert.type === 'danger' && validateTool,
+            'w-auto' : field.type === 'date' || field.type === 'number' || field.type === 'password',
         }" />
   </div>
 </template>
 <template x-if="field.type === 'selector'">
   <select
     class="form-select"
+    :class="{
+        'is-invalid' : field.alert.type === 'danger' && validateTool,
+    }"
     aria-label="Default select example"
     :id="field.name">
     <option disabled selected>Select an option</option>
@@ -51,7 +58,11 @@
   </select>
 </template>
 <template x-if="field.type === 'switch'">
-  <div class="form-check form-switch mt-2">
+  <div
+    class="form-check form-switch mt-2"
+    :class="{
+        'is-invalid' : field.alert.type === 'danger' && validateTool,
+    }">
     <input
       class="form-check-input"
       type="checkbox"
