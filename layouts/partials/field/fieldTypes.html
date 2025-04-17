@@ -1,0 +1,65 @@
+<template x-if="field.type === 'checkbox'">
+  <template x-for="(opt, idx) in field.option" :key="idx">
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        :id="`${field.name}-${idx}`"
+        :checked="opt.checked"
+        @change="opt.checked = $event.target.checked" />
+      <label
+        class="form-check-label"
+        :for="`${field.name}-${idx}`"
+        x-text="opt.label"></label>
+    </div>
+  </template>
+</template>
+<template x-if="field.type === 'textarea'">
+  <textarea
+    :id="field.name"
+    :rows="field.rows ?? 5 "
+    :type="field.type"
+    :readonly="field.readOnly"
+    :value="field.value"
+    @input="field.touched = true"
+    class="form-control"></textarea>
+</template>
+<template
+  x-if="field.type === 'text' || field.type === 'date' || field.type === 'password' || field.type === 'number'">
+  <div class="div">
+    <input
+      :id="field.name"
+      :type="field.type"
+      :readonly="field.readOnly"
+      :value="field.value"
+      @input="field.touched = true"
+      class="form-control"
+      :class="{
+          'w-auto' : field.type === 'date' || field.type === 'number' || field.type === 'password',
+        }" />
+  </div>
+</template>
+<template x-if="field.type === 'selector'">
+  <select
+    class="form-select"
+    aria-label="Default select example"
+    :id="field.name">
+    <option disabled selected>Select an option</option>
+    <template x-for="opt in field.option" :key="opt.value">
+      <option :value="opt.value" x-text="opt.label"></option>
+    </template>
+  </select>
+</template>
+<template x-if="field.type === 'switch'">
+  <div class="form-check form-switch mt-2">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      role="switch"
+      :id="field.name" />
+    <label
+      class="form-check-label"
+      :for="field.name"
+      x-text="field.label"></label>
+  </div>
+</template>

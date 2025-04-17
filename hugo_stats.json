@@ -196,7 +196,6 @@
       "text-center",
       "text-danger",
       "text-decoration-none",
-      "text-info",
       "text-muted",
       "text-muted-custom",
       "text-nowrap",
@@ -213,7 +212,6 @@
     ],
     "ids": [
       "button-addon2",
-      "emailHelp",
       "fields",
       "flexSwitchCheckDefault",
       "index",
