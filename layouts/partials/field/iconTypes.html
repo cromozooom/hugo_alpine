@@ -4,13 +4,16 @@
     x-data="{ type: field.type }"
     @mouseenter="$tooltip('Type ' +  field.type)">
     <template x-if="field.type === 'number'">
-      {{ partial "svg/fa/regular-calculator.svg" (dict "class" "size1") }}
+      {{ partial "svg/fa/regular-hashtag.svg" (dict "class" "size1") }}
     </template>
     <template x-if="field.type === 'selector'">
       {{ partial "svg/fa/regular-ghost.svg" (dict "class" "size1") }}
     </template>
-    <template x-if="field.type === 'text' || field.type === 'textarea'">
+    <template x-if="field.type === 'text'">
       {{ partial "svg/fa/regular-text.svg" (dict "class" "size1") }}
+    </template>
+    <template x-if="field.type === 'textarea'">
+      {{ partial "svg/fa/regular-align-left.svg" (dict "class" "size1") }}
     </template>
     <template x-if="field.type === 'date'">
       {{ partial "svg/fa/regular-calendar.svg" (dict "class" "size1") }}
