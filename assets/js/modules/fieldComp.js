@@ -261,9 +261,9 @@ export default function fieldComp() {
 
     togglePreview() {
       this.preview = !this.preview;
-      if (this.currentSelected !== null) {
-        this.currentSelected = null;
-      }
+      // if (this.currentSelected !== null) {
+      //   this.currentSelected = null;
+      // }
     },
     toggleValidate() {
       this.validateTool = !this.validateTool;

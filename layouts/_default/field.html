@@ -147,27 +147,30 @@
                 'bg-success-gradient bg-opacity-10': field.alert?.type === 'success',
                 }">
                   <template x-if="field.type === 'form'">
-                    <div
-                      class="d-flex align-items-center py-2 px-3 border rounded ">
-                      <template x-if="advancedTool">
-                        <button
-                          x-data
-                          x-tooltip="Audit"
-                          class="btn btn-link btn-sm">
-                          {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
-                        </button>
-                      </template>
-                      <strong class="h5 mb-0"> Inline form </strong>
-                      <template x-if="field.mandatory">
-                        <div
-                          class="btn btn-link btn-sm"
-                          x-data
-                          x-tooltip="Mandatory">
-                          <span class="text-danger">
-                            {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
-                          </span>
-                        </div>
-                      </template>
+                    <div class="d-flex flex-column border rounded ">
+                      <div
+                        class="d-flex align-items-center py-2 px-3 border-bottom">
+                        <template x-if="advancedTool">
+                          <button
+                            x-data
+                            x-tooltip="Audit"
+                            class="btn btn-link btn-sm">
+                            {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
+                          </button>
+                        </template>
+                        <strong class="h5 mb-0"> Inline form </strong>
+                        <template x-if="field.mandatory">
+                          <div
+                            class="btn btn-link btn-sm"
+                            x-data
+                            x-tooltip="Mandatory">
+                            <span class="text-danger">
+                              {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
+                            </span>
+                          </div>
+                        </template>
+                      </div>
+                      {{ partial "partials/field/inline-form.html" . }}
                     </div>
                   </template>
                   <template x-if="field.type !== 'form'">
@@ -336,8 +339,13 @@
                   </div>
                 </template>
                 <template x-if="field.type === 'form'">
-                  <div class="py-2 px-3">
-                    <strong class="h5"> Inline form </strong>
+                  <div class="w-100 d-flex flex-column">
+                    <div class="py-2 px-3 border-bottom">
+                      <strong class="h5"> Inline formx </strong>
+                    </div>
+                    <div class="w-100">
+                      {{ partial "partials/field/inline-form.html" . }}
+                    </div>
                   </div>
                 </template>
                 <template x-if="field.type !== 'form'">
