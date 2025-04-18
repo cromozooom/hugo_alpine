@@ -79,3 +79,7 @@ body {
     box-shadow: rgba(var(--bs-primary-rgb), 0.5) 0px 0px 5px 0px;
   }
 }
+
+.max-w-form {
+  max-width: 110ch;
+}
