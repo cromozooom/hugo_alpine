@@ -133,9 +133,9 @@
           'compact-noPreview py-2 gap-3': density === 'compact' && !preview,
           'default-noPreview py-2 gap-3': density === 'default' && !preview,
           'comfortable-noPreview py-3 gap-3': density === 'comfortable' && !preview,
-          'compact-preview py-2 gap-0': density === 'compact' && !preview,
-          'default-preview py-2 gap-0': density === 'default' && !preview,
-          'comfortable-preview py-3 gap-0': density === 'comfortable' && !preview,
+          'compact-preview py-2 gap-0': density === 'compact' && preview,
+          'default-preview py-2 gap-0': density === 'default' && preview,
+          'comfortable-preview py-3 gap-0': density === 'comfortable' && preview,
         }">
         <template x-if="preview">
           <template x-for="(field, index) in fields" :key="index">
@@ -180,7 +180,7 @@
                   <div class="row g-0">
                     <div class="col-5 py-2">
                       <label class="form-label" :for="field.id">
-                        <div class="d-flex align-items-center px-3">
+                        <div class="d-flex align-items-start px-2">
                           <template x-if="advancedTool">
                             <button
                               x-data
@@ -193,6 +193,7 @@
 
 
                           <strong
+                            class="mt-1"
                             :class="{
                           'text-info': field?.alert?.type === 'info' && validateTool,
                           'text-danger': field?.alert?.type === 'danger' && validateTool,
@@ -361,7 +362,7 @@
                       'pt-2 pb-3': density === 'comfortable',
                   }">
                     <label class="col-5 col-form-label" :for="field.id">
-                      <div class="d-flex gap-2 align-items-center px-2">
+                      <div class="d-flex gap-2 align-items-start px-2">
                         <template
                           x-if="density === 'compact' && field.mandatory">
                           <div
