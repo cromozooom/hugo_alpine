@@ -263,10 +263,13 @@
               <div
                 class="container rounded-1 px-0  "
                 :class="{
-                'bg-warning-gradient bg-opacity-10': field.alert?.type === 'warning',
-                'bg-danger-gradient bg-opacity-10': field.alert?.type === 'danger',
-                'bg-info-gradient bg-opacity-10': field.alert?.type === 'info',
-                'bg-success-gradient bg-opacity-10': field.alert?.type === 'success',
+                  'py-1': density === 'compact',
+                  'py-2': density === 'default',
+                  'py-3': density === 'comfortable',
+                  'bg-warning-gradient bg-opacity-10': field.alert?.type === 'warning',
+                  'bg-danger-gradient bg-opacity-10': field.alert?.type === 'danger',
+                  'bg-info-gradient bg-opacity-10': field.alert?.type === 'info',
+                  'bg-success-gradient bg-opacity-10': field.alert?.type === 'success',
               }">
                 <template x-if="density !== 'compact'">
                   <div class="row g-0 mb-1 border-bottom">
@@ -354,13 +357,7 @@
                   </div>
                 </template>
                 <template x-if="field.type !== 'form'">
-                  <div
-                    class="row g-0 pb-1"
-                    :class="{
-                      'pt-1': density === 'compact',
-                      'pt-2': density === 'default',
-                      'pt-3': density === 'comfortable',
-                  }">
+                  <div class="row g-0 pb-1">
                     <label class="col-5 col-form-label" :for="field.id">
                       <div class="d-flex gap-2 align-items-start px-2">
                         <template
@@ -385,9 +382,9 @@
                         <div
                           class="flex-grow-1 d-flex pt-1"
                           :class="{
-                            'gap-2 flex-column': !field.inline,
-                            'gap-3': field.inline,
-                          }">
+                              'gap-2 flex-column': !field.inline,
+                              'gap-3': field.inline,
+                            }">
                           {{ partial "partials/field/fieldTypes.html" . }}
                         </div>
                       </div>

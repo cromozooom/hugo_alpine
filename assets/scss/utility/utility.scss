@@ -36,14 +36,20 @@ body {
 .ring-2 {
   outline-width: 2px;
 }
+.ring-3 {
+  outline-width: 3px;
+}
 .ring-solid {
   outline-style: solid;
 }
 .ring-dashed {
   outline-style: dashed;
 }
-.ring-offset {
+.ring-offset-2 {
   outline-offset: 2px;
+}
+.ring-offset-3 {
+  outline-offset: 3px;
 }
 .ring-selected {
   outline-color: var(--bs-info);

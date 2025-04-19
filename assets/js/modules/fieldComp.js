@@ -283,14 +283,14 @@ export default function fieldComp() {
           classes['border'] = true;
           classes['border-dark'] = true;
           classes['border-2'] = true;
-          classes['opacity-75'] = true;
+          classes['xopacity-75'] = true;
           classes['border-doted'] = true;
           classes['text-body-tertiary'] = true;
           if (index === this.currentSelected) {
             classes['shadow-sm'] = true;
-            classes['ring-2'] = true;
+            classes['ring-3'] = true;
             classes['ring-solid'] = true;
-            classes['ring-offset'] = true;
+            classes['ring-offset-2'] = true;
             classes['ring-selected'] = true;
           }
         } else {
@@ -299,33 +299,33 @@ export default function fieldComp() {
           classes['border-2'] = true;
           classes['border-transparent'] = true;
           if (index === this.currentSelected) {
-            classes['ring-2'] = true;
+            classes['ring-3'] = true;
             classes['ring-solid'] = true;
-            classes['ring-offset'] = true;
+            classes['ring-offset-2'] = true;
             classes['ring-selected'] = true;
           }
         }
       } else {
         if (field.readOnly) {
-          classes['opacity-75'] = true;
+          classes['xopacity-75'] = true;
           classes['border-doted'] = true;
           classes['border'] = true;
           classes['border-dark'] = true;
           classes['border-2'] = true;
           classes['text-body-tertiary'] = true;
           if (index === this.currentSelected) {
-            classes['ring-2'] = true;
+            classes['ring-3'] = true;
             classes['ring-solid'] = true;
-            classes['ring-offset'] = true;
+            classes['ring-offset-2'] = true;
             classes['ring-selected'] = true;
           }
         } else {
           classes['border'] = true;
           classes['border-2'] = true;
           if (index === this.currentSelected) {
-            classes['ring-2'] = true;
+            classes['ring-3'] = true;
             classes['ring-solid'] = true;
-            classes['ring-offset'] = true;
+            classes['ring-offset-2'] = true;
             classes['ring-selected'] = true;
           }
         }
