@@ -281,8 +281,10 @@ export default function fieldComp() {
       if (this.density === 'compact') {
         if (field.readOnly) {
           classes['border'] = true;
+          classes['border-dark'] = true;
           classes['border-2'] = true;
-          classes['border-dashed'] = true;
+          classes['opacity-75'] = true;
+          classes['border-doted'] = true;
           classes['text-body-tertiary'] = true;
           if (index === this.currentSelected) {
             classes['shadow-sm'] = true;
@@ -305,8 +307,11 @@ export default function fieldComp() {
         }
       } else {
         if (field.readOnly) {
-          classes['border-dashed'] = true;
+          classes['opacity-75'] = true;
+          classes['border-doted'] = true;
           classes['border'] = true;
+          classes['border-dark'] = true;
+          classes['border-2'] = true;
           classes['text-body-tertiary'] = true;
           if (index === this.currentSelected) {
             classes['ring-2'] = true;
@@ -316,6 +321,7 @@ export default function fieldComp() {
           }
         } else {
           classes['border'] = true;
+          classes['border-2'] = true;
           if (index === this.currentSelected) {
             classes['ring-2'] = true;
             classes['ring-solid'] = true;

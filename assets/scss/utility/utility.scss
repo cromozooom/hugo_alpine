@@ -27,6 +27,10 @@ body {
 
 .border-dashed {
   --bs-border-style: dashed;
+  border-style: dotted;
+}
+.border-doted {
+  --bs-border-style: dotted;
 }
 
 .ring-2 {

@@ -130,8 +130,8 @@
       <div
         class="d-flex flex-column flex-grow-1 w-100  h-100 overflow-y-scroll"
         :class="{
-          'compact-noPreview py-2 gap-3': density === 'compact' && !preview,
-          'default-noPreview py-2 gap-3': density === 'default' && !preview,
+          'compact-noPreview py-2 gap-2': density === 'compact' && !preview,
+          'default-noPreview py-2 gap-2': density === 'default' && !preview,
           'comfortable-noPreview py-3 gap-3': density === 'comfortable' && !preview,
           'compact-preview py-2 gap-0': density === 'compact' && preview,
           'default-preview py-2 gap-0': density === 'default' && preview,
@@ -254,7 +254,7 @@
               class="container rounded-1 px-0 max-w-form"
               @click="select(index)"
               :style="{
-                '--bs-border-opacity': !field.readOnly ? '.5' : '.2',
+                '--bs-border-opacity': !field.readOnly ? '.5' : '1',
               }"
               :class="{
                 ...getClass(field, index),
@@ -346,7 +346,7 @@
                 <template x-if="field.type === 'form'">
                   <div class="w-100 d-flex flex-column">
                     <div class="py-2 px-3 border-bottom">
-                      <strong class="h5"> Inline formx </strong>
+                      <strong class="h5"> Inline form </strong>
                     </div>
                     <div class="w-100">
                       {{ partial "partials/field/inline-form.html" . }}
@@ -355,11 +355,11 @@
                 </template>
                 <template x-if="field.type !== 'form'">
                   <div
-                    class="row g-0 "
+                    class="row g-0 pb-1"
                     :class="{
-                      'py-2': density === 'compact',
-                      'pt-1 pb-1': density === 'default',
-                      'pt-2 pb-3': density === 'comfortable',
+                      'pt-1': density === 'compact',
+                      'pt-2': density === 'default',
+                      'pt-3': density === 'comfortable',
                   }">
                     <label class="col-5 col-form-label" :for="field.id">
                       <div class="d-flex gap-2 align-items-start px-2">
@@ -375,7 +375,9 @@
                           </div>
                         </template>
                         {{ partial "partials/field/iconTypes.html" . }}
-                        <strong><small x-text="field.label"></small> </strong>
+                        <strong class="pt-1"
+                          ><small x-text="field.label"></small>
+                        </strong>
                       </div>
                     </label>
                     <div class="col-7">
