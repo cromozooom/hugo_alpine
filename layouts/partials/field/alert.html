@@ -1,5 +1,11 @@
 <template x-if="field?.alert && validateTool">
-  <div class="row g-0">
+  <div
+    class="row g-0"
+    :class="{
+    'pt-0': density === 'compact',
+    'pt-1': density === 'default',
+    'pt-2': density === 'comfortable',
+  }">
     <div class="col p-0">
       <div
         class="alert mb-1 ms-2 me-1"

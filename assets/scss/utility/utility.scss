@@ -63,16 +63,32 @@ body {
 }
 
 .bg-danger-gradient {
-  background-image: linear-gradient(to right, var(--bs-danger) 3px, white 3px);
+  background-image: linear-gradient(
+    to right,
+    var(--bs-danger) 3px,
+    transparent 3px
+  );
 }
 .bg-success-gradient {
-  background-image: linear-gradient(to right, var(--bs-success) 3px, white 3px);
+  background-image: linear-gradient(
+    to right,
+    var(--bs-success) 3px,
+    transparent 3px
+  );
 }
 .bg-warning-gradient {
-  background-image: linear-gradient(to right, var(--bs-warning) 3px, white 3px);
+  background-image: linear-gradient(
+    to right,
+    var(--bs-warning) 3px,
+    transparent 3px
+  );
 }
 .bg-info-gradient {
-  background-image: linear-gradient(to right, var(--bs-info) 3px, white 3px);
+  background-image: linear-gradient(
+    to right,
+    var(--bs-info) 3px,
+    transparent 3px
+  );
 }
 
 .w-40 {

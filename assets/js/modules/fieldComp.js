@@ -283,7 +283,6 @@ export default function fieldComp() {
           classes['border'] = true;
           classes['border-dark'] = true;
           classes['border-2'] = true;
-          classes['xopacity-75'] = true;
           classes['border-doted'] = true;
           classes['text-body-tertiary'] = true;
           if (index === this.currentSelected) {
@@ -296,7 +295,7 @@ export default function fieldComp() {
         } else {
           classes['shadow-sm'] = true;
           classes['border'] = true;
-          classes['border-2'] = true;
+          classes['border-1'] = true;
           classes['border-transparent'] = true;
           if (index === this.currentSelected) {
             classes['ring-3'] = true;

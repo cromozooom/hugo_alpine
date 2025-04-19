@@ -128,7 +128,7 @@
 
     <div class="d-flex h-100 overflow-hidden bg-body-secondary">
       <div
-        class="d-flex flex-column flex-grow-1 w-100  h-100 overflow-y-scroll"
+        class="d-flex flex-column flex-grow-1 w-100 h-100 overflow-y-scroll"
         :class="{
           'compact-noPreview py-2 gap-2': density === 'compact' && !preview,
           'default-noPreview py-2 gap-2': density === 'default' && !preview,
@@ -139,18 +139,18 @@
         }">
         <template x-if="preview">
           <template x-for="(field, index) in fields" :key="index">
-            <template x-if="!field.readOnly ">
+            <template x-if="!field.readOnly">
               <div
-                class="container  px-0 bg-light max-w-form"
+                class="container px-0 max-w-form bg-body"
                 :class="{
-              'rounded-1': !preview,
-              'bg-warning-gradient bg-opacity-10': field.alert?.type === 'warning',
-              'bg-danger-gradient bg-opacity-10': field.alert?.type === 'danger',
-              'bg-info-gradient bg-opacity-10': field.alert?.type === 'info',
-              'bg-success-gradient bg-opacity-10': field.alert?.type === 'success',
+              'rounded rounded-3 overflow-hidden ': !preview,
+              'bg-warning-gradient': field.alert?.type === 'warning',
+              'bg-danger-gradient': field.alert?.type === 'danger',
+              'bg-info-gradient': field.alert?.type === 'info',
+              'bg-success-gradient': field.alert?.type === 'success',
               }">
                 <template x-if="field.type === 'form'">
-                  <div class="d-flex flex-column border rounded ">
+                  <div class="d-flex flex-column xxborder  ">
                     <div
                       class="d-flex align-items-center py-2 px-3 border-bottom">
                       <template x-if="advancedTool">
@@ -251,28 +251,32 @@
         <template x-if="!preview">
           <template x-for="(field, index) in fields" :key="index">
             <div
-              class="container rounded-1 px-0 max-w-form"
+              class="container rounded rounded-3 px-0 max-w-form bg-body"
               @click="select(index)"
               :style="{
                 '--bs-border-opacity': !field.readOnly ? '.5' : '1',
               }"
               :class="{
                 ...getClass(field, index),
-                'bg-light-subtle': !field.alert,
+                'opacity-50': field.readOnly
+                
               }">
               <div
-                class="container rounded-1 px-0  "
+                class="container px-0 rounded-3"
                 :class="{
-                  'py-1': density === 'compact',
-                  'py-2': density === 'default',
-                  'py-3': density === 'comfortable',
                   'bg-warning-gradient bg-opacity-10': field.alert?.type === 'warning',
                   'bg-danger-gradient bg-opacity-10': field.alert?.type === 'danger',
                   'bg-info-gradient bg-opacity-10': field.alert?.type === 'info',
                   'bg-success-gradient bg-opacity-10': field.alert?.type === 'success',
               }">
                 <template x-if="density !== 'compact'">
-                  <div class="row g-0 mb-1 border-bottom">
+                  <div
+                    class="row g-0 mb-1 border-bottom"
+                    :class="{
+                    'py-0': density === 'compact',
+                    'pt-1': density === 'default',
+                    'py-2': density === 'comfortable',
+                  }">
                     <div class="col-12">
                       <div class="d-flex justify-content-between">
                         <div class="d-flex">
@@ -347,17 +351,29 @@
                   </div>
                 </template>
                 <template x-if="field.type === 'form'">
-                  <div class="w-100 d-flex flex-column">
-                    <div class="py-2 px-3 border-bottom">
+                  <div
+                    class="w-100 d-flex flex-column"
+                    :class="{
+                    'py-0': density === 'compact',
+                    'pt-1': density === 'default',
+                    'py-2': density === 'comfortable',
+                  }">
+                    <!-- <div class="py-2 px-3 border-bottom">
                       <strong class="h5"> Inline form </strong>
-                    </div>
+                    </div> -->
                     <div class="w-100">
                       {{ partial "partials/field/inline-form.html" . }}
                     </div>
                   </div>
                 </template>
                 <template x-if="field.type !== 'form'">
-                  <div class="row g-0 pb-1">
+                  <div
+                    class="row g-0"
+                    :class="{
+                    'py-1': density === 'compact',
+                    'pt-2': density === 'default',
+                    'py-3': density === 'comfortable',
+                  }">
                     <label class="col-5 col-form-label" :for="field.id">
                       <div class="d-flex gap-2 align-items-start px-2">
                         <template
