@@ -6,6 +6,7 @@ export default function fieldComp() {
     devTool: false,
     advancedTool: false,
     currentFieldSelected: null,
+    currentStepActive: 2,
     currentStepSelected: 2,
     fields: [], // Will be initialized from localStorage
     steps: [], // Will be initialized from localStorage

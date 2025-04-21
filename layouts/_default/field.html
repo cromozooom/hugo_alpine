@@ -126,27 +126,30 @@
       </div>
     </div>
 
-    <div
-      class="bg-body d-flex justify-content-evenly px-3 shadow-sm border-bottom w-100">
+    <div class="bg-body d-flex justify-content-evenly px-3 w-100">
       <template x-for="(step, index) in steps" :key="index">
         <button
-          class="border-top-0 m-0 bg-transparent d-flex flex-column gap-1 flex-fill align-items-center btn-stepper mt-2 pt-3 pb-2"
+          class=" bg-transparent d-flex flex-column gap-1 flex-fill align-items-center btn-stepper mt-2 pt-2 pb-1"
           :class="{
           'text-body-tertiary bg-pattern-readOnly': step.readOnly,
           'text-body-tertiary bg-pattern-notReadOnly': !step.readOnly,
-          'stepSelected': currentStepSelected === index,
-          
+          'stepSelected bg-body-secondary rounded-top-3 xrounded-3 ring-3 ring-solid ring-offset-2 ring-selected': currentStepSelected === index,
         }">
-          <div class="d-flex z-2 bg-white">
+          <div
+            class="d-flex z-2 "
+            :cass="{
+              'bg-body': currentStepSelected !== index,
+              'bg-body-secondary': currentStepSelected === index,
+            }">
             <span
               style="width: 2.2rem;"
               :class="{
                 
               'border-dark border-2 border-doted': step.readOnly,
               'shadow-sm': !step.readOnly,
-              'ring-3 ring-solid ring-offset-2 ring-selected': currentStepSelected === index,
+              'ring-3 ring-solid ring-offset-2 ring-selected': ccurrentStepSelected === index,
             }"
-              class="rounded-circle d-block ratio ratio-1x1 rounded-full border d-flex align-items-center justify-content-center">
+              class="bg-white rounded-circle d-block ratio ratio-1x1 rounded-full border d-flex align-items-center justify-content-center">
               <small
                 :class="{
                   'opacity-50': step.readOnly
