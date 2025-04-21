@@ -5,8 +5,10 @@ export default function fieldComp() {
     validateTool: false,
     devTool: false,
     advancedTool: false,
-    currentSelected: null,
+    currentFieldSelected: null,
+    currentStepSelected: 2,
     fields: [], // Will be initialized from localStorage
+    steps: [], // Will be initialized from localStorage
     initialFIelds: [], // Will be initialized from localStorage
 
     // Initialize the component
@@ -16,14 +18,80 @@ export default function fieldComp() {
       if (storedData) {
         const parsedData = JSON.parse(storedData);
         this.fields = parsedData.fields || [];
+        this.steps = parsedData.steps || [];
         this.density = parsedData.density || 'default';
         this.validateTool = parsedData.validateTool || false;
         this.devTool = parsedData.devTool || false;
         this.preview = parsedData.preview || false;
         this.advancedTool = parsedData.advancedTool || false;
-        this.currentSelected = parsedData.currentSelected || null;
+        this.currentFieldSelected = parsedData.currentFieldSelected || null;
       } else {
         // Initialize with default fields if no data exists
+        this.steps = [
+          {
+            title: 'details',
+            label: 'Details',
+            id: 'step-01',
+            readOnly: false,
+            visible: true,
+            status: 'completed',
+            disabled: false,
+          },
+          {
+            title: 'financial objectives',
+            label: 'Financial Objectives',
+            id: 'step-02',
+            readOnly: true,
+            visible: true,
+            status: 'completed',
+            disabled: false,
+          },
+          {
+            title: 'communication details',
+            label: 'Communication Details',
+            id: 'step-03',
+            readOnly: false,
+            visible: true,
+            status: 'completed',
+            disabled: false,
+          },
+          {
+            title: 'hidden dynamic fields',
+            label: 'Hidden Dynamic Fields',
+            id: 'step-03',
+            readOnly: false,
+            visible: true,
+            status: 'completed',
+            disabled: false,
+          },
+          {
+            title: 'client specific',
+            label: 'Client Specific',
+            id: 'step-03',
+            readOnly: false,
+            visible: true,
+            status: 'completed',
+            disabled: false,
+          },
+          {
+            title: 'client specific',
+            label: 'Client Specific',
+            id: 'step-03',
+            readOnly: false,
+            visible: true,
+            status: 'completed',
+            disabled: false,
+          },
+          {
+            title: 'client specific',
+            label: 'Client Specific',
+            id: 'step-03',
+            readOnly: false,
+            visible: true,
+            status: 'completed',
+            disabled: false,
+          },
+        ];
         this.fields = [
           {
             name: 'Contact Category',
@@ -237,32 +305,33 @@ export default function fieldComp() {
       this.$watch('validateTool', () => this.saveToLocalStorage());
       this.$watch('devTool', () => this.saveToLocalStorage());
       this.$watch('advancedTool', () => this.saveToLocalStorage());
-      this.$watch('currentSelected', () => this.saveToLocalStorage());
+      this.$watch('currentFieldSelected', () => this.saveToLocalStorage());
     },
 
     // Save data to localStorage
     saveToLocalStorage() {
       const dataToStore = {
         fields: this.fields,
+        steps: this.steps,
         density: this.density,
         validateTool: this.validateTool,
         devTool: this.devTool,
         advancedTool: this.advancedTool,
         preview: this.preview,
-        currentSelected: this.currentSelected,
+        currentFieldSelected: this.currentFieldSelected,
       };
       localStorage.setItem('fieldData', JSON.stringify(dataToStore));
     },
 
     // Method to set the current selected index
     select(index) {
-      this.currentSelected = index;
+      this.currentFieldSelected = index;
     },
 
     togglePreview() {
       this.preview = !this.preview;
-      // if (this.currentSelected !== null) {
-      //   this.currentSelected = null;
+      // if (this.currentFieldSelected !== null) {
+      //   this.currentFieldSelected = null;
       // }
     },
     toggleValidate() {
@@ -285,7 +354,7 @@ export default function fieldComp() {
           classes['border-2'] = true;
           classes['border-doted'] = true;
           classes['text-body-tertiary'] = true;
-          if (index === this.currentSelected) {
+          if (index === this.currentFieldSelected) {
             classes['shadow-sm'] = true;
             classes['ring-3'] = true;
             classes['ring-solid'] = true;
@@ -297,7 +366,7 @@ export default function fieldComp() {
           classes['border'] = true;
           classes['border-1'] = true;
           classes['border-transparent'] = true;
-          if (index === this.currentSelected) {
+          if (index === this.currentFieldSelected) {
             classes['ring-3'] = true;
             classes['ring-solid'] = true;
             classes['ring-offset-2'] = true;
@@ -312,7 +381,7 @@ export default function fieldComp() {
           classes['border-dark'] = true;
           classes['border-2'] = true;
           classes['text-body-tertiary'] = true;
-          if (index === this.currentSelected) {
+          if (index === this.currentFieldSelected) {
             classes['ring-3'] = true;
             classes['ring-solid'] = true;
             classes['ring-offset-2'] = true;
@@ -321,7 +390,7 @@ export default function fieldComp() {
         } else {
           classes['border'] = true;
           classes['border-2'] = true;
-          if (index === this.currentSelected) {
+          if (index === this.currentFieldSelected) {
             classes['ring-3'] = true;
             classes['ring-solid'] = true;
             classes['ring-offset-2'] = true;

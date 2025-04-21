@@ -109,3 +109,62 @@ body {
 .max-w-form {
   max-width: 110ch;
 }
+
+.btn-stepper {
+  position: relative;
+  border-bottom: 5px solid transparent;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  &::after,
+  &::before {
+    content: "";
+    display: block;
+    width: 50%;
+    height: 2px;
+    position: absolute;
+    top: 2rem;
+    z-index: 0;
+
+    background-size: 100% 2px; // Full width, 1px height
+    background-repeat: repeat-x; // Repeat horizontally
+    background-position: top;
+  }
+  &::after {
+    right: 50%;
+  }
+  &::before {
+    left: 50%;
+  }
+}
+
+.bg-pattern-notReadOnly {
+  &::after,
+  &::before {
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--bs-gray-200) 4px,
+      var(--bs-gray-200) 6px
+    );
+  }
+}
+.bg-pattern-readOnly {
+  &::after,
+  &::before {
+    background-image: repeating-linear-gradient(
+      to right,
+      transparent,
+      transparent 3px,
+      var(--bs-gray-600) 3px,
+      var(--bs-gray-600) 6px
+    );
+  }
+}
+
+.z-2 {
+  z-index: 2 !important;
+}
+
+.stepSelected {
+  border-bottom: 5px solid var(--bs-info);
+}

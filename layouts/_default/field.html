@@ -2,7 +2,7 @@
   <div
     class="d-flex flex-column w-100 h-100 overflow-hidden"
     x-data="fieldComp">
-    <div class="container-fluid bg-light shadow-sm sticky-top border-bottom">
+    <div class="container-fluid bg-body shadow-sm sticky-top border-bottom">
       <div class="d-flex justify-content-between align-items-center">
         <div>
           <strong class="h4">
@@ -126,6 +126,45 @@
       </div>
     </div>
 
+    <div
+      class="bg-body d-flex justify-content-evenly px-3 shadow-sm border-bottom w-100">
+      <template x-for="(step, index) in steps" :key="index">
+        <button
+          class="border-top-0 m-0 bg-transparent d-flex flex-column gap-1 flex-fill align-items-center btn-stepper mt-2 pt-3 pb-2"
+          :class="{
+          'text-body-tertiary bg-pattern-readOnly': step.readOnly,
+          'text-body-tertiary bg-pattern-notReadOnly': !step.readOnly,
+          'stepSelected': currentStepSelected === index,
+          
+        }">
+          <div class="d-flex z-2 bg-white">
+            <span
+              style="width: 2.2rem;"
+              :class="{
+                
+              'border-dark border-2 border-doted': step.readOnly,
+              'shadow-sm': !step.readOnly,
+              'ring-3 ring-solid ring-offset-2 ring-selected': currentStepSelected === index,
+            }"
+              class="rounded-circle d-block ratio ratio-1x1 rounded-full border d-flex align-items-center justify-content-center">
+              <small
+                :class="{
+                  'opacity-50': step.readOnly
+                }"
+                class=" d-flex align-items-center justify-content-center"
+                x-text="index + 1">
+              </small>
+            </span>
+          </div>
+          <strong
+            :class="{
+            'opacity-50': step.readOnly
+          }">
+            <small x-text="step.label"> </small>
+          </strong>
+        </button>
+      </template>
+    </div>
     <div class="d-flex h-100 overflow-hidden bg-body-secondary">
       <div
         class="d-flex flex-column flex-grow-1 w-100 h-100 overflow-y-scroll"

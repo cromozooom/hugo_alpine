@@ -1,4 +1,4 @@
-<template x-if="currentSelected !== null">
+<template x-if="currentFieldSelected !== null">
   <div
     class="border-start w-40 h-100 d-flex overflow-hidden d-flex flex-column bg-body">
     <form
@@ -7,7 +7,7 @@
       <div class="flex-grow-1 overflow-y-auto d-flex flex-column gap-2">
         <div class="border-bottom bg-light p-2 shadow-sm sticky-top">
           <h5 class="h6 p-0 m-0">
-            Editor for <span x-text="fields[currentSelected].name"></span>
+            Editor for <span x-text="fields[currentFieldSelected].name"></span>
           </h5>
         </div>
         <div class="mb-3 px-3">
@@ -16,7 +16,7 @@
             type="text"
             id="fieldName"
             class="form-control"
-            x-model="fields[currentSelected].name" />
+            x-model="fields[currentFieldSelected].name" />
         </div>
         <div class="mb-3 px-3">
           <label for="fieldId" class="form-label">Id</label>
@@ -24,7 +24,7 @@
             type="text"
             id="fieldId"
             class="form-control"
-            x-model="fields[currentSelected].id" />
+            x-model="fields[currentFieldSelected].id" />
         </div>
         <div class="mb-3 px-3">
           <label for="fieldLabel" class="form-label">Label</label>
@@ -32,14 +32,14 @@
             type="text"
             id="fieldLabel"
             class="form-control"
-            x-model="fields[currentSelected].label" />
+            x-model="fields[currentFieldSelected].label" />
         </div>
         <div class="mb-3 px-3">
           <label for="fieldType" class="form-label">Type</label>
           <select
             id="fieldType"
             class="form-select"
-            x-model="fields[currentSelected].type">
+            x-model="fields[currentFieldSelected].type">
             <option value="text">Text</option>
             <option value="date">Date</option>
             <option value="switch">Switch</option>
@@ -52,25 +52,25 @@
           </select>
         </div>
         <template
-          x-if="!(fields[currentSelected].type === 'selector' || fields[currentSelected].type === 'checkbox')">
+          x-if="!(fields[currentFieldSelected].type === 'selector' || fields[currentFieldSelected].type === 'checkbox')">
           <div class="mb-3 px-3">
             <label for="fieldValue" class="form-label">Value</label>
             <input
               type="text"
               id="fieldValue"
               class="form-control"
-              x-model="fields[currentSelected].value" />
+              x-model="fields[currentFieldSelected].value" />
           </div>
         </template>
 
         <!-- New section for editing options -->
         <template
-          x-if="fields[currentSelected].type === 'selector' || fields[currentSelected].type === 'checkbox'">
+          x-if="fields[currentFieldSelected].type === 'selector' || fields[currentFieldSelected].type === 'checkbox'">
           <div class="mb-3 px-3 border-top border-bottom py-2">
             <label class="form-label">Options</label>
             <div class="d-flex flex-column gap-2">
               <template
-                x-for="(option, index) in fields[currentSelected].option"
+                x-for="(option, index) in fields[currentFieldSelected].option"
                 :key="index">
                 <div class="d-flex align-items-center gap-2">
                   <input
@@ -85,7 +85,7 @@
                   <button
                     type="button"
                     class="btn btn-outline-danger "
-                    @click="fields[currentSelected].option.splice(index, 1)">
+                    @click="fields[currentFieldSelected].option.splice(index, 1)">
                     Remove
                   </button>
                 </div>
@@ -94,7 +94,7 @@
                 <button
                   type="button"
                   class="btn btn-outline-primary  mt-2"
-                  @click="fields[currentSelected].option.push({ checked: false, label: '' })">
+                  @click="fields[currentFieldSelected].option.push({ checked: false, label: '' })">
                   Add Option
                 </button>
               </div>
@@ -107,7 +107,7 @@
             type="checkbox"
             id="fieldInline"
             class="form-check-input"
-            x-model="fields[currentSelected].inline" />
+            x-model="fields[currentFieldSelected].inline" />
         </div>
         <div class="mb-3 px-3">
           <label for="fieldMandatory" class="form-label">Mandatory</label>
@@ -115,7 +115,7 @@
             type="checkbox"
             id="fieldMandatory"
             class="form-check-input"
-            x-model="fields[currentSelected].mandatory" />
+            x-model="fields[currentFieldSelected].mandatory" />
         </div>
         <div class="mb-3 px-3">
           <label for="fieldReadOnly" class="form-label">Read-Only</label>
@@ -123,7 +123,7 @@
             type="checkbox"
             id="fieldReadOnly"
             class="form-check-input"
-            x-model="fields[currentSelected].readOnly" />
+            x-model="fields[currentFieldSelected].readOnly" />
         </div>
         <div class="mb-3 px-3">
           <label for="fieldHelp" class="form-label">Help Text</label>
@@ -131,7 +131,7 @@
             rows="6"
             id="fieldHelp"
             class="form-control"
-            x-model="fields[currentSelected].help"></textarea>
+            x-model="fields[currentFieldSelected].help"></textarea>
         </div>
       </div>
       <div class="d-flex justify-content-between w-100 border-top bg-light p-2">
