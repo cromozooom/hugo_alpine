@@ -6,8 +6,8 @@ export default function fieldComp() {
     devTool: false,
     advancedTool: false,
     currentFieldSelected: null,
-    currentStepActive: 2,
-    currentStepSelected: 2,
+    currentStepActive: 1,
+    currentStepSelected: 1,
     fields: [], // Will be initialized from localStorage
     steps: [], // Will be initialized from localStorage
     initialFIelds: [], // Will be initialized from localStorage
@@ -37,6 +37,7 @@ export default function fieldComp() {
             visible: true,
             status: 'completed',
             disabled: false,
+            formIndex: 0,
           },
           {
             title: 'financial objectives',
@@ -46,6 +47,7 @@ export default function fieldComp() {
             visible: true,
             status: 'completed',
             disabled: false,
+            formIndex: 0,
           },
           {
             title: 'communication details',
@@ -55,6 +57,7 @@ export default function fieldComp() {
             visible: true,
             status: 'completed',
             disabled: false,
+            formIndex: 0,
           },
           {
             title: 'hidden dynamic fields',
@@ -64,6 +67,7 @@ export default function fieldComp() {
             visible: true,
             status: 'completed',
             disabled: false,
+            formIndex: 0,
           },
           {
             title: 'client specific',
@@ -73,6 +77,7 @@ export default function fieldComp() {
             visible: true,
             status: 'completed',
             disabled: false,
+            formIndex: 0,
           },
           {
             title: 'client specific',
@@ -82,6 +87,7 @@ export default function fieldComp() {
             visible: true,
             status: 'completed',
             disabled: false,
+            formIndex: 0,
           },
           {
             title: 'client specific',
@@ -91,6 +97,7 @@ export default function fieldComp() {
             visible: true,
             status: 'completed',
             disabled: false,
+            formIndex: 0,
           },
         ];
         this.fields = [
