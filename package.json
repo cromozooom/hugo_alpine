@@ -16,7 +16,7 @@
 	"name": "hugo-starter-tailwind-basic",
 	"version": "0.1.0",
 	"dependencies": {
-		"@alpinejs/sort": "^3.14.7",
+		"@alpinejs/sort": "^3.14.9",
 		"alpinejs": "^3.14.3",
 		"tippy.js": "^6.3.7"
 	}

@@ -5,6 +5,7 @@ import fieldComp from './modules/fieldComp.js';
 import tippy from 'tippy.js';
 
 import storageManager from './modules/storageManager.js';
+// import Alpine from 'alpinejs'
 import sort from '@alpinejs/sort';
 
 document.addEventListener('DOMContentLoaded', () => {
