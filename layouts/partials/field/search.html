@@ -1,24 +1,23 @@
-<div class="p-2">
-  <input
-    type="text"
-    class="form-control"
-    placeholder="Try your best shot ..."
-    x-model="searchQuery"
-    @input="debounceSearch()" />
+<div>
+  <div class="sticky-top">
+    <div class="p-2 bg-white shadow-sm d-flex align-items-center gap-2">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Try your best shot ..."
+        x-model="searchQuery"
+        @input="debounceSearch()" />
+    </div>
+  </div>
 
-  <div class="mt-3">
+  <div class="mt-2">
     <div>
-      <template x-if="searchResults.fields.length">
-        <h5>Results</h5>
-      </template>
+      <!-- <template x-if="searchResults.fields.length">
+        <h5 class="px-2">Results</h5>
+      </template> -->
       <template
         x-if="searchResults.fields.length === 0 && searchQuery.trim() !== ''">
         <span>No results found</span>
-      </template>
-      <template x-if="searchQuery.trim() === ''">
-        <section>
-          {{ partial "partials/field/map.html" . }}
-        </section>
       </template>
       <div class="list-group">
         <template
@@ -31,16 +30,23 @@
           <strong>Matched Value:</strong>
           <span x-text="result.fieldValue"></span><br /> -->
 
-          <button
-            type="button"
-            class="list-group-item list-group-item-action"
-            @click="navigateToField(result.stepIndex, result.sectionIndex, result.fieldIndex)">
-            <span x-text="result.fieldName"> </span>
-          </button>
+          <div class="px-2 py-1 border-top">
+            <button
+              class="btn btn-link text-decoration-none w-100 text-start d-flex align-items-center gap-2"
+              type="button"
+              @click="navigateToField(result.stepIndex, result.sectionIndex, result.fieldIndex)">
+              <small x-text="result.fieldName"> </small>
+            </button>
+          </div>
 
           <!-- <a href="#" class="list-group-item list-group-item-action">A second link item</a> -->
         </template>
       </div>
     </div>
   </div>
+  <template x-if="searchQuery.trim() === ''">
+    <section>
+      {{ partial "partials/field/map.html" . }}
+    </section>
+  </template>
 </div>

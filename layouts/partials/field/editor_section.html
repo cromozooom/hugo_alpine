@@ -2,43 +2,6 @@
   <div>
     <template x-if="!addSectionVisible">
       <section class="">
-        <template
-          x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
-          <div class="border-top xborder-bottom p-2">
-            <strong>
-              <small>Sections</small>
-            </strong>
-            <div class="d-flex flex-column rounded border" x-sort>
-              <template
-                x-for="(section, sectionIndex) in form.steps[currentStepSelected]?.sections"
-                :key="sectionIndex">
-                <div
-                  x-sort:section
-                  class=" px-2 py-2 d-flex justify-content-between align-items-center"
-                  :class="{
-                        'border-top': sectionIndex !== 0,
-                      }">
-                  <div class="d-flex align-items-center gap-2">
-                    <span class="cursor-move me-2">
-                      {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
-                    </span>
-                    <span x-text="section.label"></span>
-                  </div>
-                  <div>
-                    <div class="btn-group">
-                      <button class="btn btn-link btn-sm">
-                        {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
-                      </button>
-                      <button class="btn btn-link btn-sm">
-                        {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </template>
-            </div>
-          </div>
-        </template>
         <div class="px-2 py-2 border-top">
           <strong>
             <small>Edit Section</small>

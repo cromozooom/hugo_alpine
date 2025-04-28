@@ -1,40 +1,90 @@
 <section class="border-bottom">
-  <div x-data="{ message: 'Alpine.js is working!' }">
-    <p x-text="message"></p>
+  <div class="d-flex justify-content-end mb-2">
+    <button
+      class="btn btn-primary btn-sm me-2"
+      @click="form.steps.forEach(step => step.collapsed = false); form.steps.forEach(step => step.sections.forEach(section => section.collapsed = false))">
+      Expand All
+    </button>
+    <button
+      class="btn btn-secondary btn-sm"
+      @click="form.steps.forEach(step => step.collapsed = true); form.steps.forEach(step => step.sections.forEach(section => section.collapsed = true))">
+      Collapse All
+    </button>
   </div>
 
-  <ul x-sort>
-    <li x-sort:item>foo</li>
-    <li x-sort:item>bar</li>
-    <li x-sort:item>baz</li>
-  </ul>
-
   <!-- Sortable Steps -->
-  <div x-sort="form.steps" class="sortable-steps">
+  <div class="sortable-steps">
     <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
-      <div class="border-top" x-sort:item>
-        <div class="px-2 py-2">
-          <strong x-text="(stepIndex + 1) + '. ' + step.title"></strong>
+      <div class="border-top">
+        <div class="ps-2 py-2">
+          <div
+            @click="selectAndScroll(stepIndex)"
+            class="d-flex align-items-center">
+            <div class="flex-grow-1">
+              <span x-sort:handle class="cursor-move me-2">
+                {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
+              </span>
+              <strong x-text="(stepIndex + 1) + '. ' + step.title"></strong>
+            </div>
+            <div>
+              <button
+                class="btn btn-link btn-sm"
+                @click.stop="step.collapsed = !step.collapsed">
+                <span x-text="step.collapsed ? 'Expand' : 'Collapse'"></span>
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- Sortable Sections -->
-        <section class="border-top">
-          <div x-sort="step.sections" class="sortable-sections">
+        <section class="border-top" x-show="!step.collapsed">
+          <div class="sortable-sections">
             <template
               x-for="(section, sectionIndex) in step.sections"
               :key="sectionIndex">
-              <div x-sort:item>
-                <div class="px-2 py-2">
-                  <span x-text="section.title"></span>
+              <div>
+                <div class="d-flex ps-2 py-2 align-items-center">
+                  <div
+                    class="flex-grow-1"
+                    @click="select(stepIndex, sectionIndex, 0)">
+                    <span x-sort:handle class="cursor-move me-2">
+                      {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
+                    </span>
+                    <span x-text="section.title"></span>
+                  </div>
+                  <div>
+                    <button
+                      class="btn btn-link btn-sm"
+                      @click.stop="section.collapsed = !section.collapsed">
+                      <span
+                        x-text="section.collapsed ? 'Expand' : 'Collapse'"></span>
+                    </button>
+                  </div>
                 </div>
                 <!-- Sortable Fields -->
-                <section class="border-bottom">
-                  <div x-sort="section.fields" class="sortable-fields">
+                <section class="border-bottom" x-show="!section.collapsed">
+                  <div x-sort class="sortable-fields">
                     <template
                       x-for="(field, fieldIndex) in section.fields"
                       :key="fieldIndex">
-                      <div class="border-top py-2 px-4" x-sort:item>
-                        <span x-text="field.label"></span>
+                      <div
+                        @click="navigateToField(stepIndex, sectionIndex, fieldIndex)"
+                        class="border-top py-1 ps-4 d-flex"
+                        x-sort:item>
+                        <div
+                          class="d-flex align-items-center gap-2 flex-grow-1">
+                          <span x-sort:handle class="cursor-move me-2">
+                            {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
+                          </span>
+                          <small x-text="field.label"></small>
+                        </div>
+                        <div>
+                          <button
+                            class="btn btn-link btn-sm"
+                            @click="deleteField(fieldIndex)">
+                            {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+                          </button>
+                        </div>
                       </div>
                     </template>
                   </div>
@@ -47,33 +97,3 @@
     </template>
   </div>
 </section>
-
-<!-- <section class="border-bottom">
-  <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
-    <div class="border-top">
-      <div class="px-2 py-2">
-        <strong x-text="step.title"></strong>
-      </div>
-      <section class="border-top">
-        <template
-          x-for="(section, sectionIndex) in step.sections"
-          :key="sectionIndex">
-          <div>
-            <div class="px-2 py-2">
-              <span x-text="section.title"></span>
-            </div>
-            <section class="border-bottom">
-              <template
-                x-for="(field, fieldIndex) in section.fields"
-                :key="fieldIndex">
-                <div class="border-top py-2 px-4">
-                  <span x-text="field.label"></span>
-                </div>
-              </template>
-            </section>
-          </div>
-        </template>
-      </section>
-    </div>
-  </template>
-</section> -->

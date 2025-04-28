@@ -1,6 +1,3 @@
-// import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js';
-// import fieldComp from './modules/fieldComp.js';
-// import Alpine from './modules/module.esm.js';
 import Alpine from 'alpinejs';
 import sortPlugin from '@alpinejs/sort';
 
@@ -9,31 +6,14 @@ import tippy from 'tippy.js';
 
 import storageManager from './modules/storageManager.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+// Register Alpine.js components and start Alpine
+document.addEventListener('alpine:init', () => {
   console.log('Alpine.js is initializing...');
+
+  // Register Alpine.js components
   Alpine.data('fieldComp', fieldComp);
   Alpine.data('storageManager', storageManager);
-  // Start Alpine
-  Alpine.start();
-  Alpine.plugin(sortPlugin);
-  // console.log('Alpine.js initialized:', Alpine);
-  // console.log('Sort plugin loaded:', sortPlugin);
-});
 
-Alpine.magic('tooltip', (el) => (message, duration = 1000) => {
-  let instance = tippy(el, { content: message, trigger: 'manual' });
-
-  instance.show();
-
-  setTimeout(() => {
-    instance.hide();
-
-    setTimeout(() => instance.destroy(), 50);
-  }, duration);
-});
-
-document.addEventListener('alpine:init', () => {
-  // TOOLTYP start
   // Magic: $tooltip
   Alpine.magic('tooltip', (el) => (message) => {
     let instance = tippy(el, { content: message, trigger: 'manual' });
@@ -51,5 +31,9 @@ document.addEventListener('alpine:init', () => {
   Alpine.directive('tooltip', (el, { expression }) => {
     tippy(el, { content: expression });
   });
-  // TOOLTYP end
 });
+
+// Register the sort plugin BEFORE starting Alpine.js
+Alpine.plugin(sortPlugin);
+// Start Alpine.js
+Alpine.start();

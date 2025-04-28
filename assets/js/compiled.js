@@ -10200,22 +10200,11 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ''}`,
   }
 
   // <stdin>
-  document.addEventListener('DOMContentLoaded', () => {
+  module_default.plugin(module_default2);
+  document.addEventListener('alpine:init', () => {
     console.log('Alpine.js is initializing...');
     module_default.data('fieldComp', fieldComp);
     module_default.data('storageManager', storageManager);
-    module_default.start();
-    module_default.plugin(module_default2);
-  });
-  module_default.magic('tooltip', (el) => (message, duration = 1e3) => {
-    let instance = tippy_esm_default(el, { content: message, trigger: 'manual' });
-    instance.show();
-    setTimeout(() => {
-      instance.hide();
-      setTimeout(() => instance.destroy(), 50);
-    }, duration);
-  });
-  document.addEventListener('alpine:init', () => {
     module_default.magic('tooltip', (el) => (message) => {
       let instance = tippy_esm_default(el, { content: message, trigger: 'manual' });
       instance.show();
@@ -10228,6 +10217,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ''}`,
       tippy_esm_default(el, { content: expression });
     });
   });
+  module_default.start();
 })();
 /*! Bundled license information:
 
