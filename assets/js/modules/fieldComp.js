@@ -68,11 +68,12 @@ export default function fieldComp() {
         this.devTool = parsedData.devTool || false;
         this.preview = parsedData.preview || false;
         this.advancedTool = parsedData.advancedTool || false;
-        this.currentStepSelected = parsedData.currentStepSelected || null;
-        this.currentSectionSelected = parsedData.currentSectionSelected || null;
-        this.currentFieldSelected = parsedData.currentFieldSelected || null;
-        this.addStepVisible = parsedData.addStepVisible || null;
-        this.addSectionVisible = parsedData.addSectionVisible || null;
+        this.currentStepSelected = parsedData.currentStepSelected || 0;
+        this.currentSectionSelected = parsedData.currentSectionSelected || 0;
+        this.currentFieldSelected = parsedData.currentFieldSelected || 0;
+        this.addStepVisible = parsedData.addStepVisible || 0;
+        this.addSectionVisible = parsedData.addSectionVisible || 0;
+        this.currentEditorSelected = parsedData.currentEditorSelected ?? 'form';
       } else {
         // Initialize with default fields if no data exists
         this.form = {
@@ -505,6 +506,12 @@ export default function fieldComp() {
             },
           ],
         };
+        this.addStepVisible = false;
+        this.addSectionVisible = false;
+        this.currentStepSelected = 0;
+        this.currentSectionSelected = 0;
+        this.currentFieldSelected = 0;
+        this.currentEditorSelected = 'form';
       }
 
       // Ensure $watch is called after initialization
@@ -655,6 +662,8 @@ export default function fieldComp() {
     // Method to set the current selected index
     selectEditor(editor) {
       if (this.currentEditorSelected === editor) {
+        console.log('Editor selected:', this.currentEditorSelected);
+        console.log('Editor already selected:', editor);
         this.currentEditorSelected = null;
       } else {
         this.currentEditorSelected = editor;
@@ -855,6 +864,18 @@ export default function fieldComp() {
 
       this.saveToLocalStorage();
       alert('Field added successfully!');
+    },
+
+    editField(fieldIndex) {
+      this.currentFieldSelected = fieldIndex;
+      this.currentEditorSelected = 'field'; // Switch to field editor
+    },
+
+    deleteField(fieldIndex) {
+      if (confirm('Are you sure you want to delete this field?')) {
+        this.form.steps[this.currentStepSelected].sections[this.currentSectionSelected].fields.splice(fieldIndex, 1);
+        this.saveToLocalStorage(); // Save changes to local storage
+      }
     },
 
     selectStep(stepIndex) {

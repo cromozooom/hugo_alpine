@@ -7,6 +7,46 @@
             No sections available for this step.
           </div>
         </template>
+        <!-- Step Editor -->
+        <div class="p-2 border-top">
+          <div class="pb-2">
+            <strong><small>Steps</small></strong>
+          </div>
+          <div class="d-flex flex-column rounded border" x-sort>
+            <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
+              <div
+                x-sort:step
+                @click="selectStep(stepIndex)"
+                class="cursor-pointer px-2 py-2 d-flex justify-content-between align-items-center"
+                :class="{
+                'border-top': stepIndex !== 0,
+              }">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="cursor-move">
+                    {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
+                  </span>
+                  <span x-text="step.label"></span>
+                </div>
+                <div>
+                  <div class="btn-group">
+                    <button
+                      class="btn btn-link btn-sm"
+                      @click="trashStep(stepIndex)">
+                      {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+                    </button>
+                    <button
+                      :disabled="currentStepSelected === stepIndex"
+                      class="btn btn-link btn-sm"
+                      @click="selectStep(stepIndex)">
+                      {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+
         <!-- Add form to edit current selected Step -->
         <div class="border-top p-2">
           <strong>
@@ -71,8 +111,8 @@
                 type="checkbox"
                 id="stepReadOnly"
                 class="form-check-input"
-                x-model="form?.steps[currentStepSelected]?.readOnly || false" />
-              <label for="stepReadOnly" class="form-check-label"
+                x-model="form.steps[currentStepSelected].readOnly" />
+              <label for="stepReadOnly" class="d-none form-check-label"
                 >Is Read-Only</label
               >
             </div>
@@ -80,40 +120,6 @@
               Save Step
             </button>
           </form>
-        </div>
-        <div class="border-top border-bottom p-2">
-          <strong>
-            <small>Sections:</small>
-          </strong>
-          <div class="d-flex flex-column rounded border" x-sort>
-            <template
-              x-for="(section, sectionIndex) in form.steps[currentStepSelected]?.sections"
-              :key="sectionIndex">
-              <div
-                x-sort:section
-                class=" px-2 py-2 d-flex justify-content-between align-items-center"
-                :class="{
-                      'border-top': sectionIndex !== 0,
-                    }">
-                <div class="d-flex align-items-center gap-2">
-                  <span class="cursor-move me-2">
-                    {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
-                  </span>
-                  <span x-text="section.label"></span>
-                </div>
-                <div>
-                  <div class="btn-group">
-                    <button class="btn btn-link btn-sm">
-                      {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
-                    </button>
-                    <button class="btn btn-link btn-sm">
-                      {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </template>
-          </div>
         </div>
       </div>
     </template>
@@ -157,7 +163,7 @@
             <div class="d-flex justify-content-between">
               <div>
                 <button
-                  class="btn btn-sm btn-outline-primary"
+                  class="btn btn-sm btn-link"
                   @click="toggleAddStepVisible()">
                   Cancel
                 </button>

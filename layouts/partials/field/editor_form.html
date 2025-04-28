@@ -150,41 +150,5 @@
         </div>
       </div>
     </div>
-
-    <!-- Step Editor -->
-    <div class="p-2 border-top">
-      <strong><small>Steps:</small></strong>
-      <div class="d-flex flex-column rounded border" x-sort>
-        <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
-          <div
-            x-sort:step
-            class="px-2 py-2 d-flex justify-content-between align-items-center"
-            :class="{
-                'border-top': stepIndex !== 0,
-              }">
-            <div class="d-flex align-items-center gap-2">
-              <span class="cursor-move">
-                {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
-              </span>
-              <span x-text="step.label"></span>
-            </div>
-            <div>
-              <div class="btn-group">
-                <button
-                  class="btn btn-link btn-sm"
-                  @click="trashStep(stepIndex)">
-                  {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
-                </button>
-                <button
-                  class="btn btn-link btn-sm"
-                  @click="selectStep(stepIndex)">
-                  {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
-                </button>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-    </div>
   </div>
 </template>

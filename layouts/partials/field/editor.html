@@ -67,7 +67,7 @@
               type="button"
               @click="selectEditor('step')">
               <strong>
-                <span x-text="currentStepSelected"></span>
+                <!-- <span x-text="currentStepSelected"></span> -->
                 Step
               </strong>
             </button>
@@ -76,8 +76,9 @@
             <div class="btn-group">
               <button
                 @click="toggleAddStepVisible()"
+                :disable="addStepVisible"
                 class="btn btn-link"
-                x-tooltip="Step audit">
+                x-tooltip="Add step">
                 {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
               </button>
               <button class="btn btn-link" x-tooltip="Step audit">
@@ -99,7 +100,7 @@
               type="button"
               @click="selectEditor('section')">
               <strong>
-                <span x-text="currentSectionSelected"></span>
+                <!-- <span x-text="currentSectionSelected"></span> -->
                 Section
               </strong>
             </button>
@@ -108,7 +109,7 @@
             <div class="btn-group">
               <button
                 class="btn btn-link"
-                x-tooltip="Add ection"
+                x-tooltip="Add section"
                 @click="toggleAddSectionVisible()">
                 {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
               </button>
@@ -131,12 +132,12 @@
               type="button"
               @click="selectEditor('field')">
               <strong>
-                <template x-if="currentFieldSelected !== null">
+                <!-- <template x-if="currentFieldSelected !== null">
                   <span x-text="currentFieldSelected"></span>
-                </template>
+                </template> -->
                 Field
-                <span
-                  x-text="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.name || 'N/A'"></span>
+                <!-- <span
+                  x-text="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.name || 'N/A'"></span> -->
               </strong>
             </button>
           </div>

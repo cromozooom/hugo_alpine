@@ -1,8 +1,51 @@
 <template x-if="currentEditorSelected === 'field'">
   <section>
+    <template
+      x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
+      <div class=" border-bottom p-2">
+        <div class="pb-2">
+          <strong><small>Fields</small></strong>
+        </div>
+
+        <div class="d-flex flex-column rounded border" x-sort>
+          <template
+            x-for="(field, fieldIndex) in form.steps[currentStepSelected]?.sections?.[currentSectionSelected]?.fields"
+            :key="fieldIndex">
+            <div
+              x-sort:field
+              class="px-2 py-2 d-flex justify-content-between align-items-center"
+              :class="{
+                              'border-top': fieldIndex !== 0,
+                            }">
+              <div class="d-flex align-items-center gap-2">
+                <span class="cursor-move me-2">
+                  {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
+                </span>
+                <span x-text="field.label"></span>
+              </div>
+              <div>
+                <div class="btn-group">
+                  <button
+                    class="btn btn-link btn-sm"
+                    @click="deleteField(fieldIndex)">
+                    {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+                  </button>
+                  <button
+                    class="btn btn-link btn-sm"
+                    @click="editField(fieldIndex)">
+                    {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </template>
+
     <div class="py-2">
       <strong class="px-2">
-        <small> edit field </small>
+        <small> Edit field </small>
       </strong>
       <div class="my-2 px-2">
         <label for="fieldName" class="form-label">Name</label>

@@ -17,10 +17,6 @@ body {
   scrollbar-width: thin;
 }
 
-.cursor-move {
-  cursor: move;
-}
-
 .max-width-45rem {
   max-width: 45rem;
 }
@@ -181,6 +177,12 @@ body {
 
 .w-110ch {
   width: 110ch !important;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.cursor-move {
+  cursor: move;
 }
 
 // .stepSelected {
