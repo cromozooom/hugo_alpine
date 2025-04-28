@@ -1,73 +1,136 @@
 <template x-if="currentEditorSelected === 'section'">
-  <section class="">
-    <div class="px-2 py-2 border-top">
-      <strong>
-        <small>Edit Section</small>
-      </strong>
+  <template x-if="!addSectionVisible">
+    <section class="">
+      <div class="px-2 py-2 border-top">
+        <strong>
+          <small>Edit Section</small>
+        </strong>
+        <template
+          x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
+          <form class="py-2" @submit.prevent="saveToLocalStorage">
+            <div class="mb-3">
+              <label for="sectionTitle" class="form-label">Section Title</label>
+              <input
+                type="text"
+                id="sectionTitle"
+                class="form-control"
+                x-model="form.steps[currentStepSelected].sections[currentSectionSelected].title"
+                placeholder="Enter section title"
+                required />
+            </div>
+            <div class="mb-3">
+              <label for="sectionLabel" class="form-label">Section Label</label>
+              <input
+                type="text"
+                id="sectionLabel"
+                class="form-control"
+                x-model="form.steps[currentStepSelected].sections[currentSectionSelected].label"
+                placeholder="Enter section label"
+                required />
+            </div>
+            <button type="submit" class="btn btn-sm btn-outline-primary">
+              Save section
+            </button>
+          </form>
+        </template>
+        <template
+          x-if="!form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
+          <div class="alert alert-info mb-0" role="alert">
+            No section selected or available for this step.
+          </div>
+        </template>
+      </div>
       <template
         x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
-        <form class="py-2" @submit.prevent="saveToLocalStorage">
+        <div class="border-top border-bottom p-2">
+          <strong>
+            <small>Fields:</small>
+          </strong>
+
+          <div class="d-flex flex-column rounded border" x-sort>
+            <template
+              x-for="(field, fieldIndex) in form.steps[currentStepSelected]?.sections?.[currentSectionSelected]?.fields"
+              :key="fieldIndex">
+              <div
+                x-sort:field
+                class="px-2 py-2 d-flex justify-content-between align-items-center"
+                :class="{
+                        'border-top': fieldIndex !== 0,
+                      }">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="cursor-move me-2">
+                    {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
+                  </span>
+                  <span x-text="field.label"></span>
+                </div>
+                <div>
+                  <div class="btn-group">
+                    <button
+                      class="btn btn-link btn-sm"
+                      @click="deleteField(fieldIndex)">
+                      {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+                    </button>
+                    <button
+                      class="btn btn-link btn-sm"
+                      @click="editField(fieldIndex)">
+                      {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </template>
+    </section>
+  </template>
+  <template x-if="addSectionVisible">
+    <section class="">
+      <div class="px-2 border-top pb-3">
+        <strong class=" mt-3">
+          <small>Add a New Section</small>
+        </strong>
+        <form @submit.prevent="addSection">
           <div class="mb-3">
-            <label for="sectionTitle" class="form-label">Section Title</label>
+            <label for="newSectionTitle" class="form-label"
+              >Section Title</label
+            >
             <input
               type="text"
-              id="sectionTitle"
+              id="newSectionTitle"
               class="form-control"
-              x-model="form.steps[currentStepSelected].sections[currentSectionSelected].title"
+              x-model="newSection.title"
               placeholder="Enter section title"
               required />
           </div>
           <div class="mb-3">
-            <label for="sectionLabel" class="form-label">Section Label</label>
+            <label for="newSectionLabel" class="form-label"
+              >Section Label</label
+            >
             <input
               type="text"
-              id="sectionLabel"
+              id="newSectionLabel"
               class="form-control"
-              x-model="form.steps[currentStepSelected].sections[currentSectionSelected].label"
+              x-model="newSection.label"
               placeholder="Enter section label"
               required />
           </div>
-          <button type="submit" class="btn btn-sm btn-outline-primary">
-            Save section
-          </button>
+          <div class="d-flex justify-content-between">
+            <div>
+              <button
+                @click="toggleAddSectionVisible()"
+                class="btn btn-sm btn-outline-primary">
+                Cancel
+              </button>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-sm btn-outline-primary">
+                Add Section
+              </button>
+            </div>
+          </div>
         </form>
-      </template>
-      <template
-        x-if="!form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
-        <div class="alert alert-info mb-0" role="alert">
-          No section selected or available for this step.
-        </div>
-      </template>
-    </div>
-    <div class="px-2 border-top pb-3">
-      <strong class=" mt-3">
-        <small>Add a New Section</small>
-      </strong>
-      <form @submit.prevent="addSection">
-        <div class="mb-3">
-          <label for="newSectionTitle" class="form-label">Section Title</label>
-          <input
-            type="text"
-            id="newSectionTitle"
-            class="form-control"
-            x-model="newSection.title"
-            placeholder="Enter section title"
-            required />
-        </div>
-        <div class="mb-3">
-          <label for="newSectionLabel" class="form-label">Section Label</label>
-          <input
-            type="text"
-            id="newSectionLabel"
-            class="form-control"
-            x-model="newSection.label"
-            placeholder="Enter section label"
-            required />
-        </div>
-        <button type="submit" class="btn btn-sm btn-outline-primary">
-          Add Section
-        </button>
-      </form>
-    </div>
-  </section>
+      </div>
+    </section>
+  </template>
 </template>

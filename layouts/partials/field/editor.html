@@ -63,7 +63,7 @@
           :class="{'shadow-sm' : currentEditorSelected === 'step'}">
           <div class="flex-grow-1">
             <button
-              class="btn btn-link btn-sm text-decoration-none w-100 text-start  text-align-start"
+              class="btn btn-link btn-sm text-decoration-none w-100 text-start text-align-start"
               type="button"
               @click="selectEditor('step')">
               <strong>
@@ -74,6 +74,12 @@
           </div>
           <div>
             <div class="btn-group">
+              <button
+                @click="toggleAddStepVisible()"
+                class="btn btn-link"
+                x-tooltip="Step audit">
+                {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
+              </button>
               <button class="btn btn-link" x-tooltip="Step audit">
                 {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
               </button>
@@ -100,6 +106,12 @@
           </div>
           <div>
             <div class="btn-group">
+              <button
+                class="btn btn-link"
+                x-tooltip="Add ection"
+                @click="toggleAddSectionVisible()">
+                {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
+              </button>
               <button class="btn btn-link" x-tooltip="Section audit">
                 {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
               </button>

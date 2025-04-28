@@ -1,7 +1,7 @@
 <template x-if="currentEditorSelected === 'form'">
   <div class="d-flex flex-column gap-2">
     <div class="p-2">
-      <strong><small>All the fields in the world</small></strong>
+      <strong><small>Edit Form</small></strong>
       <div class="d-flex flex-column mt-2">
         <div class="mb-3">
           <label for="formName" class="form-label">Form Name</label>
@@ -153,7 +153,7 @@
 
     <!-- Step Editor -->
     <div class="p-2 border-top">
-      <strong><small>Step Editor</small></strong>
+      <strong><small>Steps:</small></strong>
       <div class="d-flex flex-column rounded border" x-sort>
         <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
           <div

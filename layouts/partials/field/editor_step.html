@@ -1,152 +1,176 @@
 <template x-if="currentEditorSelected === 'step'">
   <section>
-    <template x-if="!form.steps[currentStepSelected]?.sections?.length">
-      <div class="alert alert-info m-2" role="alert">
-        No sections available for this step.
-      </div>
-    </template>
-    <!-- Add form to edit current selected Step -->
-    <div class="border-top p-2">
-      <strong>
-        <small>Edit Step</small>
-      </strong>
-      <form class="pt-2" @submit.prevent="saveToLocalStorage">
-        <div class="mb-3">
-          <label for="stepTitle" class="form-label">Step Title</label>
-          <input
-            type="text"
-            id="stepTitle"
-            class="form-control"
-            x-model="form.steps[currentStepSelected].title"
-            placeholder="Enter step title"
-            required />
-        </div>
-        <div class="mb-3">
-          <label for="stepLabel" class="form-label">Step Label</label>
-          <input
-            type="text"
-            id="stepLabel"
-            class="form-control"
-            x-model="form.steps[currentStepSelected].label"
-            placeholder="Enter step label"
-            required />
-        </div>
-        <div class="mb-3">
-          <label for="stepId" class="form-label">Step ID</label>
-          <input
-            type="text"
-            id="stepId"
-            class="form-control"
-            x-model="form.steps[currentStepSelected].id"
-            placeholder="Enter step ID"
-            required />
-        </div>
-        <div class="mb-3">
-          <label for="stepStatus" class="form-label">Status</label>
-          <select
-            id="stepStatus"
-            class="form-select"
-            x-model="form.steps[currentStepSelected].status">
-            <option value="pending">Pending</option>
-            <option value="completed">Completed</option>
-            <option value="in-progress">In Progress</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="stepVisible" class="form-label">Visible</label>
-          <input
-            type="checkbox"
-            id="stepVisible"
-            class="form-check-input"
-            x-model="form.steps[currentStepSelected].visible" />
-          <label for="stepVisible" class="form-check-label">Is Visible</label>
-        </div>
-        <div class="mb-3">
-          <label for="stepReadOnly" class="form-label">Read-Only</label>
-          <input
-            type="checkbox"
-            id="stepReadOnly"
-            class="form-check-input"
-            x-model="form.steps[currentStepSelected]?.readOnly || false" />
-          <label for="stepReadOnly" class="form-check-label"
-            >Is Read-Only</label
-          >
-        </div>
-        <button type="submit" class="btn btn-sm btn-outline-primary">
-          Save Step
-        </button>
-      </form>
-    </div>
-    <div class="border-top border-bottom p-2">
-      <strong>
-        <small>steps:</small>
-      </strong>
-      <div class="d-flex flex-column rounded border" x-sort>
-        <template
-          x-for="(section, sectionIndex) in form.steps[currentStepSelected]?.sections"
-          :key="sectionIndex">
-          <div
-            x-sort:section
-            class=" px-2 py-2 d-flex justify-content-between align-items-center"
-            :class="{
-                'border-top': sectionIndex !== 0,
-              }">
-            <div class="d-flex align-items-center gap-2">
-              <span class="cursor-move me-2">
-                {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
-              </span>
-              <span x-text="section.label"></span>
-            </div>
-            <div>
-              <button class="btn btn-link btn-sm">
-                {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
-              </button>
-            </div>
+    <template x-if="!addStepVisible">
+      <div>
+        <template x-if="!form.steps[currentStepSelected]?.sections?.length">
+          <div class="alert alert-info m-2" role="alert">
+            No sections available for this step.
           </div>
         </template>
+        <!-- Add form to edit current selected Step -->
+        <div class="border-top p-2">
+          <strong>
+            <small>Edit Step</small>
+          </strong>
+          <form class="pt-2" @submit.prevent="saveToLocalStorage">
+            <div class="mb-3">
+              <label for="stepTitle" class="form-label">Step Title</label>
+              <input
+                type="text"
+                id="stepTitle"
+                class="form-control"
+                x-model="form.steps[currentStepSelected].title"
+                placeholder="Enter step title"
+                required />
+            </div>
+            <div class="mb-3">
+              <label for="stepLabel" class="form-label">Step Label</label>
+              <input
+                type="text"
+                id="stepLabel"
+                class="form-control"
+                x-model="form.steps[currentStepSelected].label"
+                placeholder="Enter step label"
+                required />
+            </div>
+            <div class="mb-3">
+              <label for="stepId" class="form-label">Step ID</label>
+              <input
+                type="text"
+                id="stepId"
+                class="form-control"
+                x-model="form.steps[currentStepSelected].id"
+                placeholder="Enter step ID"
+                required />
+            </div>
+            <div class="mb-3">
+              <label for="stepStatus" class="form-label">Status</label>
+              <select
+                id="stepStatus"
+                class="form-select"
+                x-model="form.steps[currentStepSelected].status">
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+                <option value="in-progress">In Progress</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="stepVisible" class="form-label">Visible</label>
+              <input
+                type="checkbox"
+                id="stepVisible"
+                class="form-check-input"
+                x-model="form.steps[currentStepSelected].visible" />
+              <label for="stepVisible" class="form-check-label"
+                >Is Visible</label
+              >
+            </div>
+            <div class="mb-3">
+              <label for="stepReadOnly" class="form-label">Read-Only</label>
+              <input
+                type="checkbox"
+                id="stepReadOnly"
+                class="form-check-input"
+                x-model="form?.steps[currentStepSelected]?.readOnly || false" />
+              <label for="stepReadOnly" class="form-check-label"
+                >Is Read-Only</label
+              >
+            </div>
+            <button type="submit" class="btn btn-sm btn-outline-primary">
+              Save Step
+            </button>
+          </form>
+        </div>
+        <div class="border-top border-bottom p-2">
+          <strong>
+            <small>Sections:</small>
+          </strong>
+          <div class="d-flex flex-column rounded border" x-sort>
+            <template
+              x-for="(section, sectionIndex) in form.steps[currentStepSelected]?.sections"
+              :key="sectionIndex">
+              <div
+                x-sort:section
+                class=" px-2 py-2 d-flex justify-content-between align-items-center"
+                :class="{
+                      'border-top': sectionIndex !== 0,
+                    }">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="cursor-move me-2">
+                    {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
+                  </span>
+                  <span x-text="section.label"></span>
+                </div>
+                <div>
+                  <div class="btn-group">
+                    <button class="btn btn-link btn-sm">
+                      {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+                    </button>
+                    <button class="btn btn-link btn-sm">
+                      {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class=" p-2">
-      <div>
-        <strong>
-          <small>Add a New Step</small>
-        </strong>
-        <form class="py-2" @submit.prevent="addStep">
-          <div class="mb-3">
-            <label for="stepTitle" class="form-label">Step Title</label>
-            <input
-              type="text"
-              id="stepTitle"
-              class="form-control"
-              x-model="newStep.title"
-              placeholder="Enter step title"
-              required />
-          </div>
-          <div class="mb-3">
-            <label for="stepLabel" class="form-label">Step Label</label>
-            <input
-              type="text"
-              id="stepLabel"
-              class="form-control"
-              x-model="newStep.label"
-              placeholder="Enter step label"
-              required />
-          </div>
-          <div class="mb-3">
-            <label for="stepId" class="form-label">Step ID</label>
-            <input
-              type="text"
-              id="stepId"
-              class="form-control"
-              x-model="newStep.id"
-              placeholder="Enter step ID"
-              required />
-          </div>
-          <button type="submit" class="btn btn-sm btn-outline-primary">
-            Add Step
-          </button>
-        </form>
+    </template>
+    <template x-if="addStepVisible">
+      <div class=" p-2">
+        <div>
+          <strong>
+            <small>Add a New Step</small>
+          </strong>
+          <form class="py-2" @submit.prevent="addStep">
+            <div class="mb-3">
+              <label for="stepTitle" class="form-label">Step Title</label>
+              <input
+                type="text"
+                id="stepTitle"
+                class="form-control"
+                x-model="newStep.title"
+                placeholder="Enter step title"
+                required />
+            </div>
+            <div class="mb-3">
+              <label for="stepLabel" class="form-label">Step Label</label>
+              <input
+                type="text"
+                id="stepLabel"
+                class="form-control"
+                x-model="newStep.label"
+                placeholder="Enter step label"
+                required />
+            </div>
+            <div class="mb-3">
+              <label for="stepId" class="form-label">Step ID</label>
+              <input
+                type="text"
+                id="stepId"
+                class="form-control"
+                x-model="newStep.id"
+                placeholder="Enter step ID"
+                required />
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                  @click="toggleAddStepVisible()">
+                  Cancel
+                </button>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-sm btn-outline-primary">
+                  Add Step
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </template>
   </section>
 </template>

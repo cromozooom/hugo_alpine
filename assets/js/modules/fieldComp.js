@@ -10,6 +10,9 @@ export default function fieldComp() {
     showToc: false,
     showEditor: false,
 
+    addStepVisible: false,
+    addSectionVisible: false,
+
     currentFieldSelected: 0,
     currentStepActive: 0,
     currentEditorSelected: 'form',
@@ -68,6 +71,8 @@ export default function fieldComp() {
         this.currentStepSelected = parsedData.currentStepSelected || null;
         this.currentSectionSelected = parsedData.currentSectionSelected || null;
         this.currentFieldSelected = parsedData.currentFieldSelected || null;
+        this.addStepVisible = parsedData.addStepVisible || null;
+        this.addSectionVisible = parsedData.addSectionVisible || null;
       } else {
         // Initialize with default fields if no data exists
         this.form = {
@@ -515,6 +520,8 @@ export default function fieldComp() {
       this.$watch('currentStepSelected', () => this.saveToLocalStorage());
       this.$watch('currentSectionSelected', () => this.saveToLocalStorage());
       this.$watch('currentFieldSelected', () => this.saveToLocalStorage());
+      this.$watch('addStepVisible', () => this.saveToLocalStorage());
+      this.$watch('addSectionVisible', () => this.saveToLocalStorage());
     },
 
     async loadStaticForm() {
@@ -640,6 +647,7 @@ export default function fieldComp() {
         currentStepSelected: this.currentStepSelected,
         currentSectionSelected: this.currentSectionSelected,
         currentFieldSelected: this.currentFieldSelected,
+        addStepVisible: this.addStepVisible,
       };
       localStorage.setItem('formData', JSON.stringify(dataToStore));
     },
@@ -672,6 +680,12 @@ export default function fieldComp() {
       // console.log('select 650', stepIndex, sectionIndex, fieldIndex);
     },
 
+    toggleAddSectionVisible() {
+      this.addSectionVisible = !this.addSectionVisible;
+    },
+    toggleAddStepVisible() {
+      this.addStepVisible = !this.addStepVisible;
+    },
     toggleToc() {
       this.showToc = !this.showToc;
     },
