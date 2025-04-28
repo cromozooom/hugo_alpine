@@ -599,7 +599,14 @@ export default function fieldComp() {
           section.fields.forEach((field, fieldIndex) => {
             // Check if any field property matches the query
             for (const key in field) {
-              if (typeof field[key] === 'string' && field[key].toLowerCase().includes(query)) {
+              if (
+                // check all key for fields
+                // typeof field[key] === 'string' && field[key].toLowerCase().includes(query)
+
+                (key === 'name' || key === 'label') &&
+                typeof field[key] === 'string' &&
+                field[key].toLowerCase().includes(query)
+              ) {
                 // Add the result with indices
                 this.searchResults.fields.push({
                   stepIndex,
@@ -979,64 +986,6 @@ export default function fieldComp() {
               'ring-offset-2': true,
               'ring-selected': true,
             });
-          }
-        }
-      }
-
-      return classes;
-    },
-
-    _getClass(field, index) {
-      const classes = {};
-
-      if (this.density === 'compact') {
-        if (field.readOnly) {
-          classes['border'] = true;
-          classes['border-dark'] = true;
-          classes['border-2'] = true;
-          classes['border-doted'] = true;
-          classes['text-body-tertiary'] = true;
-          if (index === this.currentFieldSelected) {
-            classes['shadow-sm'] = true;
-            classes['ring-3'] = true;
-            classes['ring-solid'] = true;
-            classes['ring-offset-2'] = true;
-            classes['ring-selected'] = true;
-          }
-        } else {
-          classes['shadow-sm'] = true;
-          classes['border'] = true;
-          classes['border-1'] = true;
-          classes['border-transparent'] = true;
-          if (index === this.currentFieldSelected) {
-            classes['ring-3'] = true;
-            classes['ring-solid'] = true;
-            classes['ring-offset-2'] = true;
-            classes['ring-selected'] = true;
-          }
-        }
-      } else {
-        if (field.readOnly) {
-          classes['xopacity-75'] = true;
-          classes['border-doted'] = true;
-          classes['border'] = true;
-          classes['border-dark'] = true;
-          classes['border-2'] = true;
-          classes['text-body-tertiary'] = true;
-          if (index === this.currentFieldSelected) {
-            classes['ring-3'] = true;
-            classes['ring-solid'] = true;
-            classes['ring-offset-2'] = true;
-            classes['ring-selected'] = true;
-          }
-        } else {
-          classes['border'] = true;
-          classes['border-2'] = true;
-          if (index === this.currentFieldSelected) {
-            classes['ring-3'] = true;
-            classes['ring-solid'] = true;
-            classes['ring-offset-2'] = true;
-            classes['ring-selected'] = true;
           }
         }
       }

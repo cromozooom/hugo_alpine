@@ -12,7 +12,7 @@
             x-model="form.name"
             placeholder="Enter form name" />
         </div>
-        <div class="mb-3">
+        <div class="mb-0">
           <label for="formId" class="form-label">Form Id</label>
           <input
             type="text"
@@ -25,7 +25,7 @@
     </div>
 
     <!-- Action Buttons Editor -->
-    <div class="p-2">
+    <div class="p-2 border-top">
       <strong><small>Action Buttons Editor</small></strong>
       <div class="d-flex flex-column mt-2">
         <!-- Start Buttons -->
@@ -90,7 +90,7 @@
         </div>
 
         <!-- End Buttons -->
-        <div class="mb-3">
+        <div class="mb-0">
           <strong><small>End Buttons</small></strong>
           <template
             x-for="(button, index) in form.actionButtons.endButtons"
@@ -152,7 +152,7 @@
     </div>
 
     <!-- Step Editor -->
-    <div class="p-2">
+    <div class="p-2 border-top">
       <strong><small>Step Editor</small></strong>
       <div class="d-flex flex-column rounded border" x-sort>
         <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">

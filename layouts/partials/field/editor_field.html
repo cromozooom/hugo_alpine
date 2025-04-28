@@ -1,0 +1,190 @@
+<template x-if="currentEditorSelected === 'field'">
+  <section>
+    <div class="py-2">
+      <strong class="px-2">
+        <small> edit field </small>
+      </strong>
+      <div class="my-2 px-2">
+        <label for="fieldName" class="form-label">Name</label>
+        <input
+          type="text"
+          id="fieldName"
+          class="form-control"
+          :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.name || ''"
+          @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].name = $event.target.value)" />
+      </div>
+      <div class="mb-2 px-2">
+        <label for="fieldId" class="form-label">Id</label>
+        <input
+          type="text"
+          id="fieldId"
+          class="form-control"
+          :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.id || ''"
+          @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].id = $event.target.value)" />
+      </div>
+      <div class="mb-2 px-2">
+        <label for="fieldLabel" class="form-label">Label</label>
+        <input
+          type="text"
+          id="fieldLabel"
+          class="form-control"
+          :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.label || ''"
+          @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].label = $event.target.value)" />
+      </div>
+      <div class="mb-2 px-2">
+        <label for="fieldType" class="form-label">Type</label>
+        <select
+          id="fieldType"
+          class="form-select"
+          :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type || ''"
+          @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].type = $event.target.value)">
+          <option value="text">Text</option>
+          <option value="date">Date</option>
+          <option value="switch">Switch</option>
+          <option value="password">Password</option>
+          <option value="selector">Selector</option>
+          <option value="number">Number</option>
+          <option value="textarea">Textarea</option>
+          <option value="form">Form</option>
+          <option value="checkbox">Checkbox</option>
+        </select>
+      </div>
+      <template
+        x-if="!(form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type === 'selector' || form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type === 'checkbox')">
+        <div class="mb-3 px-2">
+          <label for="fieldValue" class="form-label">Value</label>
+          <input
+            type="text"
+            id="fieldValue"
+            class="form-control"
+            :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.value || ''"
+            @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].value = $event.target.value)" />
+        </div>
+      </template>
+      <template
+        x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type === 'selector' || form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type === 'checkbox'">
+        <div class="mb-3 px-2 border-top border-bottom py-2">
+          <label class="form-label">Options</label>
+          <div class="d-flex flex-column gap-2">
+            <template
+              x-for="(option, index) in form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.option"
+              :key="index">
+              <div class="d-flex align-items-center gap-2">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  x-model="option.checked" />
+                <input
+                  type="text"
+                  class="form-control"
+                  x-model="option.label"
+                  placeholder="Option label" />
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  @click="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.option.splice(index, 1)">
+                  Remove
+                </button>
+              </div>
+            </template>
+            <div class="d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-outline-primary mt-2"
+                @click="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.option.push({ checked: false, label: '' })">
+                Add Option
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
+      <div class="mb-3 px-2">
+        <label for="fieldInline" class="form-label">Inline</label>
+        <input
+          type="checkbox"
+          id="fieldInline"
+          class="form-check-input"
+          :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.inline || false"
+          @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].inline = $event.target.checked)" />
+      </div>
+      <div class="mb-3 px-2">
+        <label for="fieldMandatory" class="form-label">Mandatory</label>
+        <input
+          type="checkbox"
+          id="fieldMandatory"
+          class="form-check-input"
+          :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.mandatory || false"
+          @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].mandatory = $event.target.checked)" />
+      </div>
+      <div class="mb-3 px-2">
+        <label for="fieldReadOnly" class="form-label">Read-Only</label>
+        <input
+          type="checkbox"
+          id="fieldReadOnly"
+          class="form-check-input"
+          :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.readOnly || false"
+          @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].readOnly = $event.target.checked)" />
+      </div>
+      <div class="mb-2 px-2">
+        <label for="fieldHelp" class="form-label">Help Text</label>
+        <textarea
+          rows="6"
+          id="fieldHelp"
+          class="form-control"
+          :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.help || ''"
+          @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].help = $event.target.value)"></textarea>
+      </div>
+    </div>
+    <div>
+      <!-- add new field form -->
+      <div class="p-2 border-top">
+        <strong>
+          <small>Add a New Field</small>
+        </strong>
+        <form @submit.prevent="addField">
+          <div class="mb-3">
+            <label for="fieldName" class="form-label">Field Name</label>
+            <input
+              type="text"
+              id="fieldName"
+              class="form-control"
+              x-model="newField.name"
+              placeholder="Enter field name"
+              required />
+          </div>
+          <div class="mb-3">
+            <label for="fieldLabel" class="form-label">Field Label</label>
+            <input
+              type="text"
+              id="fieldLabel"
+              class="form-control"
+              x-model="newField.label"
+              placeholder="Enter field label"
+              required />
+          </div>
+          <div class="mb-3">
+            <label for="fieldType" class="form-label">Field Type</label>
+            <select
+              id="fieldType"
+              class="form-select"
+              x-model="newField.type"
+              required>
+              <option value="text">Text</option>
+              <option value="date">Date</option>
+              <option value="switch">Switch</option>
+              <option value="password">Password</option>
+              <option value="selector">Selector</option>
+              <option value="number">Number</option>
+              <option value="textarea">Textarea</option>
+              <option value="form">Form</option>
+              <option value="checkbox">Checkbox</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-sm btn-outline-primary">
+            Add Field
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</template>
