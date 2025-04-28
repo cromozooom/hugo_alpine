@@ -7,6 +7,7 @@ export default function fieldComp() {
     validateTool: false,
     devTool: false,
     advancedTool: false,
+    showToc: false,
     showEditor: false,
 
     currentFieldSelected: 0,
@@ -18,9 +19,37 @@ export default function fieldComp() {
 
     form: {}, // Will be initialized from localStorage
     steps: [], // Will be initialized from localStorage
+    newStep: {
+      title: '',
+      label: '',
+      id: '',
+      readOnly: false,
+      visible: true,
+      status: 'pending',
+      disabled: false,
+      formIndex: 0,
+      sections: [],
+    },
+    newSection: {
+      title: '',
+      label: '',
+    },
+    newField: {
+      name: '',
+      label: '',
+      type: 'text', // Default field type
+    },
+
     legacy: false, // Will be initialized from localStorage
     isAtStart: true,
     isAtEnd: false,
+
+    searchQuery: '',
+    searchResults: {
+      fields: [],
+    },
+    debounceTimeout: null,
+
     // Initialize the component
     init() {
       // Load data from localStorage if it exists
@@ -31,6 +60,7 @@ export default function fieldComp() {
         this.steps = parsedData.steps || [];
         this.density = parsedData.density || 'default';
         this.validateTool = parsedData.validateTool || false;
+        this.showToc = parsedData.showToc || false;
         this.showEditor = parsedData.showEditor || false;
         this.devTool = parsedData.devTool || false;
         this.preview = parsedData.preview || false;
@@ -41,7 +71,7 @@ export default function fieldComp() {
       } else {
         // Initialize with default fields if no data exists
         this.form = {
-          name: 'Form Name',
+          name: 'KYC_Charity',
           id: '123',
           actionButtons: {
             startButtons: [
@@ -50,6 +80,7 @@ export default function fieldComp() {
                 id: 'cancel-button',
                 icon: 'fa-solid fa-play',
                 type: 'button',
+                ui: 'outline',
               },
             ],
             endButtons: [
@@ -58,6 +89,7 @@ export default function fieldComp() {
                 id: 'save-button',
                 icon: 'fa-solid fa-play',
                 type: 'button',
+                ui: 'solid',
               },
             ],
           },
@@ -97,7 +129,7 @@ export default function fieldComp() {
                       },
                     },
                     {
-                      name: 'Field 02',
+                      name: 'Date of birth',
                       id: 'field-02',
                       readOnly: false,
                       visible: true,
@@ -112,7 +144,7 @@ export default function fieldComp() {
                       value: 'valField02',
                     },
                     {
-                      name: 'Field 03',
+                      name: 'Suitability Review Lookup',
                       id: 'field-03',
                       readOnly: true,
                       visible: true,
@@ -127,7 +159,7 @@ export default function fieldComp() {
                       value: 'valField03',
                     },
                     {
-                      name: 'Password 04',
+                      name: 'Password',
                       id: 'password-04',
                       readOnly: false,
                       visible: true,
@@ -146,7 +178,7 @@ export default function fieldComp() {
                       },
                     },
                     {
-                      name: 'Field 05',
+                      name: 'Are you a UK resident for tax purposes?',
                       id: 'field-05',
                       readOnly: true,
                       visible: true,
@@ -167,7 +199,7 @@ export default function fieldComp() {
                       ],
                     },
                     {
-                      name: 'Field 4',
+                      name: 'Budget',
                       id: 'field-06',
                       readOnly: false,
                       visible: true,
@@ -178,11 +210,11 @@ export default function fieldComp() {
                       link: '',
                       sync: false,
                       mandatory: false,
-                      label: 'Label field 4',
+                      label: 'Budget',
                       value: 'valField04',
                     },
                     {
-                      name: 'Textarea',
+                      name: 'Are you resident in any other country for tax purposes?',
                       id: 'field-07',
                       readOnly: false,
                       visible: true,
@@ -203,7 +235,7 @@ export default function fieldComp() {
                       },
                     },
                     {
-                      name: 'Field 4',
+                      name: 'Are you in good health 149?',
                       id: 'field-08',
                       readOnly: false,
                       visible: true,
@@ -219,7 +251,7 @@ export default function fieldComp() {
                       value: 'valField04',
                     },
                     {
-                      name: 'Field 4',
+                      name: 'Are you in good health? - (inline)',
                       id: 'field-09',
                       readOnly: false,
                       visible: true,
@@ -241,7 +273,7 @@ export default function fieldComp() {
                       ],
                     },
                     {
-                      name: 'Field 4',
+                      name: 'Are you in good health ?',
                       id: 'field-09',
                       readOnly: false,
                       visible: true,
@@ -263,7 +295,7 @@ export default function fieldComp() {
                       ],
                     },
                     {
-                      name: 'Field 4',
+                      name: 'Are you a smoker?',
                       id: 'field-10',
                       readOnly: false,
                       visible: true,
@@ -291,6 +323,30 @@ export default function fieldComp() {
               status: 'completed',
               disabled: false,
               formIndex: 0,
+              sections: [
+                {
+                  title: 'recent-financial-objective',
+                  label: 'Recent Financial objective',
+
+                  fields: [
+                    {
+                      name: 'Date of objective',
+                      id: 'field-020',
+                      readOnly: false,
+                      visible: true,
+                      disabled: false,
+                      type: 'date',
+                      valid: true,
+                      touched: false,
+                      link: '',
+                      sync: false,
+                      mandatory: true,
+                      label: 'Date of objective',
+                      value: 'valField020',
+                    },
+                  ],
+                },
+              ],
             },
             {
               title: 'communication details',
@@ -449,6 +505,7 @@ export default function fieldComp() {
       // Ensure $watch is called after initialization
       this.$watch('form', () => this.saveToLocalStorage());
       this.$watch('density', () => this.saveToLocalStorage());
+      this.$watch('showToc', () => this.saveToLocalStorage());
       this.$watch('showEditor', () => this.saveToLocalStorage());
       this.$watch('preview', () => this.saveToLocalStorage());
       this.$watch('validateTool', () => this.saveToLocalStorage());
@@ -460,11 +517,95 @@ export default function fieldComp() {
       this.$watch('currentFieldSelected', () => this.saveToLocalStorage());
     },
 
+    navigateToField(stepIndex, sectionIndex, fieldIndex) {
+      this.currentStepSelected = stepIndex;
+      this.currentSectionSelected = sectionIndex;
+      this.currentFieldSelected = fieldIndex;
+
+      // Wait for Alpine.js to update the DOM
+      this.$nextTick(() => {
+        const mainArea = document.querySelector('#mainArea');
+        const fieldElement = mainArea?.querySelector(
+          `[data-step-index="${stepIndex}"][data-section-index="${sectionIndex}"][data-field-index="${fieldIndex}"]`,
+        );
+
+        if (fieldElement) {
+          // Scroll the field into view within #mainArea
+          fieldElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          console.warn('Field element not found');
+        }
+      });
+    },
+
+    debounceSearch() {
+      clearTimeout(this.debounceTimeout); // Clear the previous timeout
+      this.debounceTimeout = setTimeout(() => {
+        this.performSearch(); // Call the search function after the delay
+      }, 300); // Adjust the delay (in milliseconds) as needed
+    },
+
+    // Method to add a new step
+
+    performSearch() {
+      const query = this.searchQuery.toLowerCase().trim();
+
+      // Clear previous results
+      this.searchResults = { fields: [] };
+
+      // If the query is empty, do not perform the search
+      if (!query) {
+        return;
+      }
+
+      // Ensure `form.steps` is defined and is an array
+      if (!this.form.steps || !Array.isArray(this.form.steps)) {
+        console.warn('form.steps is undefined or not an array');
+        return;
+      }
+
+      // Search only in fields
+      this.form.steps.forEach((step, stepIndex) => {
+        // Ensure `step.sections` is defined and is an array
+        if (!step.sections || !Array.isArray(step.sections)) {
+          console.warn(`step.sections is undefined or not an array for stepIndex: ${stepIndex}`);
+          return;
+        }
+
+        step.sections.forEach((section, sectionIndex) => {
+          // Ensure `section.fields` is defined and is an array
+          if (!section.fields || !Array.isArray(section.fields)) {
+            console.warn(`section.fields is undefined or not an array for sectionIndex: ${sectionIndex}`);
+            return;
+          }
+
+          section.fields.forEach((field, fieldIndex) => {
+            // Check if any field property matches the query
+            for (const key in field) {
+              if (typeof field[key] === 'string' && field[key].toLowerCase().includes(query)) {
+                // Add the result with indices
+                this.searchResults.fields.push({
+                  stepIndex,
+                  sectionIndex,
+                  fieldIndex,
+                  fieldName: field.name,
+                  fieldKey: key,
+                  fieldValue: field[key],
+                });
+                break; // Stop checking other properties of this field
+              }
+            }
+          });
+        });
+      });
+    },
+
     // Save data to localStorage
     saveToLocalStorage() {
       const dataToStore = {
         form: this.form,
         steps: this.steps,
+        showToc: this.showToc,
         showEditor: this.showEditor,
         density: this.density,
         validateTool: this.validateTool,
@@ -487,7 +628,7 @@ export default function fieldComp() {
         this.currentEditorSelected = editor;
       }
     },
-    select(index) {
+    selectField(index) {
       this.currentFieldSelected = index;
     },
 
@@ -504,9 +645,12 @@ export default function fieldComp() {
         this.currentFieldSelected = fieldIndex;
       } else {
       }
-      console.log('select', stepIndex, sectionIndex, fieldIndex);
+      // console.log('select 650', stepIndex, sectionIndex, fieldIndex);
     },
 
+    toggleToc() {
+      this.showToc = !this.showToc;
+    },
     toggleEditor() {
       this.showEditor = !this.showEditor;
     },
@@ -551,6 +695,130 @@ export default function fieldComp() {
       this.selectStep(stepIndex);
     },
 
+    // Method to add a new section
+    addSection() {
+      if (!this.newSection.title || !this.newSection.label) {
+        alert('Please fill out all fields.');
+        return;
+      }
+
+      // Ensure the current step and its sections array exist
+      const currentStep = this.form.steps[this.currentStepSelected];
+      if (!currentStep) {
+        alert('No step is selected or the step does not exist.');
+        return;
+      }
+
+      if (!currentStep.sections) {
+        currentStep.sections = []; // Initialize sections as an empty array
+      }
+
+      // Add the new section to the current step
+      currentStep.sections.push({
+        ...this.newSection,
+        fields: [], // Initialize with an empty fields array
+      });
+
+      // Reset the newSection object
+      this.newSection = {
+        title: '',
+        label: '',
+      };
+
+      this.saveToLocalStorage();
+      alert('Section added successfully!');
+    },
+
+    addStep() {
+      if (!this.newStep.title || !this.newStep.label || !this.newStep.id) {
+        alert('Please fill out all fields.');
+        return;
+      }
+
+      // Add the new step to the steps array
+      this.form.steps.push({ ...this.newStep });
+
+      // Reset the newStep object
+      this.newStep = {
+        title: '',
+        label: '',
+        id: '',
+        readOnly: false,
+        visible: true,
+        status: 'pending',
+        disabled: false,
+        formIndex: 0,
+        sections: [],
+      };
+
+      this.saveToLocalStorage();
+      this.selectStep(this.form.steps.length - 1);
+
+      alert('Step added successfully!');
+    },
+
+    trashStep(stepIndex) {
+      if (confirm('Are you sure you want to delete this step?')) {
+        let prevStepIndex = stepIndex - 1;
+        // Remove the step at the given index
+        this.form.steps.splice(stepIndex, 1);
+
+        // Optionally reset the current selection if the deleted step was selected
+        if (this.currentStepSelected === stepIndex) {
+          this.currentStepSelected = null;
+          this.currentSectionSelected = null;
+          this.currentFieldSelected = null;
+        }
+        if (prevStepIndex < 0) {
+          this.selectStep(0);
+        } else {
+          this.selectStep(prevStepIndex);
+        }
+      }
+    },
+
+    addField() {
+      if (!this.newField.name || !this.newField.label) {
+        alert('Please fill out all fields.');
+        return;
+      }
+
+      // Ensure the current section and its fields array exist
+      const currentSection = this.form.steps?.[this.currentStepSelected]?.sections?.[this.currentSectionSelected];
+      if (!currentSection) {
+        alert('No section is selected or the section does not exist.');
+        return;
+      }
+
+      if (!currentSection.fields) {
+        currentSection.fields = []; // Initialize fields as an empty array
+      }
+
+      // Generate the field ID
+      const fieldId = `${this.newField.name.toLowerCase().replace(/\s+/g, '-')}-step${this.currentStepSelected}-section${this.currentSectionSelected}-field${currentSection.fields.length}`;
+
+      // Add the new field to the current section
+      currentSection.fields.push({
+        ...this.newField,
+        id: fieldId, // Automatically generated ID
+        value: '', // Default value
+        mandatory: false,
+        readOnly: false,
+        help: '',
+        option: [], // For selector or checkbox types
+      });
+
+      // Reset the newField object
+      this.newField = {
+        name: '',
+        label: '',
+        type: 'text',
+      };
+
+      this.saveToLocalStorage();
+      alert('Field added successfully!');
+    },
+
     selectStep(stepIndex) {
       this.currentStepSelected = stepIndex;
 
@@ -578,36 +846,130 @@ export default function fieldComp() {
       this.checkScrollPosition();
     },
 
-    _selectStep(stepIndex) {
-      this.currentStepActive = stepIndex;
-      this.currentStepSelected = stepIndex;
+    // Method to download the form as a JSON file
+    downloadForm() {
+      const dataStr = JSON.stringify(this.form, null, 2); // Convert form data to JSON
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
 
-      // Scroll the selected step into the center of the container only if it's not fully visible
-      const container = document.getElementById('scrollable-steps');
-      const stepElement = container.children[stepIndex];
-      if (stepElement) {
-        const containerLeft = container.scrollLeft;
-        const containerRight = container.scrollLeft + container.offsetWidth;
+      // Create a temporary link element
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'form.json'; // File name for the downloaded file
+      a.click();
 
-        const stepLeft = stepElement.offsetLeft;
-        const stepRight = stepElement.offsetLeft + stepElement.offsetWidth;
+      // Clean up the URL object
+      URL.revokeObjectURL(url);
+    },
 
-        // Check if the step is fully visible
-        if (stepLeft < containerLeft || stepRight > containerRight) {
-          const containerWidth = container.offsetWidth;
-          const stepWidth = stepElement.offsetWidth;
+    // Method to load a JSON file and update the form
+    loadForm(event) {
+      const file = event.target.files[0];
+      if (!file) {
+        alert('No file selected.');
+        return;
+      }
 
-          // Calculate the scroll position to center the step
-          const scrollPosition = stepLeft - containerWidth / 2 + stepWidth / 2;
-          container.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const jsonData = JSON.parse(e.target.result); // Parse the JSON file
+          this.form = jsonData; // Update the form with the loaded data
+          this.saveToLocalStorage(); // Save the loaded form to localStorage
+          alert('Form loaded successfully!');
+        } catch (error) {
+          alert('Invalid JSON file.');
+          console.error('Error loading form:', error);
+        }
+      };
+      reader.readAsText(file); // Read the file as text
+    },
+
+    getClass(field, stepIndex, sectionIndex, fieldIndex) {
+      const isSelected =
+        this.currentStepSelected === stepIndex &&
+        this.currentSectionSelected === sectionIndex &&
+        this.currentFieldSelected === fieldIndex;
+
+      const classes = {
+        'field-selected': isSelected, // Add a class if the field is selected
+        'field-readonly': field.readOnly, // Add a class if the field is read-only
+        'field-mandatory': field.mandatory, // Add a class if the field is mandatory
+      };
+
+      // Add density-specific and read-only logic
+      if (this.density === 'compact') {
+        if (field.readOnly) {
+          Object.assign(classes, {
+            border: true,
+            'border-dark': true,
+            'border-2': true,
+            'border-doted': true,
+            'text-body-tertiary': true,
+          });
+          if (isSelected) {
+            Object.assign(classes, {
+              'shadow-sm': true,
+              'ring-3': true,
+              'ring-solid': true,
+              'ring-offset-2': true,
+              'ring-selected': true,
+            });
+          }
+        } else {
+          Object.assign(classes, {
+            'shadow-sm': true,
+            border: true,
+            'border-1': true,
+            'border-transparent': true,
+          });
+          if (isSelected) {
+            Object.assign(classes, {
+              'ring-3': true,
+              'ring-solid': true,
+              'ring-offset-2': true,
+              'ring-selected': true,
+            });
+          }
+        }
+      } else {
+        if (field.readOnly) {
+          Object.assign(classes, {
+            'xopacity-75': true,
+            'border-doted': true,
+            border: true,
+            'border-dark': true,
+            'border-2': true,
+            'text-body-tertiary': true,
+          });
+          if (isSelected) {
+            Object.assign(classes, {
+              'ring-3': true,
+              'ring-solid': true,
+              'ring-offset-2': true,
+              'ring-selected': true,
+            });
+          }
+        } else {
+          Object.assign(classes, {
+            border: true,
+            'border-2': true,
+          });
+          if (isSelected) {
+            Object.assign(classes, {
+              'ring-3': true,
+              'ring-solid': true,
+              'ring-offset-2': true,
+              'ring-selected': true,
+            });
+          }
         }
       }
 
-      // Check scroll position after selecting a step
-      this.checkScrollPosition();
+      return classes;
     },
 
-    getClass(field, index) {
+    _getClass(field, index) {
       const classes = {};
 
       if (this.density === 'compact') {

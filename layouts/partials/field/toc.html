@@ -1,0 +1,35 @@
+<template x-if="!showToc">
+  <div class="d-flex h-100 border-end bg-body">
+    <button
+      @click="toggleToc()"
+      class="btn btn-link d-flex align-items-start pt-2">
+      <template x-if="showEditor">
+        {{ partial "svg/fa/regular-chevron-left.svg" (dict "class" "icon-size-s") }}
+      </template>
+      <template x-if="!showEditor">
+        {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
+      </template>
+    </button>
+  </div>
+</template>
+<template x-if="showToc">
+  <div
+    class="border-end sideWidth h-100 d-flex overflow-hidden d-flex flex-column bg-body">
+    <div class="d-flex flex-column w-100 h-100 overflow-hidden flex-grow-1">
+      <button
+        @click="toggleToc()"
+        class="btn btn-link rounded-0 border-bottom d-flex align-items-center gap-2 text-decoration-none">
+        <template x-if="showEditor">
+          {{ partial "svg/fa/regular-chevron-left.svg" (dict "class" "icon-size-s") }}
+        </template>
+        <template x-if="!showEditor">
+          {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
+        </template>
+        <small class="text-dark"> Search </small>
+      </button>
+      <div class="flex-grow-1 h-100 overflow-y-auto d-flex flex-column ">
+        {{ partial "partials/field/search.html" . }}
+      </div>
+    </div>
+  </div>
+</template>

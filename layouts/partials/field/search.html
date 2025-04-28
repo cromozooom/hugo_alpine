@@ -1,0 +1,46 @@
+<div class="p-2">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Try your best shot ..."
+    x-model="searchQuery"
+    @input="debounceSearch()" />
+
+  <div class="mt-3">
+    <div>
+      <template x-if="searchResults.fields.length">
+        <h5>Fields</h5>
+      </template>
+      <template
+        x-if="searchResults.fields.length === 0 && searchQuery.trim() !== ''">
+        <span>No results found</span>
+      </template>
+      <template x-if="searchQuery.trim() === ''">
+        <div class="alert alert-info" role="alert">
+          <span>Type something to find a field</span>
+        </div>
+      </template>
+      <div class="list-group">
+        <template
+          x-for="result in searchResults.fields"
+          :key="`${result.stepIndex}-${result.sectionIndex}-${result.fieldIndex}`">
+          <!-- <strong>Field Name:</strong>
+          <span x-text="result.fieldName"></span><br />
+          <strong>Matched Key:</strong>
+          <span x-text="result.fieldKey"></span><br />
+          <strong>Matched Value:</strong>
+          <span x-text="result.fieldValue"></span><br /> -->
+
+          <button
+            type="button"
+            class="list-group-item list-group-item-action"
+            @click="navigateToField(result.stepIndex, result.sectionIndex, result.fieldIndex)">
+            <span x-text="result.fieldName"> </span>
+          </button>
+
+          <!-- <a href="#" class="list-group-item list-group-item-action">A second link item</a> -->
+        </template>
+      </div>
+    </div>
+  </div>
+</div>

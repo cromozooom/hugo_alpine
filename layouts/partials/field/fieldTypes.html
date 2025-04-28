@@ -52,7 +52,7 @@
     aria-label="Default select example"
     :id="field.name">
     <option disabled selected>Select an option</option>
-    <template x-for="opt in field.option" :key="opt.value">
+    <template x-for="(opt, idx) in field.option" :key="`${opt.value}-${idx}`">
       <option :value="opt.value" x-text="opt.label"></option>
     </template>
   </select>

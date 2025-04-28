@@ -1,0 +1,190 @@
+<template x-if="currentEditorSelected === 'form'">
+  <div class="d-flex flex-column gap-2">
+    <div class="p-2">
+      <strong><small>All the fields in the world</small></strong>
+      <div class="d-flex flex-column mt-2">
+        <div class="mb-3">
+          <label for="formName" class="form-label">Form Name</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            id="formName"
+            x-model="form.name"
+            placeholder="Enter form name" />
+        </div>
+        <div class="mb-3">
+          <label for="formId" class="form-label">Form Id</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            id="formId"
+            x-model="form.id"
+            placeholder="Enter form id" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons Editor -->
+    <div class="p-2">
+      <strong><small>Action Buttons Editor</small></strong>
+      <div class="d-flex flex-column mt-2">
+        <!-- Start Buttons -->
+        <div class="mb-3">
+          <strong><small>Start Buttons</small></strong>
+          <template
+            x-for="(button, index) in form.actionButtons.startButtons"
+            :key="index">
+            <div class="d-flex flex-column gap-2 border rounded p-2 mb-2">
+              <div>
+                <label for="startButtonLabel" class="form-label">Label</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  x-model="button.label"
+                  placeholder="Enter button label" />
+              </div>
+              <div>
+                <label for="startButtonId" class="form-label">ID</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  x-model="button.id"
+                  placeholder="Enter button ID" />
+              </div>
+              <div>
+                <label for="startButtonIcon" class="form-label">Icon</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  x-model="button.icon"
+                  placeholder="Enter button icon" />
+              </div>
+              <div>
+                <label for="startButtonType" class="form-label">Type</label>
+                <select
+                  class="form-select form-select-sm"
+                  x-model="button.type">
+                  <option value="button">Button</option>
+                  <option value="submit">Submit</option>
+                  <option value="reset">Reset</option>
+                </select>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btn-sm mt-2 d-flex align-items-center gap-2"
+                  @click="form.actionButtons.startButtons.splice(index, 1)">
+                  {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1 ") }}
+                  Button
+                  <!-- <span x-text="'(' + button.label + ')'"></span> -->
+                </button>
+              </div>
+            </div>
+          </template>
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm mt-2"
+            @click="form.actionButtons.startButtons.push({ label: '', id: '', icon: '', type: 'button' })">
+            Add Start Button
+          </button>
+        </div>
+
+        <!-- End Buttons -->
+        <div class="mb-3">
+          <strong><small>End Buttons</small></strong>
+          <template
+            x-for="(button, index) in form.actionButtons.endButtons"
+            :key="index">
+            <div class="d-flex flex-column gap-2 border rounded p-2 mb-2">
+              <div>
+                <label for="endButtonLabel" class="form-label">Label</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  x-model="button.label"
+                  placeholder="Enter button label" />
+              </div>
+              <div>
+                <label for="endButtonId" class="form-label">ID</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  x-model="button.id"
+                  placeholder="Enter button ID" />
+              </div>
+              <div>
+                <label for="endButtonIcon" class="form-label">Icon</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  x-model="button.icon"
+                  placeholder="Enter button icon" />
+              </div>
+              <div>
+                <label for="endButtonType" class="form-label">Type</label>
+                <select
+                  class="form-select form-select-sm"
+                  x-model="button.type">
+                  <option value="button">Button</option>
+                  <option value="submit">Submit</option>
+                  <option value="reset">Reset</option>
+                </select>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btn-sm mt-2 d-flex align-items-center gap-2"
+                  @click="form.actionButtons.endButtons.splice(index, 1)">
+                  {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1 ") }}
+                  Button
+                </button>
+              </div>
+            </div>
+          </template>
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm mt-2"
+            @click="form.actionButtons.endButtons.push({ label: '', id: '', icon: '', type: 'button' })">
+            Add End Button
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step Editor -->
+    <div class="p-2">
+      <strong><small>Step Editor</small></strong>
+      <div class="d-flex flex-column rounded border" x-sort>
+        <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
+          <div
+            x-sort:step
+            class="px-2 py-2 d-flex justify-content-between align-items-center"
+            :class="{
+                'border-top': stepIndex !== 0,
+              }">
+            <div class="d-flex align-items-center gap-2">
+              <span class="cursor-move">
+                {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
+              </span>
+              <span x-text="step.label"></span>
+            </div>
+            <div>
+              <div class="btn-group">
+                <button
+                  class="btn btn-link btn-sm"
+                  @click="trashStep(stepIndex)">
+                  {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
+                </button>
+                <button
+                  class="btn btn-link btn-sm"
+                  @click="selectStep(stepIndex)">
+                  {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</template>

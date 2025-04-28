@@ -1,127 +1,323 @@
 <template x-if="!showEditor">
   <div class="d-flex h-100 border-start bg-body">
-    <button @click="toggleEditor()" class="btn btn-sm btn-link">
-      {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
+    <button
+      @click="toggleEditor()"
+      class="btn btn-link d-flex align-items-start pt-2">
+      <template x-if="showEditor">
+        {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
+      </template>
+      <template x-if="!showEditor">
+        {{ partial "svg/fa/regular-chevron-left.svg" (dict "class" "icon-size-s") }}
+      </template>
     </button>
   </div>
 </template>
 <template x-if="showEditor">
   <div
-    class="border-start w-40 h-100 d-flex overflow-hidden d-flex flex-column bg-body">
+    class="border-start sideWidth h-100 d-flex overflow-hidden d-flex flex-column bg-body">
+    <button
+      @click="toggleEditor()"
+      class="btn btn-link border-end d-flex align-items-center gap-2 border-bottom text-decoration-none">
+      <template x-if="showEditor">
+        {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
+      </template>
+      <template x-if="!showEditor">
+        {{ partial "svg/fa/regular-chevron-left.svg" (dict "class" "icon-size-s") }}
+      </template>
+      <small class="text-dark"> Form Editor </small>
+    </button>
     <form
       @submit.prevent="saveToLocalStorage"
       class="d-flex flex-column w-100 h-100 overflow-hidden flex-grow-1">
       <div class="flex-grow-1 overflow-y-auto d-flex flex-column ">
         <div
-          class="border-bottom bg-light p-2 shadow-sm sticky-top"
+          class="border-bottom bg-light shadow-sm sticky-top d-flex"
           :class="{'shadow-sm' : currentEditorSelected === 'form'}">
           <button
-            class="btn btn-link btn-sm text-decoration-none  w-100"
+            class="btn btn-link  text-decoration-none w-100 text-start "
             type="button"
             @click="selectEditor('form')">
-            <strong>Form</strong>
+            <strong>
+              <span x-text="form.name"></span>
+              Form
+            </strong>
           </button>
         </div>
-        <template x-if="currentEditorSelected === 'form'">
-          <div class="p-2">
-            <div class="d-flex flex-column rounded border" x-sort>
-              <template
-                x-for="(step, stepIndex) in form.steps"
-                :key="stepIndex">
-                <div
-                  x-sort:step
-                  class=" px-2 py-2 d-flex justify-content-between align-items-center"
-                  :class="{
-                    'border-top': stepIndex !== 0,
-                  }">
-                  <div class="d-flex align-items-center gap-2">
-                    <span class="cursor-move">
-                      {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
-                    </span>
-                    <span x-text="step.label"></span>
-                  </div>
-                  <div>
-                    <button class="btn btn-link btn-sm">
-                      {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
-                    </button>
-                  </div>
-                </div>
-              </template>
-            </div>
-          </div>
-        </template>
+        {{ partial "partials/field/editor_form.html" . }}
+
+
         <div
           class="border-bottom bg-light p-2 shadow-sm sticky-top"
           :class="{'shadow-sm' : currentEditorSelected === 'step'}">
           <button
-            class="btn btn-link btn-sm text-decoration-none w-100 text-align-start"
+            class="btn btn-link btn-sm text-decoration-none w-100 text-start  text-align-start"
             type="button"
             @click="selectEditor('step')">
             <strong>
-              Step
               <span x-text="currentStepSelected"></span>
+              Step
             </strong>
           </button>
         </div>
         <template x-if="currentEditorSelected === 'step'">
-          <div class="p-2">
-            <template x-if="!form.steps[currentStepSelected]?.sections.length">
+          <section>
+            <template x-if="!form.steps[currentStepSelected]?.sections?.length">
               <div class="alert alert-info m-2" role="alert">
                 No sections available for this step.
               </div>
             </template>
-            <div class="d-flex flex-column rounded border mx-2" x-sort>
-              <template
-                x-for="(section, sectionIndex) in form.steps[currentStepSelected]?.sections"
-                :key="sectionIndex">
-                <div
-                  x-sort:section
-                  class=" px-2 py-2 d-flex justify-content-between align-items-center"
-                  :class="{
-                    'border-top': sectionIndex !== 0,
-                  }">
-                  <div class="d-flex align-items-center gap-2">
-                    <span class="cursor-move me-2">
-                      {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
-                    </span>
-                    <span x-text="section.label"></span>
-                  </div>
-                  <div>
-                    <button class="btn btn-link btn-sm">
-                      {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
-                    </button>
-                  </div>
+            <!-- Add form to edit current selected Step -->
+            <div class="border-top p-2">
+              <strong>
+                <small>Edit Step</small>
+              </strong>
+              <form class="pt-2" @submit.prevent="saveToLocalStorage">
+                <div class="mb-3">
+                  <label for="stepTitle" class="form-label">Step Title</label>
+                  <input
+                    type="text"
+                    id="stepTitle"
+                    class="form-control"
+                    x-model="form.steps[currentStepSelected].title"
+                    placeholder="Enter step title"
+                    required />
                 </div>
-              </template>
+                <div class="mb-3">
+                  <label for="stepLabel" class="form-label">Step Label</label>
+                  <input
+                    type="text"
+                    id="stepLabel"
+                    class="form-control"
+                    x-model="form.steps[currentStepSelected].label"
+                    placeholder="Enter step label"
+                    required />
+                </div>
+                <div class="mb-3">
+                  <label for="stepId" class="form-label">Step ID</label>
+                  <input
+                    type="text"
+                    id="stepId"
+                    class="form-control"
+                    x-model="form.steps[currentStepSelected].id"
+                    placeholder="Enter step ID"
+                    required />
+                </div>
+                <div class="mb-3">
+                  <label for="stepStatus" class="form-label">Status</label>
+                  <select
+                    id="stepStatus"
+                    class="form-select"
+                    x-model="form.steps[currentStepSelected].status">
+                    <option value="pending">Pending</option>
+                    <option value="completed">Completed</option>
+                    <option value="in-progress">In Progress</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="stepVisible" class="form-label">Visible</label>
+                  <input
+                    type="checkbox"
+                    id="stepVisible"
+                    class="form-check-input"
+                    x-model="form.steps[currentStepSelected].visible" />
+                  <label for="stepVisible" class="form-check-label"
+                    >Is Visible</label
+                  >
+                </div>
+                <div class="mb-3">
+                  <label for="stepReadOnly" class="form-label">Read-Only</label>
+                  <input
+                    type="checkbox"
+                    id="stepReadOnly"
+                    class="form-check-input"
+                    x-model="form.steps[currentStepSelected]?.readOnly || false" />
+                  <label for="stepReadOnly" class="form-check-label"
+                    >Is Read-Only</label
+                  >
+                </div>
+                <button type="submit" class="btn btn-sm btn-outline-primary">
+                  Save Step
+                </button>
+              </form>
             </div>
-          </div>
+            <div class="border-top p-2">
+              <strong>
+                <small>steps:</small>
+              </strong>
+              <div class="d-flex flex-column rounded border" x-sort>
+                <template
+                  x-for="(section, sectionIndex) in form.steps[currentStepSelected]?.sections"
+                  :key="sectionIndex">
+                  <div
+                    x-sort:section
+                    class=" px-2 py-2 d-flex justify-content-between align-items-center"
+                    :class="{
+                      'border-top': sectionIndex !== 0,
+                    }">
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="cursor-move me-2">
+                        {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
+                      </span>
+                      <span x-text="section.label"></span>
+                    </div>
+                    <div>
+                      <button class="btn btn-link btn-sm">
+                        {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
+                      </button>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+            <div class="border-top p-2">
+              <div>
+                <strong>
+                  <small>Add a New Step</small>
+                </strong>
+                <form class="py-2" @submit.prevent="addStep">
+                  <div class="mb-3">
+                    <label for="stepTitle" class="form-label">Step Title</label>
+                    <input
+                      type="text"
+                      id="stepTitle"
+                      class="form-control"
+                      x-model="newStep.title"
+                      placeholder="Enter step title"
+                      required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="stepLabel" class="form-label">Step Label</label>
+                    <input
+                      type="text"
+                      id="stepLabel"
+                      class="form-control"
+                      x-model="newStep.label"
+                      placeholder="Enter step label"
+                      required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="stepId" class="form-label">Step ID</label>
+                    <input
+                      type="text"
+                      id="stepId"
+                      class="form-control"
+                      x-model="newStep.id"
+                      placeholder="Enter step ID"
+                      required />
+                  </div>
+                  <button type="submit" class="btn btn-sm btn-outline-primary">
+                    Add Step
+                  </button>
+                </form>
+              </div>
+            </div>
+          </section>
         </template>
         <div
           class="border-bottom bg-light p-2 shadow-sm sticky-top"
           :class="{'shadow-sm' : currentEditorSelected === 'section'}">
           <button
-            class="btn btn-link btn-sm text-decoration-none w-100 text-align-start"
+            class="btn btn-link btn-sm text-decoration-none w-100 text-start  text-align-start"
             type="button"
             @click="selectEditor('section')">
             <strong>
-              Section
               <span x-text="currentSectionSelected"></span>
+              Section
             </strong>
           </button>
         </div>
         <template x-if="currentEditorSelected === 'section'">
-          <section class="p-2">
-            <span>section editor</span>
+          <section class="">
+            <div class="px-2 py-2 border-top">
+              <strong>
+                <small>Edit Section</small>
+              </strong>
+              <template
+                x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
+                <form class="py-2" @submit.prevent="saveToLocalStorage">
+                  <div class="mb-3">
+                    <label for="sectionTitle" class="form-label"
+                      >Section Title</label
+                    >
+                    <input
+                      type="text"
+                      id="sectionTitle"
+                      class="form-control"
+                      x-model="form.steps[currentStepSelected].sections[currentSectionSelected].title"
+                      placeholder="Enter section title"
+                      required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="sectionLabel" class="form-label"
+                      >Section Label</label
+                    >
+                    <input
+                      type="text"
+                      id="sectionLabel"
+                      class="form-control"
+                      x-model="form.steps[currentStepSelected].sections[currentSectionSelected].label"
+                      placeholder="Enter section label"
+                      required />
+                  </div>
+                  <button type="submit" class="btn btn-sm btn-outline-primary">
+                    Save section
+                  </button>
+                </form>
+              </template>
+              <template
+                x-if="!form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
+                <div class="alert alert-info mb-0" role="alert">
+                  No section selected or available for this step.
+                </div>
+              </template>
+            </div>
+            <div class="px-2 border-top pb-3">
+              <strong class=" mt-3">
+                <small>Add a New Section</small>
+              </strong>
+              <form @submit.prevent="addSection">
+                <div class="mb-3">
+                  <label for="newSectionTitle" class="form-label"
+                    >Section Title</label
+                  >
+                  <input
+                    type="text"
+                    id="newSectionTitle"
+                    class="form-control"
+                    x-model="newSection.title"
+                    placeholder="Enter section title"
+                    required />
+                </div>
+                <div class="mb-3">
+                  <label for="newSectionLabel" class="form-label"
+                    >Section Label</label
+                  >
+                  <input
+                    type="text"
+                    id="newSectionLabel"
+                    class="form-control"
+                    x-model="newSection.label"
+                    placeholder="Enter section label"
+                    required />
+                </div>
+                <button type="submit" class="btn btn-sm btn-outline-primary">
+                  Add Section
+                </button>
+              </form>
+            </div>
           </section>
         </template>
         <div
           class="border-bottom bg-light p-2 shadow-sm sticky-top"
           :class="{'shadow-sm' : currentEditorSelected === 'field'}">
           <button
-            class="btn btn-link btn-sm text-decoration-none  w-100"
+            class="btn btn-link btn-sm text-decoration-none w-100 text-start"
             type="button"
             @click="selectEditor('field')">
             <strong>
+              <template x-if="currentFieldSelected !== null">
+                <span x-text="currentFieldSelected"></span>
+              </template>
               Field
               <span
                 x-text="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.name || 'N/A'"></span>
@@ -130,148 +326,209 @@
         </div>
         <template x-if="currentEditorSelected === 'field'">
           <section>
-            <div class="mb-3 px-3">
-              <label for="fieldName" class="form-label">Name</label>
-              <input
-                type="text"
-                id="fieldName"
-                class="form-control"
-                :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.name || ''"
-                @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].name = $event.target.value)" />
-            </div>
-            <div class="mb-3 px-3">
-              <label for="fieldId" class="form-label">Id</label>
-              <input
-                type="text"
-                id="fieldId"
-                class="form-control"
-                :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.id || ''"
-                @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].id = $event.target.value)" />
-            </div>
-            <div class="mb-3 px-3">
-              <label for="fieldLabel" class="form-label">Label</label>
-              <input
-                type="text"
-                id="fieldLabel"
-                class="form-control"
-                :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.label || ''"
-                @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].label = $event.target.value)" />
-            </div>
-            <div class="mb-3 px-3">
-              <label for="fieldType" class="form-label">Type</label>
-              <select
-                id="fieldType"
-                class="form-select"
-                :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type || ''"
-                @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].type = $event.target.value)">
-                <option value="text">Text</option>
-                <option value="date">Date</option>
-                <option value="switch">Switch</option>
-                <option value="password">Password</option>
-                <option value="selector">Selector</option>
-                <option value="number">Number</option>
-                <option value="textarea">Textarea</option>
-                <option value="form">Form</option>
-                <option value="checkbox">Checkbox</option>
-              </select>
-            </div>
-            <template
-              x-if="!(form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type === 'selector' || form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type === 'checkbox')">
-              <div class="mb-3 px-3">
-                <label for="fieldValue" class="form-label">Value</label>
+            <div class="py-2">
+              <strong class="px-2">
+                <small> edit field </small>
+              </strong>
+              <div class="my-2 px-2">
+                <label for="fieldName" class="form-label">Name</label>
                 <input
                   type="text"
-                  id="fieldValue"
+                  id="fieldName"
                   class="form-control"
-                  :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.value || ''"
-                  @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].value = $event.target.value)" />
+                  :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.name || ''"
+                  @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].name = $event.target.value)" />
               </div>
-            </template>
-            <!-- New section for editing options -->
-            <template
-              x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type === 'selector' || form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type === 'checkbox'">
-              <div class="mb-3 px-3 border-top border-bottom py-2">
-                <label class="form-label">Options</label>
-                <div class="d-flex flex-column gap-2">
-                  <template
-                    x-for="(option, index) in form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.option"
-                    :key="index">
-                    <div class="d-flex align-items-center gap-2">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        x-model="option.checked" />
-                      <input
-                        type="text"
-                        class="form-control"
-                        x-model="option.label"
-                        placeholder="Option label" />
+              <div class="mb-2 px-2">
+                <label for="fieldId" class="form-label">Id</label>
+                <input
+                  type="text"
+                  id="fieldId"
+                  class="form-control"
+                  :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.id || ''"
+                  @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].id = $event.target.value)" />
+              </div>
+              <div class="mb-2 px-2">
+                <label for="fieldLabel" class="form-label">Label</label>
+                <input
+                  type="text"
+                  id="fieldLabel"
+                  class="form-control"
+                  :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.label || ''"
+                  @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].label = $event.target.value)" />
+              </div>
+              <div class="mb-2 px-2">
+                <label for="fieldType" class="form-label">Type</label>
+                <select
+                  id="fieldType"
+                  class="form-select"
+                  :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type || ''"
+                  @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].type = $event.target.value)">
+                  <option value="text">Text</option>
+                  <option value="date">Date</option>
+                  <option value="switch">Switch</option>
+                  <option value="password">Password</option>
+                  <option value="selector">Selector</option>
+                  <option value="number">Number</option>
+                  <option value="textarea">Textarea</option>
+                  <option value="form">Form</option>
+                  <option value="checkbox">Checkbox</option>
+                </select>
+              </div>
+              <template
+                x-if="!(form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type === 'selector' || form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type === 'checkbox')">
+                <div class="mb-3 px-2">
+                  <label for="fieldValue" class="form-label">Value</label>
+                  <input
+                    type="text"
+                    id="fieldValue"
+                    class="form-control"
+                    :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.value || ''"
+                    @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].value = $event.target.value)" />
+                </div>
+              </template>
+              <template
+                x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type === 'selector' || form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.type === 'checkbox'">
+                <div class="mb-3 px-2 border-top border-bottom py-2">
+                  <label class="form-label">Options</label>
+                  <div class="d-flex flex-column gap-2">
+                    <template
+                      x-for="(option, index) in form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.option"
+                      :key="index">
+                      <div class="d-flex align-items-center gap-2">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          x-model="option.checked" />
+                        <input
+                          type="text"
+                          class="form-control"
+                          x-model="option.label"
+                          placeholder="Option label" />
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger"
+                          @click="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.option.splice(index, 1)">
+                          Remove
+                        </button>
+                      </div>
+                    </template>
+                    <div class="d-flex justify-content-end">
                       <button
                         type="button"
-                        class="btn btn-outline-danger"
-                        @click="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.option.splice(index, 1)">
-                        Remove
+                        class="btn btn-outline-primary mt-2"
+                        @click="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.option.push({ checked: false, label: '' })">
+                        Add Option
                       </button>
                     </div>
-                  </template>
-                  <div class="d-flex justify-content-end">
-                    <button
-                      type="button"
-                      class="btn btn-outline-primary mt-2"
-                      @click="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.option.push({ checked: false, label: '' })">
-                      Add Option
-                    </button>
                   </div>
                 </div>
+              </template>
+              <div class="mb-3 px-2">
+                <label for="fieldInline" class="form-label">Inline</label>
+                <input
+                  type="checkbox"
+                  id="fieldInline"
+                  class="form-check-input"
+                  :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.inline || false"
+                  @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].inline = $event.target.checked)" />
               </div>
-            </template>
-            <div class="mb-3 px-3">
-              <label for="fieldInline" class="form-label">Inline</label>
-              <input
-                type="checkbox"
-                id="fieldInline"
-                class="form-check-input"
-                :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.inline || false"
-                @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].inline = $event.target.checked)" />
+              <div class="mb-3 px-2">
+                <label for="fieldMandatory" class="form-label">Mandatory</label>
+                <input
+                  type="checkbox"
+                  id="fieldMandatory"
+                  class="form-check-input"
+                  :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.mandatory || false"
+                  @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].mandatory = $event.target.checked)" />
+              </div>
+              <div class="mb-3 px-2">
+                <label for="fieldReadOnly" class="form-label">Read-Only</label>
+                <input
+                  type="checkbox"
+                  id="fieldReadOnly"
+                  class="form-check-input"
+                  :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.readOnly || false"
+                  @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].readOnly = $event.target.checked)" />
+              </div>
+              <div class="mb-2 px-2">
+                <label for="fieldHelp" class="form-label">Help Text</label>
+                <textarea
+                  rows="6"
+                  id="fieldHelp"
+                  class="form-control"
+                  :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.help || ''"
+                  @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].help = $event.target.value)"></textarea>
+              </div>
             </div>
-            <div class="mb-3 px-3">
-              <label for="fieldMandatory" class="form-label">Mandatory</label>
-              <input
-                type="checkbox"
-                id="fieldMandatory"
-                class="form-check-input"
-                :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.mandatory || false"
-                @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].mandatory = $event.target.checked)" />
-            </div>
-            <div class="mb-3 px-3">
-              <label for="fieldReadOnly" class="form-label">Read-Only</label>
-              <input
-                type="checkbox"
-                id="fieldReadOnly"
-                class="form-check-input"
-                :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.readOnly || false"
-                @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].readOnly = $event.target.checked)" />
-            </div>
-            <div class="mb-2 px-3">
-              <label for="fieldHelp" class="form-label">Help Text</label>
-              <textarea
-                rows="6"
-                id="fieldHelp"
-                class="form-control"
-                :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.help || ''"
-                @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].help = $event.target.value)"></textarea>
+            <div>
+              <!-- add new field form -->
+              <div class="p-2 border-top">
+                <strong>
+                  <small>Add a New Field</small>
+                </strong>
+                <form @submit.prevent="addField">
+                  <div class="mb-3">
+                    <label for="fieldName" class="form-label">Field Name</label>
+                    <input
+                      type="text"
+                      id="fieldName"
+                      class="form-control"
+                      x-model="newField.name"
+                      placeholder="Enter field name"
+                      required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="fieldLabel" class="form-label"
+                      >Field Label</label
+                    >
+                    <input
+                      type="text"
+                      id="fieldLabel"
+                      class="form-control"
+                      x-model="newField.label"
+                      placeholder="Enter field label"
+                      required />
+                  </div>
+                  <div class="mb-3">
+                    <label for="fieldType" class="form-label">Field Type</label>
+                    <select
+                      id="fieldType"
+                      class="form-select"
+                      x-model="newField.type"
+                      required>
+                      <option value="text">Text</option>
+                      <option value="date">Date</option>
+                      <option value="switch">Switch</option>
+                      <option value="password">Password</option>
+                      <option value="selector">Selector</option>
+                      <option value="number">Number</option>
+                      <option value="textarea">Textarea</option>
+                      <option value="form">Form</option>
+                      <option value="checkbox">Checkbox</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-sm btn-outline-primary">
+                    Add Field
+                  </button>
+                </form>
+              </div>
             </div>
           </section>
         </template>
       </div>
       <div class="d-flex justify-content-between w-100 border-top bg-light p-2">
-        <button
-          type="button"
-          @click="toggleEditor()"
-          class="btn btn-outline-primary">
-          Cancel
-        </button>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <div>
+          <!-- <button
+            type="button"
+            @click="toggleEditor()"
+            class="btn btn-outline-primary">
+            Cancel
+          </button> -->
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
       </div>
     </form>
   </div>
