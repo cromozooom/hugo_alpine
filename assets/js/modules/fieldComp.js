@@ -517,6 +517,23 @@ export default function fieldComp() {
       this.$watch('currentFieldSelected', () => this.saveToLocalStorage());
     },
 
+    async loadStaticForm() {
+      try {
+        const response = await fetch('/field/kyc-charity.json'); // Path to the JSON file
+        if (!response.ok) {
+          throw new Error('Failed to load the form.');
+        }
+
+        const formData = await response.json();
+        this.form = formData; // Update the form with the loaded data
+        this.saveToLocalStorage(); // Save the loaded form to localStorage
+        alert('KYC Charity Form loaded successfully!');
+      } catch (error) {
+        console.error('Error loading the form:', error);
+        alert('Failed to load the form. Please try again.');
+      }
+    },
+
     navigateToField(stepIndex, sectionIndex, fieldIndex) {
       this.currentStepSelected = stepIndex;
       this.currentSectionSelected = sectionIndex;

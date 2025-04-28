@@ -1,0 +1,1001 @@
+{
+  "name": "KYC_Charity",
+  "id": "123",
+  "actionButtons": {
+    "startButtons": [
+      {
+        "label": "Cancel",
+        "id": "cancel-button",
+        "icon": "fa-solid fa-play",
+        "type": "button",
+        "ui": "outline"
+      }
+    ],
+    "endButtons": [
+      {
+        "label": "Save",
+        "id": "save-button",
+        "icon": "fa-solid fa-play",
+        "type": "button",
+        "ui": "solid"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "title": "Your details",
+      "label": "Your details",
+      "id": "step-01",
+      "readOnly": false,
+      "visible": false,
+      "status": "completed",
+      "disabled": false,
+      "formIndex": 0,
+      "sections": [
+        {
+          "title": "Management",
+          "label": "Management",
+          "fields": [
+            {
+              "name": "Assets",
+              "label": "Assets",
+              "type": "text",
+              "id": "assets-step0-section0-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Please list all the assets",
+              "label": "Please list all the assets",
+              "type": "text",
+              "id": "please-list-all-the-assets:-step0-section0-field1",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "Please provide details of any current or planned capital commitments or liabilities",
+              "option": []
+            },
+            {
+              "name": "Liabilities",
+              "label": "Liabilities",
+              "type": "text",
+              "id": "liabilities-step0-section0-field2",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "The information you provide in this section will help us to identify any guidelines or limits on allocation to any asset classes or to specify whether there are any asset types that you wish to avoid. This may include a minimum or maximum exposure to any particular asset class. Please note that if you choose to restrict investment in certain areas this may result in larger proportions of the portfolio being invested in other assets, thereby leading to a greater level of risk. If the founding documents or specific endowments have any restrictions, please provide details here:",
+              "option": []
+            },
+            {
+              "name": "Asset Allocation and Special Investment Instructions",
+              "label": "Asset Allocation and Special Investment Instructions",
+              "type": "textarea",
+              "id": "asset-allocation-and-special-investment-instructions-step0-section0-field3",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "This section will provide us with the necessary information that we need to identify any areas that you DO NOT wish to invest in, such as areas with ethical constraints. Please note that if you choose to exclude investment in certain areas this will limit your investment options and may result in lower investment returns. If you have any exclusions or ethical consideration please provide details here:",
+              "option": []
+            },
+            {
+              "name": "Exclusions and Ethical or Socially Responsible Investment (SRI) considerations",
+              "label": "Exclusions and Ethical or Socially Responsible Investment (SRI) considerations",
+              "type": "textarea",
+              "id": "exclusions-and-ethical-or-socially-responsible-investment-(sri)-considerations-step0-section0-field4",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "Please provide any further information which you believe may be relevant to the firm in connection with the management of the investment portfolio or wider provision of our professional services. This may include any future capital commitments or liabilities or known change in income requirements",
+              "option": []
+            },
+            {
+              "name": "Further information on approach to investments",
+              "label": "Further information on approach to investments",
+              "type": "textarea",
+              "id": "further-information-on-approach-to-investments-step0-section0-field5",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            }
+          ]
+        },
+        {
+          "title": "Charity Details",
+          "label": "Charity Details",
+          "fields": [
+            {
+              "name": "Review Type",
+              "label": "Review Type",
+              "type": "text",
+              "id": "review-type-step0-section1-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Full name of Charity",
+              "label": "Full name of Charity",
+              "type": "text",
+              "id": "full-name-of-charity-step0-section1-field1",
+              "value": "",
+              "mandatory": true,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Legal form of Charity",
+              "label": "Legal form of Charity",
+              "type": "text",
+              "id": "legal-form-of-charity-step0-section1-field2",
+              "value": "",
+              "mandatory": true,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Charity Purposes / Objectives ",
+              "label": "Charity Purposes / Objectives",
+              "type": "textarea",
+              "id": "charity-purposes-/-objectives--step0-section1-field3",
+              "value": "",
+              "mandatory": true,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Date Charity Created",
+              "label": "Date Charity Created",
+              "type": "date",
+              "id": "date-charity-created-step0-section1-field4",
+              "value": "",
+              "mandatory": true,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Value of Charity when established (£)",
+              "label": "Value of Charity when established (£)",
+              "type": "number",
+              "id": "value-of-charity-when-established-(£)-step0-section1-field5",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Principal Office Address",
+              "label": "Principal Office Address",
+              "type": "text",
+              "id": "principal-office-address-step0-section1-field6",
+              "value": "",
+              "mandatory": true,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Postcode",
+              "label": "Postcode",
+              "type": "text",
+              "id": "postcode-step0-section1-field7",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Registered address country",
+              "label": "Registered address country",
+              "type": "text",
+              "id": "registered-address-country-step0-section1-field8",
+              "value": "",
+              "mandatory": true,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Charity Number",
+              "label": "Charity Number",
+              "type": "number",
+              "id": "charity-number-step0-section1-field9",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Tax Reference",
+              "label": "Tax Reference",
+              "type": "text",
+              "id": "tax-reference-step0-section1-field10",
+              "value": "",
+              "mandatory": true,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Financial year end day",
+              "label": "Financial year end day",
+              "type": "text",
+              "id": "financial-year-end-day-step0-section1-field11",
+              "value": "",
+              "mandatory": true,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Financial year end month",
+              "label": "Financial year end month",
+              "type": "date",
+              "id": "financial-year-end-month-step0-section1-field12",
+              "value": "",
+              "mandatory": true,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Client Identification Code (LEI)",
+              "label": "Client Identification Code (LEI)",
+              "type": "text",
+              "id": "client-identification-code-(lei)-step0-section1-field13",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "Client Identification Code (LEI)",
+              "option": []
+            },
+            {
+              "name": "LEI Expiry Date",
+              "label": "LEI Expiry Date",
+              "type": "date",
+              "id": "lei-expiry-date-step0-section1-field14",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            }
+          ]
+        },
+        {
+          "title": "Assets",
+          "label": "Assets",
+          "fields": [
+            {
+              "name": "Add new assets",
+              "label": "Add new assets",
+              "type": "text",
+              "id": "add-new-assets-step0-section2-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            }
+          ]
+        },
+        {
+          "title": "Liabilities",
+          "label": "Liabilities",
+          "fields": [
+            {
+              "name": "Add new liabilities",
+              "label": "Add new liabilities",
+              "type": "text",
+              "id": "add-new-liabilities-step0-section3-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Total Liabilities",
+              "label": "Total Liabilities",
+              "type": "number",
+              "id": "total-liabilities-step0-section3-field1",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Net Worth",
+              "label": "Net Worth",
+              "type": "number",
+              "id": "net-worth-step0-section3-field2",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Add new income",
+              "label": "Add new income",
+              "type": "text",
+              "id": "add-new-income-step0-section3-field3",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            }
+          ]
+        },
+        {
+          "title": "Income",
+          "label": "Income",
+          "fields": [
+            {
+              "name": "Add new Income",
+              "label": "Add new Income",
+              "type": "number",
+              "id": "add-new-income-step0-section4-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Expenses",
+              "label": "Expenses",
+              "type": "number",
+              "id": "expenses-step0-section4-field1",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Goals and objectives",
+      "label": "Goals and objectives",
+      "id": "goals-and-objectives",
+      "readOnly": true,
+      "visible": true,
+      "status": "completed",
+      "disabled": false,
+      "formIndex": 0,
+      "sections": [
+        {
+          "title": "Approach investment",
+          "label": "Approach investment",
+          "fields": [
+            {
+              "name": "Approach to investment",
+              "label": "Approach to investment",
+              "type": "text",
+              "id": "approach-to-investment-step1-section0-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "Before we can offer a personal recommendation concerning a designated investment or manage investments on your behalf, we must understand your circumstances and how they relate to the services offered. Please tick one answer for each of the following questions to help us to build a picture of your views on investment.",
+              "option": []
+            }
+          ]
+        },
+        {
+          "title": "Investment Knowledge",
+          "label": "Investment Knowledge",
+          "fields": [
+            {
+              "name": "How much investment knowledge do you have?",
+              "label": "How much investment knowledge do you have?",
+              "type": "textarea",
+              "id": "how-much-investment-knowledge-do-you-have?-step1-section1-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            }
+          ]
+        },
+        {
+          "title": "Investment Experience",
+          "label": "Investment Experience",
+          "fields": [
+            {
+              "name": "Purchases arranged through a Financial Adviser",
+              "label": "Purchases arranged through a Financial Adviser",
+              "type": "text",
+              "id": "purchases-arranged-through-a-financial-adviser-step1-section2-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Portfolio managed on a discretionary basis",
+              "label": "Portfolio managed on a discretionary basis",
+              "type": "text",
+              "id": "portfolio-managed-on-a-discretionary-basis-step1-section2-field1",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Portfolio managed on an advisory basis",
+              "label": "Portfolio managed on an advisory basis",
+              "type": "text",
+              "id": "portfolio-managed-on-an-advisory-basis-step1-section2-field2",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Self managed portfolio",
+              "label": "Self managed portfolio",
+              "type": "text",
+              "id": "self-managed-portfolio-step1-section2-field3",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            }
+          ]
+        },
+        {
+          "title": "Investment Objectives",
+          "label": "Investment Objectives",
+          "fields": [
+            {
+              "name": "What are your investment objectives?",
+              "label": "What are your investment objectives?",
+              "type": "checkbox",
+              "id": "what-are-your-investment-objectives?-step1-section3-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": [
+                {
+                  "checked": false,
+                  "label": "Balanced"
+                },
+                {
+                  "checked": false,
+                  "label": "Growth"
+                },
+                {
+                  "checked": false,
+                  "label": "Income"
+                },
+                {
+                  "checked": false,
+                  "label": "Not Applicable"
+                }
+              ],
+              "inline": true
+            }
+          ]
+        },
+        {
+          "title": "Investment Timescale",
+          "label": "Investment Timescale",
+          "fields": [
+            {
+              "name": "What is your timescale for investment?",
+              "label": "What is your timescale for investment?",
+              "type": "text",
+              "id": "what-is-your-timescale-for-investment?-step1-section4-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            }
+          ]
+        },
+        {
+          "title": "Risk Tolerance",
+          "label": "Risk Tolerance",
+          "fields": [
+            {
+              "name": "Risk tolerance",
+              "label": "Risk tolerance",
+              "type": "selector",
+              "id": "risk-tolerance-step1-section5-field0",
+              "value": "",
+              "mandatory": true,
+              "readOnly": false,
+              "help": "If the stock market declined by 20%, what action would you take?",
+              "option": [
+                {
+                  "checked": true,
+                  "label": "Sell immediately to avoid further worry "
+                },
+                {
+                  "checked": false,
+                  "label": "Do nothing and wait for investment returns to improve "
+                },
+                {
+                  "checked": false,
+                  "label": "Buy to take advantage of lower share prices in anticipation of future gains "
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Risk Profile",
+          "label": "Risk Profile",
+          "fields": [
+            {
+              "name": "Risk tolerance",
+              "label": "Risk tolerance",
+              "type": "checkbox",
+              "id": "risk-tolerance-step1-section6-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": [
+                {
+                  "checked": false,
+                  "label": "Low"
+                },
+                {
+                  "checked": false,
+                  "label": "Low mid"
+                },
+                {
+                  "checked": false,
+                  "label": "Mid"
+                },
+                {
+                  "checked": false,
+                  "label": "Mid High"
+                },
+                {
+                  "checked": false,
+                  "label": "High"
+                }
+              ],
+              "inline": true
+            }
+          ]
+        },
+        {
+          "title": "Client Specific",
+          "label": "Client Specific",
+          "fields": []
+        }
+      ]
+    },
+    {
+      "title": "Client Specific",
+      "label": "Client Specific",
+      "id": "step03",
+      "readOnly": false,
+      "visible": true,
+      "status": "pending",
+      "disabled": false,
+      "formIndex": 0,
+      "sections": [
+        {
+          "title": "Approach to investment",
+          "label": "Approach to investment",
+          "fields": [
+            {
+              "name": "Detail",
+              "label": "details",
+              "type": "text",
+              "id": "detail-step2-section0-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "Before we can offer a personal recommendation concerning a designated investment or manage investments on your behalf, we must understand your circumstances and how they relate to the services offered. Please tick one answer for each of the following questions to help us to build a picture of your views on investment.",
+              "option": []
+            },
+            {
+              "name": "Investment Knowledge",
+              "label": "Investment Knowledge",
+              "type": "text",
+              "id": "investment-knowledge-step2-section0-field1",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "How much investment knowledge do you have?",
+              "label": "How much investment knowledge do you have?",
+              "type": "text",
+              "id": "how-much-investment-knowledge-do-you-have?-step2-section0-field2",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Investment Experience",
+              "label": "Investment Experience",
+              "type": "text",
+              "id": "investment-experience-step2-section0-field3",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            }
+          ]
+        },
+        {
+          "title": "What investment experience do you have?",
+          "label": "What investment experience do you have?",
+          "fields": [
+            {
+              "name": "Purchases arranged through a Financial Adviser",
+              "label": "Purchases arranged through a Financial Adviser",
+              "type": "text",
+              "id": "purchases-arranged-through-a-financial-adviser-step2-section1-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Portfolio managed on a discretionary basis",
+              "label": "Portfolio managed on a discretionary basis",
+              "type": "text",
+              "id": "portfolio-managed-on-a-discretionary-basis-step2-section1-field1",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Portfolio managed on an advisory basis",
+              "label": "Portfolio managed on an advisory basis",
+              "type": "text",
+              "id": "portfolio-managed-on-an-advisory-basis-step2-section1-field2",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Self managed portfolio",
+              "label": "Self managed portfolio",
+              "type": "text",
+              "id": "self-managed-portfolio-step2-section1-field3",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Investment Objectives",
+              "label": "Investment Objectives",
+              "type": "text",
+              "id": "investment-objectives-step2-section1-field4",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "What are your investment objectives?",
+              "label": "What are your investment objectives?",
+              "type": "checkbox",
+              "id": "what-are-your-investment-objectives-step2-section1-field5",
+              "value": "",
+              "mandatory": true,
+              "readOnly": false,
+              "help": "",
+              "option": [
+                {
+                  "checked": false,
+                  "label": "Balanced"
+                },
+                {
+                  "checked": false,
+                  "label": "Growth"
+                },
+                {
+                  "checked": false,
+                  "label": "Income"
+                },
+                {
+                  "checked": false,
+                  "label": "Not Applicable"
+                }
+              ],
+              "inline": true
+            },
+            {
+              "name": "Investment Timescale",
+              "label": "Investment Timescale",
+              "type": "text",
+              "id": "investment-timescale-step2-section1-field6",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "What is your timescale for investment?*",
+              "option": []
+            },
+            {
+              "name": "Risk Tolerance",
+              "label": "Risk Tolerance",
+              "type": "selector",
+              "id": "risk-tolerance-step2-section1-field7",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "Risk tolerance - If the stock market declined by 20%, what action would you take?",
+              "option": [
+                {
+                  "checked": false,
+                  "label": " Sell immediately to avoid further worry "
+                },
+                {
+                  "checked": false,
+                  "label": " Do nothing and wait for investment returns to improve "
+                },
+                {
+                  "checked": false,
+                  "label": " Buy to take advantage of lower share prices in anticipation of future gains "
+                }
+              ]
+            },
+            {
+              "name": "Risk Profile",
+              "label": "Risk Profile",
+              "type": "checkbox",
+              "id": "risk-profile-step2-section1-field8",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "Risk tolerance - What is the risk profile of the investments to be managed?",
+              "option": [
+                {
+                  "checked": false,
+                  "label": "Low"
+                },
+                {
+                  "checked": false,
+                  "label": "Low mid"
+                },
+                {
+                  "checked": false,
+                  "label": "Mid"
+                },
+                {
+                  "checked": false,
+                  "label": "Mid high"
+                },
+                {
+                  "checked": false,
+                  "label": "High"
+                }
+              ],
+              "inline": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hidden Dynamic fields",
+      "label": "Hidden Dynamic fields",
+      "id": "step-03",
+      "readOnly": true,
+      "visible": true,
+      "status": "pending",
+      "disabled": false,
+      "formIndex": 0,
+      "sections": [
+        {
+          "title": "Client category",
+          "label": "Client category",
+          "fields": [
+            {
+              "name": "Client Sub-Category",
+              "label": "Client Sub-Category",
+              "type": "text",
+              "id": "client-sub-category-step3-section0-field0",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Roles",
+              "label": "Roles",
+              "type": "text",
+              "id": "roles-step3-section0-field1",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Service Types",
+              "label": "Service Types",
+              "type": "text",
+              "id": "service-types-step3-section0-field2",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Suitability Required",
+              "label": "Suitability Required",
+              "type": "text",
+              "id": "suitability-required-step3-section0-field3",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "KYC Complete",
+              "label": "KYC Complete",
+              "type": "switch",
+              "id": "kyc-complete-step3-section0-field4",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": " Used for displaying Re-Open KYC button",
+              "option": []
+            },
+            {
+              "name": "User Roles",
+              "label": "User Roles",
+              "type": "text",
+              "id": "user-roles-step3-section0-field5",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "User Teams",
+              "label": "User Teams",
+              "type": "text",
+              "id": "user-teams-step3-section0-field6",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": []
+            },
+            {
+              "name": "Contact Category",
+              "label": "Contact Category",
+              "type": "selector",
+              "id": "contact-category-step3-section0-field7",
+              "value": "",
+              "mandatory": false,
+              "readOnly": false,
+              "help": "",
+              "option": [
+                {
+                  "checked": false,
+                  "label": "Accountancy"
+                },
+                {
+                  "checked": false,
+                  "label": "Charity"
+                },
+                {
+                  "checked": false,
+                  "label": "Charity Intermediary"
+                },
+                {
+                  "checked": false,
+                  "label": "Corporate Finance"
+                },
+                {
+                  "checked": false,
+                  "label": "Corporation"
+                },
+                {
+                  "checked": false,
+                  "label": "IFA"
+                },
+                {
+                  "checked": false,
+                  "label": "Individual"
+                },
+                {
+                  "checked": false,
+                  "label": "Intermediary"
+                },
+                {
+                  "checked": false,
+                  "label": "Joint"
+                },
+                {
+                  "checked": false,
+                  "label": "Law Firm"
+                },
+                {
+                  "checked": false,
+                  "label": "Mortgage Broker"
+                },
+                {
+                  "checked": false,
+                  "label": "Offshore Bond"
+                },
+                {
+                  "checked": false,
+                  "label": "Other"
+                },
+                {
+                  "checked": false,
+                  "label": "Private Equity"
+                },
+                {
+                  "checked": false,
+                  "label": "Product Provider"
+                },
+                {
+                  "checked": false,
+                  "label": "SIPP Provider"
+                },
+                {
+                  "checked": false,
+                  "label": "Solicitor"
+                },
+                {
+                  "checked": false,
+                  "label": "Tax Specialists/Planners"
+                },
+                {
+                  "checked": false,
+                  "label": "Trust"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
