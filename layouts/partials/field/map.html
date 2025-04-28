@@ -1,0 +1,79 @@
+<section class="border-bottom">
+  <div x-data="{ message: 'Alpine.js is working!' }">
+    <p x-text="message"></p>
+  </div>
+
+  <ul x-sort>
+    <li x-sort:item>foo</li>
+    <li x-sort:item>bar</li>
+    <li x-sort:item>baz</li>
+  </ul>
+
+  <!-- Sortable Steps -->
+  <div x-sort="form.steps" class="sortable-steps">
+    <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
+      <div class="border-top" x-sort:item>
+        <div class="px-2 py-2">
+          <strong x-text="(stepIndex + 1) + '. ' + step.title"></strong>
+        </div>
+
+        <!-- Sortable Sections -->
+        <section class="border-top">
+          <div x-sort="step.sections" class="sortable-sections">
+            <template
+              x-for="(section, sectionIndex) in step.sections"
+              :key="sectionIndex">
+              <div x-sort:item>
+                <div class="px-2 py-2">
+                  <span x-text="section.title"></span>
+                </div>
+                <!-- Sortable Fields -->
+                <section class="border-bottom">
+                  <div x-sort="section.fields" class="sortable-fields">
+                    <template
+                      x-for="(field, fieldIndex) in section.fields"
+                      :key="fieldIndex">
+                      <div class="border-top py-2 px-4" x-sort:item>
+                        <span x-text="field.label"></span>
+                      </div>
+                    </template>
+                  </div>
+                </section>
+              </div>
+            </template>
+          </div>
+        </section>
+      </div>
+    </template>
+  </div>
+</section>
+
+<!-- <section class="border-bottom">
+  <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
+    <div class="border-top">
+      <div class="px-2 py-2">
+        <strong x-text="step.title"></strong>
+      </div>
+      <section class="border-top">
+        <template
+          x-for="(section, sectionIndex) in step.sections"
+          :key="sectionIndex">
+          <div>
+            <div class="px-2 py-2">
+              <span x-text="section.title"></span>
+            </div>
+            <section class="border-bottom">
+              <template
+                x-for="(field, fieldIndex) in section.fields"
+                :key="fieldIndex">
+                <div class="border-top py-2 px-4">
+                  <span x-text="field.label"></span>
+                </div>
+              </template>
+            </section>
+          </div>
+        </template>
+      </section>
+    </div>
+  </template>
+</section> -->

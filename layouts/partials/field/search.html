@@ -9,16 +9,16 @@
   <div class="mt-3">
     <div>
       <template x-if="searchResults.fields.length">
-        <h5>Fields</h5>
+        <h5>Results</h5>
       </template>
       <template
         x-if="searchResults.fields.length === 0 && searchQuery.trim() !== ''">
         <span>No results found</span>
       </template>
       <template x-if="searchQuery.trim() === ''">
-        <div class="alert alert-info" role="alert">
-          <span>Type something to find a field</span>
-        </div>
+        <section>
+          {{ partial "partials/field/map.html" . }}
+        </section>
       </template>
       <div class="list-group">
         <template
