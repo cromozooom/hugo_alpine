@@ -56,7 +56,11 @@
               "mandatory": false,
               "readOnly": false,
               "help": "Please provide details of any current or planned capital commitments or liabilities",
-              "option": []
+              "option": [],
+              "alert": {
+                "type": "danger",
+                "message": "Please provide details of any current or planned capital commitments or liabilities"
+              }
             },
             {
               "name": "Liabilities",

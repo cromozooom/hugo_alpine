@@ -98,6 +98,34 @@
           </div>
         </div>
       </template>
+
+      <div class="mb-3 px-2">
+        <label for="fieldAlertType" class="form-label">Alert Type</label>
+        <select
+          id="fieldAlertType"
+          class="form-select"
+          :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.alert?.type || ''"
+          @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.alert 
+            ? (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].alert.type = $event.target.value) 
+            : (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].alert = { type: $event.target.value, message: '' })">
+          <option value="danger">Danger</option>
+          <option value="warning">Warning</option>
+          <option value="info">Info</option>
+          <option value="success">Success</option>
+        </select>
+      </div>
+      <div class="mb-3 px-2">
+        <label for="fieldAlertMessage" class="form-label">Alert Message</label>
+        <textarea
+          rows="3"
+          id="fieldAlertMessage"
+          class="form-control"
+          :value="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.alert?.message || ''"
+          @input="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.alert 
+            ? (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].alert.message = $event.target.value) 
+            : (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].alert = { type: '', message: $event.target.value })"></textarea>
+      </div>
+
       <div class="mb-3 px-2">
         <label for="fieldInline" class="form-label">Inline</label>
         <input
@@ -180,6 +208,7 @@
               <option value="checkbox">Checkbox</option>
             </select>
           </div>
+
           <button type="submit" class="btn btn-sm btn-outline-primary">
             Add Field
           </button>

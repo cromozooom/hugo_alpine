@@ -46,10 +46,10 @@
           </div>
           <div>
             <div class="btn-group">
-              <button class="btn btn-link" @mouseenter="$tooltip('Audit')">
+              <button class="btn btn-link" x-tooltip="Form audit">
                 {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
               </button>
-              <button class="btn btn-link" @mouseenter="$tooltip('Save form')">
+              <button class="btn btn-link" x-tooltip="Save form">
                 {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
               </button>
             </div>
@@ -74,10 +74,10 @@
           </div>
           <div>
             <div class="btn-group">
-              <button class="btn btn-link" @mouseenter="$tooltip('Audit step')">
+              <button class="btn btn-link" x-tooltip="Step audit">
                 {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
               </button>
-              <button class="btn btn-link" @mouseenter="$tooltip('Save step')">
+              <button class="btn btn-link" x-tooltip="Save step">
                 {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
               </button>
             </div>
@@ -100,14 +100,10 @@
           </div>
           <div>
             <div class="btn-group">
-              <button
-                class="btn btn-link"
-                @mouseenter="$tooltip('Audit section')">
+              <button class="btn btn-link" x-tooltip="Section audit">
                 {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
               </button>
-              <button
-                class="btn btn-link"
-                @mouseenter="$tooltip('Save section')">
+              <button class="btn btn-link" x-tooltip="Save section">
                 {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
               </button>
             </div>
@@ -134,12 +130,10 @@
           </div>
           <div>
             <div class="btn-group">
-              <button
-                class="btn btn-link"
-                @mouseenter="$tooltip('Audit field')">
+              <button class="btn btn-link" x-tooltip="Audit field">
                 {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
               </button>
-              <button class="btn btn-link" @mouseenter="$tooltip('Save field')">
+              <button class="btn btn-link" x-tooltip="Save field">
                 {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
               </button>
             </div>

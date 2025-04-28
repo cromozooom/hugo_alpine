@@ -756,8 +756,8 @@
                   :type="btn.type"
                   class="btn"
                   :class="{
-                    'btn-outline-primary': btn.ui === 'outline',
-                    'btn-primary': btn.ui === 'solid',
+                    'btn-outline-info': btn.ui === 'outline',
+                    'btn-info': btn.ui === 'solid',
                   }"
                   @click="handleButtonClick(btn)">
                   <i :class="btn.icon"></i> <span x-text="btn.label"></span>
@@ -777,8 +777,8 @@
                   :type="btn.type"
                   class="btn"
                   :class="{
-                    'btn-outline-primary': btn.ui === 'outline',
-                    'btn-primary': btn.ui === 'solid',
+                    'btn-outline-info': btn.ui === 'outline',
+                    'btn-info': btn.ui === 'solid',
                   }"
                   @click="handleButtonClick(btn)">
                   <template x-if="btn.icon.length">
