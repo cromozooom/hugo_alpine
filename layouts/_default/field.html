@@ -109,19 +109,18 @@
           <div class="align-self-stretch d-flex border-start ps-3">
             <div class="d-flex align-items-center gap-2">
               <div class="btn-group">
-                <button @click="downloadForm" class="btn btn-primary">
-                  Download Form
+                <button @click="downloadForm" class="btn btn-outline-primary">
+                  Download
                 </button>
-                <label class="btn btn-secondary">
-                  Load Form
+                <label class="btn btn-outline-primary">
+                  Load
                   <input type="file" @change="loadForm" accept=".json" hidden />
                 </label>
 
-                <button
-                  @click="loadStaticForm"
-                  class="btn btn-outline-secondary">
+                <button @click="loadStaticForm" class="btn btn-outline-primary">
                   KYC Charity
                 </button>
+                <button class="btn btn-primary">Save</button>
               </div>
             </div>
           </div>
