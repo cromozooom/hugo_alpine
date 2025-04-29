@@ -14,9 +14,6 @@
   </div>
   <div>
     <div class="btn-group">
-      <button class="btn btn-link" x-tooltip="Form audit">
-        {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
-      </button>
       <button class="btn btn-link" x-tooltip="Save form">
         {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
       </button>
@@ -25,9 +22,32 @@
 </div>
 
 <template x-if="currentEditorSelected === 'form'">
-  <div class="d-flex flex-column gap-2">
+  <div class="d-flex flex-column">
+    <div class="d-flex align-items-center ">
+      <div class="flex-grow-1 px-2">
+        <strong>
+          <small> Edit Form </small>
+        </strong>
+      </div>
+      <div>
+        <div class="btn-group">
+          <button
+            class="btn btn-link btn-sm"
+            x-tooltip="Trash Form"
+            @click="trashForm()">
+            {{ partial "svg/fa/regular-trash.svg" (dict "class" "icon-size-s") }}
+          </button>
+          <button class="btn btn-link" x-tooltip="Audit Form">
+            {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
+          </button>
+          <button class="btn btn-link" x-tooltip="Advance JSON">
+            {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="p-2">
-      <div class="d-flex flex-column mt-2">
+      <div class="d-flex flex-column">
         <div class="mb-3">
           <label for="formName" class="form-label">Form Name</label>
           <input

@@ -32,7 +32,7 @@
 <template x-if="currentEditorSelected === 'step'">
   <section>
     <!-- Edit Current -->
-    <template x-if="!addStepVisible">
+    <template x-if="!addStepVisible && form.steps[currentStepSelected]">
       <div class="border-top">
         <div class="d-flex align-items-center ">
           <div class="flex-grow-1 px-2">
@@ -50,6 +50,9 @@
 
               <button class="btn btn-link" x-tooltip="Step audit">
                 {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
+              </button>
+              <button class="btn btn-link" x-tooltip="Advance JSON">
+                {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
               </button>
             </div>
           </div>
@@ -123,16 +126,21 @@
         </form>
       </div>
     </template>
-    <div>
-      <template x-if="!form.steps[currentStepSelected]?.sections?.length">
-        <div class="alert alert-info m-2" role="alert">
-          No sections available for this step.
-        </div>
-      </template>
-
-      <!-- Add form to edit current selected Step -->
-    </div>
-
+    <template x-if="form.steps.length === 0">
+      <div class="alert alert-info m-2" role="alert">
+        <span>no step</span>
+      </div>
+    </template>
+    <template x-if="form.steps.length">
+      <div>
+        <template x-if="!form.steps[currentStepSelected]?.sections?.length">
+          <div class="alert alert-info m-2" role="alert">
+            No sections available for this step.
+          </div>
+        </template>
+        <!-- Add form to edit current selected Step -->
+      </div>
+    </template>
     <!-- + Step  -->
     <template x-if="addStepVisible">
       <div class=" p-2">

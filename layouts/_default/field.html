@@ -162,6 +162,19 @@
             @scroll="checkScrollPosition"
             class="d-flex w-100 hide-scrollbar overflow-x-scroll pt-2"
             x-sort>
+            <template x-if="form.steps.length === 0">
+              <div
+                class="w-100 d-flex justify-content-center align-items-center">
+                <button
+                  @click="toggleAddStepVisible()"
+                  :disabled="addStepVisible === true"
+                  class="btn btn-link text-decoration-none"
+                  x-tooltip="Add step">
+                  {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
+                  <span>Add steps ... </span>
+                </button>
+              </div>
+            </template>
             <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
               <!-- @click="currentStepActive = stepIndex, currentStepSelected = stepIndex" -->
               <span
