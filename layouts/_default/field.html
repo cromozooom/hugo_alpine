@@ -152,7 +152,7 @@
         class="d-flex flex-column flex-grow-1 h-100 overflow-y-scroll scrollbar-width__thin">
         <div class="bg-body d-flex w-100 sticky-top">
           <button
-            class="btn btn-link border-end rounded-0"
+            class="btn btn-link border-end rounded-0 border-bottom border__inactive"
             :disabled="isAtStart"
             @click="scrollSteps('prev')">
             {{ partial "svg/fa/regular-chevron-left.svg" (dict "class" "icon-size-s") }}
@@ -160,18 +160,19 @@
           <div
             id="scrollable-steps"
             @scroll="checkScrollPosition"
-            class="d-flex w-100 hide-scrollbar overflow-x-scroll px-2 pt-2"
+            class="d-flex w-100 hide-scrollbar overflow-x-scroll pt-2"
             x-sort>
             <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
               <!-- @click="currentStepActive = stepIndex, currentStepSelected = stepIndex" -->
               <span
                 x-sort:step
                 @click="selectAndScroll(stepIndex)"
-                class="px-4 bg-transparent d-flex flex-column gap-1 flex-fill align-items-center btn-stepper"
+                class="border-bottom px-4 bg-transparent d-flex flex-column gap-1 flex-fill align-items-center btn-stepper"
                 :class="{
                 'text-body-tertiary bg-pattern-readOnly': step.readOnly,
                 'text-body-tertiary bg-pattern-notReadOnly': !step.readOnly,
-                'stepSelected bg-body-secondary rounded-top-3 xrounded-3 ring-3 ring-solid ring-offset-2 ring-selected': currentStepSelected === stepIndex,
+                'border__transparent stepSelected bg-body-secondary rounded-top-3 xrounded-3 ring-3 ring-solid ring-offset-2 ring-selected': currentStepSelected === stepIndex,
+                'border__inactive': currentStepSelected !== stepIndex,
               }">
                 <!-- <span class="cursor-move my-handle">
                   {{ partial "svg/fa/regular-ellipsis.svg" (dict "class" "size1") }}
@@ -210,7 +211,7 @@
             </template>
           </div>
           <button
-            class="border-start btn btn-link rounded-0"
+            class="border-start btn btn-link rounded-0  border-bottom border__inactive"
             :disabled="isAtEnd"
             @click="scrollSteps('next')">
             {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}

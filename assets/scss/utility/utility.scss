@@ -198,3 +198,12 @@ body {
 // .stepSelected {
 //   border-top: 3px solid var(--bs-info);
 // }
+
+.border-bottom {
+  &.border__inactive {
+    --bs-border-color: #{$gray-500} !important;
+  }
+  &.border__transparent {
+    --bs-border-color: transparent;
+  }
+}
