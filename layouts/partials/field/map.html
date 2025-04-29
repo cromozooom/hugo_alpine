@@ -72,7 +72,11 @@
               x-for="(section, sectionIndex) in step.sections"
               :key="sectionIndex">
               <div x-sort:item>
-                <div class="d-flex ps-2 py-2 align-items-center">
+                <div
+                  class="d-flex ps-2 py-2 align-items-center"
+                  :class="{
+                    'hover-primary-subtle cursor-pointer':  !(sectionIndex === currentSectionSelected && currentStepSelected === stepIndex),
+                  }">
                   <div
                     class="flex-grow-1"
                     @click="navigateToField(stepIndex, sectionIndex, 0)">
@@ -114,7 +118,10 @@
                       :key="fieldIndex">
                       <div
                         @click="navigateToField(stepIndex, sectionIndex, fieldIndex)"
-                        class="border-top py-1 ps-4 d-flex"
+                        class="border-top py-1 ps-4 d-flex  "
+                        :class="{
+                            'hover-primary-subtle cursor-pointer': !(fieldIndex === currentFieldSelected && sectionIndex === currentSectionSelected && stepIndex === currentStepSelected),
+                          }"
                         x-sort:item>
                         <div
                           class="d-flex align-items-center gap-2 flex-grow-1">

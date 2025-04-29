@@ -184,7 +184,7 @@
                 :class="{
                 'text-body-tertiary bg-pattern-readOnly': step.readOnly,
                 'text-body-tertiary bg-pattern-notReadOnly': !step.readOnly,
-                'border__transparent stepSelected bg-body-secondary rounded-top-3 xrounded-3 ring-3 ring-solid ring-offset-2 ring-selected': currentStepSelected === stepIndex,
+                'border__transparent stepSelected bg-body-tertiary rounded-top-3 xrounded-3 ring-3 ring-solid ring-offset-2 ring-selected': currentStepSelected === stepIndex,
                 'border__inactive': currentStepSelected !== stepIndex,
               }">
                 <!-- <span class="cursor-move my-handle">
@@ -194,7 +194,7 @@
                   class="d-flex z-2 "
                   :class="{
                     'bg-body': currentStepSelected !== stepIndex,
-                    'bg-body-secondary': currentStepSelected === stepIndex,
+                    'border': currentStepSelected === stepIndex,
                   }">
                   <span
                     style="width: 2.2rem;"

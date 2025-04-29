@@ -201,9 +201,16 @@ body {
 
 .border-bottom {
   &.border__inactive {
-    --bs-border-color: #{$gray-500} !important;
+    --bs-border-color: #{$gray-300} !important;
   }
   &.border__transparent {
     --bs-border-color: transparent;
+  }
+}
+
+.hover-primary-subtle {
+  &:hover {
+    background-color: var(--bs-primary-bg-subtle) !important;
+    color: var(--bs-primary-text-emphasis) !important;
   }
 }
