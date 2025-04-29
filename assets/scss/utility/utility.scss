@@ -15,6 +15,7 @@ body {
 }
 .scrollbar-width__thin {
   scrollbar-width: thin;
+  scrollbar-gutter: stable;
 }
 
 .max-width-45rem {
@@ -44,11 +45,20 @@ body {
 .ring-offset-2 {
   outline-offset: 2px;
 }
+.ring-offset--4 {
+  outline-offset: -4px;
+}
+.ring-offset--3 {
+  outline-offset: -3px;
+}
 .ring-offset-3 {
   outline-offset: 3px;
 }
 .ring-selected {
   outline-color: var(--bs-info);
+}
+.ring-transparent {
+  outline-color: transparent;
 }
 
 .cursor-not-allowed {

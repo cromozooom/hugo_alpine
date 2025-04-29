@@ -150,7 +150,7 @@
       {{ partial "partials/field/toc.html" . }}
       <div
         id="mainArea"
-        class="d-flex flex-column flex-grow-1 h-100 overflow-y-scroll">
+        class="d-flex flex-column flex-grow-1 h-100 overflow-y-scroll scrollbar-width__thin">
         <div class="bg-body d-flex w-100 sticky-top">
           <button
             class="btn btn-link border-end rounded-0"
@@ -217,7 +217,7 @@
             {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
           </button>
         </div>
-        <div class="flex-grow-1 d-flex flex-column justify-content-start py-2">
+        <div class="flex-grow-1 d-flex flex-column justify-content-start gap-2">
           <template x-if="!preview">
             <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
               <template
@@ -225,9 +225,14 @@
                 <template
                   x-for="(section, sectionIndex) in step.sections"
                   :key="sectionIndex">
-                  <section class="d-flex flex-column mx-auto w-100">
+                  <section
+                    class="d-flex flex-column mx-auto w-100  rounded-3 ring-offset--4 ring-3 ring-solid pb-2"
+                    :class="{
+                        'ring-selected': sectionIndex === currentSectionSelected,
+                        'ring-transparent':sectionIndex !== currentSectionSelected,
+                      }">
                     <div
-                      class="container p-2 max-w-form bg-body"
+                      class="container pb-2 pt-3 max-w-form "
                       @click="select(stepIndex, sectionIndex, 0)">
                       <strong class="h5" x-text="section.label"></strong>
                     </div>

@@ -30,12 +30,19 @@
           <strong>Matched Value:</strong>
           <span x-text="result.fieldValue"></span><br /> -->
 
-          <div class="px-2 py-1 border-top">
+          <div class="xpx-2 py-1 border-top">
             <button
               class="btn btn-link text-decoration-none w-100 text-start d-flex align-items-center gap-2"
               type="button"
               @click="navigateToField(result.stepIndex, result.sectionIndex, result.fieldIndex)">
-              <small x-text="result.fieldName"> </small>
+              <div
+                class="badge text-primary-emphasis"
+                :class="{
+                  'bg-primary-subtle': result.fieldIndex === currentFieldSelected && result.sectionIndex === currentSectionSelected && result.stepIndex === currentStepSelected,
+                  'bg-light': !(result.fieldIndex === currentFieldSelected && result.sectionIndex === currentSectionSelected && result.stepIndex === currentStepSelected),
+                }">
+                <small x-text="result.fieldName"> </small>
+              </div>
             </button>
           </div>
 

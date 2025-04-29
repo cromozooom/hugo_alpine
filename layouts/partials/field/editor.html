@@ -29,122 +29,14 @@
     <form
       @submit.prevent="saveToLocalStorage"
       class="d-flex flex-column w-100 h-100 overflow-hidden flex-grow-1">
-      <div class="flex-grow-1 overflow-y-auto d-flex flex-column ">
-        <div
-          class="border-bottom bg-light shadow-sm sticky-top d-flex align-items-center justify-content-between"
-          :class="{'shadow-sm' : currentEditorSelected === 'form'}">
-          <div class="flex-grow-1">
-            <button
-              class="btn btn-link btn-sm text-decoration-none w-100 text-start "
-              type="button"
-              @click="selectEditor('form')">
-              <strong>
-                <span x-text="form.name"></span>
-                Form
-              </strong>
-            </button>
-          </div>
-          <div>
-            <div class="btn-group">
-              <button class="btn btn-link" x-tooltip="Form audit">
-                {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
-              </button>
-              <button class="btn btn-link" x-tooltip="Save form">
-                {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
-              </button>
-            </div>
-          </div>
-        </div>
+      <div
+        class="flex-grow-1 overflow-y-auto d-flex flex-column scrollbar-width__thin">
         {{ partial "partials/field/editor_form.html" . }}
 
-
-        <div
-          class="border-bottom bg-light shadow-sm sticky-top d-flex align-items-center justify-content-between"
-          :class="{'shadow-sm' : currentEditorSelected === 'step'}">
-          <div class="flex-grow-1">
-            <button
-              class="btn btn-link btn-sm text-decoration-none w-100 text-start text-align-start"
-              type="button"
-              @click="selectEditor('step')">
-              <strong>
-                <!-- <span x-text="currentStepSelected"></span> -->
-                Step
-              </strong>
-            </button>
-          </div>
-          <div>
-            <div class="btn-group">
-              <button class="btn btn-link" x-tooltip="Step audit">
-                {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
-              </button>
-              <button class="btn btn-link" x-tooltip="Save step">
-                {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
-              </button>
-            </div>
-          </div>
-        </div>
         {{ partial "partials/field/editor_step.html" . }}
-        <div
-          class="border-bottom bg-light shadow-sm sticky-top d-flex align-items-center"
-          :class="{'shadow-sm' : currentEditorSelected === 'section'}">
-          <div class="flex-grow-1">
-            <button
-              class="btn btn-link btn-sm text-decoration-none w-100 text-start  text-align-start"
-              type="button"
-              @click="selectEditor('section')">
-              <strong>
-                <!-- <span x-text="currentSectionSelected"></span> -->
-                Section
-              </strong>
-            </button>
-          </div>
-          <div>
-            <div class="btn-group">
-              <button
-                class="btn btn-link"
-                x-tooltip="Add section"
-                @click="toggleAddSectionVisible()">
-                {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
-              </button>
-              <button class="btn btn-link" x-tooltip="Section audit">
-                {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
-              </button>
-              <button class="btn btn-link" x-tooltip="Save section">
-                {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
-              </button>
-            </div>
-          </div>
-        </div>
+
         {{ partial "partials/field/editor_section.html" . }}
-        <div
-          class="border-bottom bg-light  shadow-sm sticky-top d-flex align-items-center"
-          :class="{'shadow-sm' : currentEditorSelected === 'field'}">
-          <div class="flex-grow-1">
-            <button
-              class="btn btn-link btn-sm text-decoration-none w-100 text-start"
-              type="button"
-              @click="selectEditor('field')">
-              <strong>
-                <!-- <template x-if="currentFieldSelected !== null">
-                  <span x-text="currentFieldSelected"></span>
-                </template> -->
-                Field
-                <!-- <span
-                  x-text="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.name || 'N/A'"></span> -->
-              </strong>
-            </button>
-          </div>
-          <div>
-            <div class="btn-group">
-              <button class="btn btn-link" x-tooltip="Audit field">
-                {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
-              </button>
-              <button class="btn btn-link" x-tooltip="Save field">
-                {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
-              </button>
-            </div>
-          </div>
-        </div>
+
         {{ partial "partials/field/editor_field.html" . }}
       </div>
       <div class="d-flex justify-content-between w-100 border-top bg-light p-2">

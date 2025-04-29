@@ -1,7 +1,32 @@
+<div
+  class="border-bottom bg-light shadow-sm sticky-top d-flex align-items-center justify-content-between"
+  :class="{'shadow-sm' : currentEditorSelected === 'form'}">
+  <div class="flex-grow-1">
+    <button
+      class="btn btn-link btn-sm text-decoration-none w-100 text-start "
+      type="button"
+      @click="selectEditor('form')">
+      <strong>
+        <span x-text="form.name"></span>
+        Form
+      </strong>
+    </button>
+  </div>
+  <div>
+    <div class="btn-group">
+      <button class="btn btn-link" x-tooltip="Form audit">
+        {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
+      </button>
+      <button class="btn btn-link" x-tooltip="Save form">
+        {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
+      </button>
+    </div>
+  </div>
+</div>
+
 <template x-if="currentEditorSelected === 'form'">
   <div class="d-flex flex-column gap-2">
     <div class="p-2">
-      <strong><small>Edit Form</small></strong>
       <div class="d-flex flex-column mt-2">
         <div class="mb-3">
           <label for="formName" class="form-label">Form Name</label>
@@ -25,130 +50,143 @@
     </div>
 
     <!-- Action Buttons Editor -->
-    <div class="p-2 border-top">
-      <strong><small>Action Buttons Editor</small></strong>
-      <div class="d-flex flex-column mt-2">
-        <!-- Start Buttons -->
-        <div class="mb-3">
-          <strong><small>Start Buttons</small></strong>
-          <template
-            x-for="(button, index) in form.actionButtons.startButtons"
-            :key="index">
-            <div class="d-flex flex-column gap-2 border rounded p-2 mb-2">
-              <div>
-                <label for="startButtonLabel" class="form-label">Label</label>
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  x-model="button.label"
-                  placeholder="Enter button label" />
-              </div>
-              <div>
-                <label for="startButtonId" class="form-label">ID</label>
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  x-model="button.id"
-                  placeholder="Enter button ID" />
-              </div>
-              <div>
-                <label for="startButtonIcon" class="form-label">Icon</label>
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  x-model="button.icon"
-                  placeholder="Enter button icon" />
-              </div>
-              <div>
-                <label for="startButtonType" class="form-label">Type</label>
-                <select
-                  class="form-select form-select-sm"
-                  x-model="button.type">
-                  <option value="button">Button</option>
-                  <option value="submit">Submit</option>
-                  <option value="reset">Reset</option>
-                </select>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  class="btn btn-outline-danger btn-sm mt-2 d-flex align-items-center gap-2"
-                  @click="form.actionButtons.startButtons.splice(index, 1)">
-                  {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1 ") }}
-                  Button
-                  <!-- <span x-text="'(' + button.label + ')'"></span> -->
-                </button>
-              </div>
-            </div>
-          </template>
-          <button
-            type="button"
-            class="btn btn-outline-primary btn-sm mt-2"
-            @click="form.actionButtons.startButtons.push({ label: '', id: '', icon: '', type: 'button' })">
-            Add Start Button
-          </button>
+    <div class="border-top">
+      <div class="d-flex align-items-center ">
+        <div class="flex-grow-1 px-2">
+          <strong><small>Form / Action Buttons</small></strong>
         </div>
-
-        <!-- End Buttons -->
-        <div class="mb-0">
-          <strong><small>End Buttons</small></strong>
-          <template
-            x-for="(button, index) in form.actionButtons.endButtons"
-            :key="index">
-            <div class="d-flex flex-column gap-2 border rounded p-2 mb-2">
-              <div>
-                <label for="endButtonLabel" class="form-label">Label</label>
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  x-model="button.label"
-                  placeholder="Enter button label" />
-              </div>
-              <div>
-                <label for="endButtonId" class="form-label">ID</label>
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  x-model="button.id"
-                  placeholder="Enter button ID" />
-              </div>
-              <div>
-                <label for="endButtonIcon" class="form-label">Icon</label>
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  x-model="button.icon"
-                  placeholder="Enter button icon" />
-              </div>
-              <div>
-                <label for="endButtonType" class="form-label">Type</label>
-                <select
-                  class="form-select form-select-sm"
-                  x-model="button.type">
-                  <option value="button">Button</option>
-                  <option value="submit">Submit</option>
-                  <option value="reset">Reset</option>
-                </select>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  class="btn btn-outline-danger btn-sm mt-2 d-flex align-items-center gap-2"
-                  @click="form.actionButtons.endButtons.splice(index, 1)">
-                  {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1 ") }}
-                  Button
-                </button>
-              </div>
-            </div>
-          </template>
+        <div>
           <button
-            type="button"
-            class="btn btn-outline-primary btn-sm mt-2"
-            @click="form.actionButtons.endButtons.push({ label: '', id: '', icon: '', type: 'button' })">
-            Add End Button
+            @click="actionButtonsVisible = !actionButtonsVisible"
+            class="btn btn-link btn-sm">
+            Toggle
           </button>
         </div>
       </div>
+      <template x-if="actionButtonsVisible">
+        <div class="d-flex flex-column mt-2 px-2">
+          <!-- Start Buttons -->
+          <div class="mb-3">
+            <strong><small>Start Buttons</small></strong>
+            <template
+              x-for="(button, index) in form.actionButtons.startButtons"
+              :key="index">
+              <div class="d-flex flex-column gap-2 border rounded p-2 mb-2">
+                <div>
+                  <label for="startButtonLabel" class="form-label">Label</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    x-model="button.label"
+                    placeholder="Enter button label" />
+                </div>
+                <div>
+                  <label for="startButtonId" class="form-label">ID</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    x-model="button.id"
+                    placeholder="Enter button ID" />
+                </div>
+                <div>
+                  <label for="startButtonIcon" class="form-label">Icon</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    x-model="button.icon"
+                    placeholder="Enter button icon" />
+                </div>
+                <div>
+                  <label for="startButtonType" class="form-label">Type</label>
+                  <select
+                    class="form-select form-select-sm"
+                    x-model="button.type">
+                    <option value="button">Button</option>
+                    <option value="submit">Submit</option>
+                    <option value="reset">Reset</option>
+                  </select>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger btn-sm mt-2 d-flex align-items-center gap-2"
+                    @click="form.actionButtons.startButtons.splice(index, 1)">
+                    {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1 ") }}
+                    Button
+                    <!-- <span x-text="'(' + button.label + ')'"></span> -->
+                  </button>
+                </div>
+              </div>
+            </template>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm mt-2"
+              @click="form.actionButtons.startButtons.push({ label: '', id: '', icon: '', type: 'button' })">
+              Add Start Button
+            </button>
+          </div>
+
+          <!-- End Buttons -->
+          <div class="mb-0">
+            <strong><small>End Buttons</small></strong>
+            <template
+              x-for="(button, index) in form.actionButtons.endButtons"
+              :key="index">
+              <div class="d-flex flex-column gap-2 border rounded p-2 mb-2">
+                <div>
+                  <label for="endButtonLabel" class="form-label">Label</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    x-model="button.label"
+                    placeholder="Enter button label" />
+                </div>
+                <div>
+                  <label for="endButtonId" class="form-label">ID</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    x-model="button.id"
+                    placeholder="Enter button ID" />
+                </div>
+                <div>
+                  <label for="endButtonIcon" class="form-label">Icon</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    x-model="button.icon"
+                    placeholder="Enter button icon" />
+                </div>
+                <div>
+                  <label for="endButtonType" class="form-label">Type</label>
+                  <select
+                    class="form-select form-select-sm"
+                    x-model="button.type">
+                    <option value="button">Button</option>
+                    <option value="submit">Submit</option>
+                    <option value="reset">Reset</option>
+                  </select>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger btn-sm mt-2 d-flex align-items-center gap-2"
+                    @click="form.actionButtons.endButtons.splice(index, 1)">
+                    {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1 ") }}
+                    Button
+                  </button>
+                </div>
+              </div>
+            </template>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm mt-2"
+              @click="form.actionButtons.endButtons.push({ label: '', id: '', icon: '', type: 'button' })">
+              Add End Button
+            </button>
+          </div>
+        </div>
+      </template>
     </div>
   </div>
 </template>

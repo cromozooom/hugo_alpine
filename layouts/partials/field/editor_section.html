@@ -1,14 +1,61 @@
+<div
+  class="border-bottom bg-light shadow-sm sticky-top d-flex align-items-center"
+  :class="{'shadow-sm' : currentEditorSelected === 'section'}">
+  <div class="flex-grow-1">
+    <button
+      class="btn btn-link btn-sm text-decoration-none w-100 text-start  text-align-start"
+      type="button"
+      @click="selectEditor('section')">
+      <strong>
+        <!-- <span x-text="currentSectionSelected"></span> -->
+        Section
+      </strong>
+    </button>
+  </div>
+  <div>
+    <div class="btn-group">
+      <button
+        :disabled="addSectionVisible === true"
+        class="btn btn-link"
+        x-tooltip="Add section"
+        @click="toggleAddSectionVisible()">
+        {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
+      </button>
+
+      <button class="btn btn-link" x-tooltip="Save section">
+        {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
+      </button>
+    </div>
+  </div>
+</div>
+
 <template x-if="currentEditorSelected === 'section'">
   <div>
     <template x-if="!addSectionVisible">
       <section class="">
-        <div class="px-2 py-2 border-top">
-          <strong>
-            <small>Edit Section</small>
-          </strong>
+        <div class="py-2 border-top">
+          <div class="d-flex align-items-center ">
+            <div class="flex-grow-1 px-2">
+              <strong>
+                <small>Edit Selected Section</small>
+              </strong>
+            </div>
+            <div>
+              <div class="btn-group">
+                <button
+                  class="btn btn-link btn-sm"
+                  @click="trashSection(currentSectionSelected)">
+                  {{ partial "svg/fa/regular-trash.svg" (dict "class" "icon-size-s") }}
+                </button>
+                <button class="btn btn-link" x-tooltip="Section audit">
+                  {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
+                </button>
+              </div>
+            </div>
+          </div>
           <template
             x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
-            <form class="py-2" @submit.prevent="saveToLocalStorage">
+            <form class="py-2 px-2" @submit.prevent="saveToLocalStorage">
               <div class="mb-3">
                 <label for="sectionTitle" class="form-label"
                   >Section Title</label
@@ -33,9 +80,6 @@
                   placeholder="Enter section label"
                   required />
               </div>
-              <button type="submit" class="btn btn-sm btn-outline-primary">
-                Save section
-              </button>
             </form>
           </template>
           <template
@@ -51,12 +95,12 @@
       <section class="">
         <div class="p-2 border-top ">
           <strong class=" mt-3">
-            <small>Add a New Section</small>
+            <small>+ New Section</small>
           </strong>
           <form @submit.prevent="addSection">
             <div class="mb-3">
               <label for="newSectionTitle" class="form-label"
-                >Section Title</label
+                >New Section Title</label
               >
               <input
                 type="text"
@@ -68,7 +112,7 @@
             </div>
             <div class="mb-3">
               <label for="newSectionLabel" class="form-label"
-                >Section Label</label
+                >New Section Label</label
               >
               <input
                 type="text"
@@ -88,7 +132,7 @@
               </div>
               <div>
                 <button type="submit" class="btn btn-sm btn-outline-primary">
-                  Add Section
+                  Add New Section
                 </button>
               </div>
             </div>

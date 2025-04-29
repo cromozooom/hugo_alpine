@@ -1,69 +1,114 @@
 <section class="border-bottom">
-  <div class="d-flex justify-content-end mb-2">
-    <button
-      class="btn btn-primary btn-sm me-2"
-      @click="form.steps.forEach(step => step.collapsed = false); form.steps.forEach(step => step.sections.forEach(section => section.collapsed = false))">
-      Expand All
-    </button>
-    <button
-      class="btn btn-secondary btn-sm"
-      @click="form.steps.forEach(step => step.collapsed = true); form.steps.forEach(step => step.sections.forEach(section => section.collapsed = true))">
-      Collapse All
-    </button>
+  <div class="d-flex justify-content-end mb-2 px-2">
+    <div class="btn-group">
+      <button
+        class="btn btn-outline-primary btn-sm"
+        :disabled="form.steps.every(step => !step.collapsed && step.sections.every(section => !section.collapsed))"
+        @click="form.steps.forEach(step => step.collapsed = false); form.steps.forEach(step => step.sections.forEach(section => section.collapsed = false))">
+        Expand All
+      </button>
+      <button
+        class="btn btn-outline-primary btn-sm"
+        :disabled="form.steps.every(step => step.collapsed && step.sections.every(section => section.collapsed))"
+        @click="form.steps.forEach(step => step.collapsed = true); form.steps.forEach(step => step.sections.forEach(section => section.collapsed = true))">
+        Collapse All
+      </button>
+    </div>
   </div>
+  <!-- <div class="d-flex justify-content-end mb-2 px-2">
+    <div class="btn-group">
+      <button
+        class="btn btn-outline-primary btn-sm"
+        @click="form.steps.forEach(step => step.collapsed = false); form.steps.forEach(step => step.sections.forEach(section => section.collapsed = false))">
+        Expand All
+      </button>
+      <button
+        class="btn btn-outline-primary btn-sm"
+        @click="form.steps.forEach(step => step.collapsed = true); form.steps.forEach(step => step.sections.forEach(section => section.collapsed = true))">
+        Collapse All
+      </button>
+    </div>
+  </div> -->
 
-  <!-- Sortable Steps -->
-  <div class="sortable-steps">
+  <div class="sortable-steps" x-sort>
     <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
-      <div class="border-top">
-        <div class="ps-2 py-2">
+      <div class="border-top  shadow-sm" x-sort:item>
+        <div class="ps-2 py-2 bg-body-secondary">
           <div
             @click="selectAndScroll(stepIndex)"
-            class="d-flex align-items-center">
-            <div class="flex-grow-1">
+            class="d-flex align-items-center ">
+            <div class="flex-grow-1 h4 mb-0">
               <span x-sort:handle class="cursor-move me-2">
                 {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
               </span>
-              <strong x-text="(stepIndex + 1) + '. ' + step.title"></strong>
+              <div
+                class="badge "
+                :class="{
+                'text-bg-primary' : currentStepSelected === stepIndex,
+                'text-dark' : currentStepSelected !== stepIndex,
+            }">
+                <strong x-text="(stepIndex + 1) + '. ' + step.title"></strong>
+              </div>
             </div>
             <div>
               <button
                 class="btn btn-link btn-sm"
                 @click.stop="step.collapsed = !step.collapsed">
-                <span x-text="step.collapsed ? 'Expand' : 'Collapse'"></span>
+                <!-- <span x-text="step.collapsed ? 'Expand' : 'Collapse'"></span> -->
+                <template x-if="step.collapsed">
+                  {{ partial "svg/fa/regular-chevron-down.svg" (dict "class" "size1") }}
+                </template>
+                <template x-if="!step.collapsed">
+                  {{ partial "svg/fa/regular-chevron-up.svg" (dict "class" "size1") }}
+                </template>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Sortable Sections -->
         <section class="border-top" x-show="!step.collapsed">
-          <div class="sortable-sections">
+          <div class="sortable-sections" x-sort>
             <template
               x-for="(section, sectionIndex) in step.sections"
               :key="sectionIndex">
-              <div>
+              <div x-sort:item>
                 <div class="d-flex ps-2 py-2 align-items-center">
                   <div
                     class="flex-grow-1"
-                    @click="select(stepIndex, sectionIndex, 0)">
+                    @click="navigateToField(stepIndex, sectionIndex, 0)">
                     <span x-sort:handle class="cursor-move me-2">
                       {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
                     </span>
-                    <span x-text="section.title"></span>
+                    <div
+                      class="badge  text-primary-emphasis"
+                      :class="{
+                        'bg-primary-subtle': sectionIndex === currentSectionSelected && currentStepSelected === stepIndex,
+                        'bg-light': !(sectionIndex === currentSectionSelected && currentStepSelected === stepIndex),
+                      }">
+                      <span x-text="section.title"></span>
+                    </div>
                   </div>
                   <div>
                     <button
                       class="btn btn-link btn-sm"
                       @click.stop="section.collapsed = !section.collapsed">
-                      <span
-                        x-text="section.collapsed ? 'Expand' : 'Collapse'"></span>
+                      <!-- <span
+                        x-text="section.collapsed ? 'Expand' : 'Collapse'"></span> -->
+                      <template x-if="section.collapsed">
+                        {{ partial "svg/fa/regular-chevron-down.svg" (dict "class" "size1") }}
+                      </template>
+                      <template x-if="!section.collapsed">
+                        {{ partial "svg/fa/regular-chevron-up.svg" (dict "class" "size1") }}
+                      </template>
                     </button>
                   </div>
                 </div>
                 <!-- Sortable Fields -->
-                <section class="border-bottom" x-show="!section.collapsed">
-                  <div x-sort class="sortable-fields">
+                <section
+                  class="border-bottom"
+                  x-show="!section.collapsed"
+                  x-sort:group>
+                  <div class="sortable-fields">
                     <template
                       x-for="(field, fieldIndex) in section.fields"
                       :key="fieldIndex">
@@ -76,14 +121,21 @@
                           <span x-sort:handle class="cursor-move me-2">
                             {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
                           </span>
-                          <small x-text="field.label"></small>
+                          <div
+                            class="badge text-primary-emphasis"
+                            :class="{
+                            'bg-primary-subtle': fieldIndex === currentFieldSelected && sectionIndex === currentSectionSelected && stepIndex === currentStepSelected,
+                            'bg-light': !(fieldIndex === currentFieldSelected && sectionIndex === currentSectionSelected && stepIndex === currentStepSelected),
+                          }">
+                            <small x-text="field.label"></small>
+                          </div>
                         </div>
                         <div>
-                          <button
+                          <!-- <button
                             class="btn btn-link btn-sm"
-                            @click="deleteField(fieldIndex)">
+                            @click="trashField(fieldIndex)">
                             {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
-                          </button>
+                          </button> -->
                         </div>
                       </div>
                     </template>

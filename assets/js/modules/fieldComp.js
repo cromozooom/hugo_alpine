@@ -12,6 +12,7 @@ export default function fieldComp() {
 
     addStepVisible: false,
     addSectionVisible: false,
+    addFieldVisible: false,
 
     currentFieldSelected: 0,
     currentStepActive: 0,
@@ -19,6 +20,7 @@ export default function fieldComp() {
     currentStepSelected: 0,
     currentSectionSelected: 0,
     currentFieldSelected: 0,
+    actionButtonsVisible: false,
 
     form: {}, // Will be initialized from localStorage
     steps: [], // Will be initialized from localStorage
@@ -73,6 +75,7 @@ export default function fieldComp() {
         this.currentFieldSelected = parsedData.currentFieldSelected || 0;
         this.addStepVisible = parsedData.addStepVisible || 0;
         this.addSectionVisible = parsedData.addSectionVisible || 0;
+        this.addFieldVisible = parsedData.addFieldVisible || 0;
         this.currentEditorSelected = parsedData.currentEditorSelected ?? 'form';
       } else {
         // Initialize with default fields if no data exists
@@ -508,6 +511,7 @@ export default function fieldComp() {
         };
         this.addStepVisible = false;
         this.addSectionVisible = false;
+        this.addFieldVisible = false;
         this.currentStepSelected = 0;
         this.currentSectionSelected = 0;
         this.currentFieldSelected = 0;
@@ -529,6 +533,7 @@ export default function fieldComp() {
       this.$watch('currentFieldSelected', () => this.saveToLocalStorage());
       this.$watch('addStepVisible', () => this.saveToLocalStorage());
       this.$watch('addSectionVisible', () => this.saveToLocalStorage());
+      this.$watch('addFieldVisible', () => this.saveToLocalStorage());
     },
 
     async loadStaticForm() {
@@ -689,10 +694,15 @@ export default function fieldComp() {
       // console.log('select 650', stepIndex, sectionIndex, fieldIndex);
     },
 
+    toggleAddFieldVisible() {
+      this.addFieldVisible = !this.addFieldVisible;
+    },
     toggleAddSectionVisible() {
       this.addSectionVisible = !this.addSectionVisible;
     },
     toggleAddStepVisible() {
+      this.currentEditorSelected = 'step';
+      console.log('toggleAddStepVisible', this.currentEditorSelected);
       this.addStepVisible = !this.addStepVisible;
     },
     toggleToc() {
@@ -871,7 +881,7 @@ export default function fieldComp() {
       this.currentEditorSelected = 'field'; // Switch to field editor
     },
 
-    deleteField(fieldIndex) {
+    trashField(fieldIndex) {
       if (confirm('Are you sure you want to delete this field?')) {
         this.form.steps[this.currentStepSelected].sections[this.currentSectionSelected].fields.splice(fieldIndex, 1);
         this.saveToLocalStorage(); // Save changes to local storage

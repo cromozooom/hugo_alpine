@@ -1,20 +1,61 @@
-<button
-  @click="toggleAddStepVisible()"
-  :disable="addStepVisible"
-  class="btn btn-link"
-  x-tooltip="Add step">
-  {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
-</button>
+<div
+  class="border-bottom bg-light shadow-sm sticky-top d-flex align-items-center justify-content-between"
+  :class="{'shadow-sm' : currentEditorSelected === 'step'}">
+  <div class="flex-grow-1">
+    <button
+      class="btn btn-link btn-sm text-decoration-none w-100 text-start text-align-start"
+      type="button"
+      @click="selectEditor('step')">
+      <strong>
+        <!-- <span x-text="currentStepSelected"></span> -->
+        Step
+      </strong>
+    </button>
+  </div>
+  <div>
+    <div class="btn-group">
+      <button
+        @click="toggleAddStepVisible()"
+        :disabled="addStepVisible === true"
+        class="btn btn-link"
+        x-tooltip="Add step">
+        {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
+      </button>
+
+      <button class="btn btn-link" x-tooltip="Save step">
+        {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
+      </button>
+    </div>
+  </div>
+</div>
 
 <template x-if="currentEditorSelected === 'step'">
   <section>
     <!-- Edit Current -->
     <template x-if="!addStepVisible">
-      <div class="border-top p-2">
-        <strong>
-          <small>Edit Step</small>
-        </strong>
-        <form class="pt-2" @submit.prevent="saveToLocalStorage">
+      <div class="border-top">
+        <div class="d-flex align-items-center ">
+          <div class="flex-grow-1 px-2">
+            <strong>
+              <small>Edit Step</small>
+            </strong>
+          </div>
+          <div>
+            <div class="btn-group">
+              <button
+                class="btn btn-link btn-sm"
+                @click="trashStep(currentStepSelected)">
+                {{ partial "svg/fa/regular-trash.svg" (dict "class" "icon-size-s") }}
+              </button>
+
+              <button class="btn btn-link" x-tooltip="Step audit">
+                {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <form class="pt-2 px-2" @submit.prevent="saveToLocalStorage">
           <div class="mb-3">
             <label for="stepTitle" class="form-label">Step Title</label>
             <input
@@ -88,44 +129,6 @@
           No sections available for this step.
         </div>
       </template>
-      <div class="p-2 border-top">
-        <div class="pb-2">
-          <strong><small>Steps</small></strong>
-        </div>
-        <div class="d-flex flex-column rounded border" x-sort>
-          <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
-            <div
-              x-sort:step
-              @click="selectStep(stepIndex)"
-              class="cursor-pointer px-2 py-2 d-flex justify-content-between align-items-center"
-              :class="{
-              'border-top': stepIndex !== 0,
-            }">
-              <div class="d-flex align-items-center gap-2">
-                <span class="cursor-move">
-                  {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
-                </span>
-                <span x-text="step.label"></span>
-              </div>
-              <div>
-                <div class="btn-group">
-                  <button
-                    class="btn btn-link btn-sm"
-                    @click="trashStep(stepIndex)">
-                    {{ partial "svg/fa/regular-trash.svg" (dict "class" "size1") }}
-                  </button>
-                  <button
-                    :disabled="currentStepSelected === stepIndex"
-                    class="btn btn-link btn-sm"
-                    @click="selectStep(stepIndex)">
-                    {{ partial "svg/fa/regular-pencil.svg" (dict "class" "size1") }}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </template>
-        </div>
-      </div>
 
       <!-- Add form to edit current selected Step -->
     </div>
