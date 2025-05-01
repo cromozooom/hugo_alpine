@@ -9,7 +9,7 @@
             </strong>
           </div>
           <div>
-            <div class="btn-group">
+            <div class="d-flex">
               <button
                 class="btn btn-link btn-sm"
                 @click="trashField(currentFieldSelected)">
@@ -20,6 +20,20 @@
               </button>
               <button class="btn btn-link" x-tooltip="Advance JSON">
                 {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
+              </button>
+              <button
+                x-show="!showTreeEditors"
+                :disabled="addFieldVisible === true"
+                class="btn btn-link"
+                x-tooltip="Add field"
+                @click="toggleAddFieldVisible()">
+                {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
+              </button>
+              <button
+                x-show="!showTreeEditors"
+                class="btn btn-link"
+                x-tooltip="Save field">
+                {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
               </button>
             </div>
           </div>
