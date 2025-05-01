@@ -9,6 +9,7 @@ export default function fieldComp() {
     advancedTool: false,
     showToc: false,
     showEditor: false,
+    showTreeEditors: false,
 
     addStepVisible: false,
     addSectionVisible: false,
@@ -77,6 +78,7 @@ export default function fieldComp() {
         this.addSectionVisible = parsedData.addSectionVisible || 0;
         this.addFieldVisible = parsedData.addFieldVisible || 0;
         this.currentEditorSelected = parsedData.currentEditorSelected ?? 'form';
+        this.showTreeEditors = parsedData.showTreeEditors || false;
       } else {
         // Initialize with default fields if no data exists
         this.form = {
@@ -750,6 +752,10 @@ export default function fieldComp() {
     selectAndScroll(stepIndex) {
       this.select(stepIndex, 0, 0);
       this.selectStep(stepIndex);
+      if (!this.showTreeEditors) {
+        this.currentEditorSelected = 'step';
+        console.log('selectAndScroll', this.showTreeEditors, this.currentEditorSelected);
+      }
     },
 
     // Method to add a new section

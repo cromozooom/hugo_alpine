@@ -15,30 +15,68 @@
 <template x-if="showEditor">
   <div
     class="border-start sideWidth h-100 d-flex overflow-hidden d-flex flex-column bg-body">
-    <button
-      @click="toggleEditor()"
-      class="btn btn-link border-end d-flex align-items-center gap-2 border-bottom text-decoration-none">
-      <template x-if="showEditor">
-        {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
-      </template>
-      <template x-if="!showEditor">
-        {{ partial "svg/fa/regular-chevron-left.svg" (dict "class" "icon-size-s") }}
-      </template>
-      <small class="text-dark"> Form Editor </small>
-    </button>
-    <form
-      @submit.prevent="saveToLocalStorage"
-      class="d-flex flex-column w-100 h-100 overflow-hidden flex-grow-1">
-      <div
-        class="flex-grow-1 overflow-y-auto d-flex flex-column scrollbar-width__thin">
-        {{ partial "partials/field/editor_form.html" . }}
-
-        {{ partial "partials/field/editor_step.html" . }}
-
-        {{ partial "partials/field/editor_section.html" . }}
-
-        {{ partial "partials/field/editor_field.html" . }}
+    <div class="d-flex align-items-cengter border-bottom">
+      <div class="flex-grow-1">
+        <button
+          @click="toggleEditor()"
+          class="btn btn-link d-flex align-items-center gap-2  text-decoration-none">
+          <template x-if="showEditor">
+            {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
+          </template>
+          <template x-if="!showEditor">
+            {{ partial "svg/fa/regular-chevron-left.svg" (dict "class" "icon-size-s") }}
+          </template>
+          <small class="text-dark"> Form Editor </small>
+        </button>
       </div>
-    </form>
+      <div>
+        <button
+          class="btn btn-sm btn-link"
+          @click="showTreeEditors = !showTreeEditors"
+          :class="{
+            'text-primary': showTreeEditors,
+            'text-muted': !showTreeEditors
+
+          }">
+          {{ partial "svg/fa/regular-list-tree.svg" (dict "class" "icon-size-s") }}
+        </button>
+      </div>
+    </div>
+
+    <template x-if="!showTreeEditors">
+      <form
+        @submit.prevent="saveToLocalStorage"
+        class="d-flex flex-column w-100 h-100 overflow-hidden flex-grow-1">
+        <span x-text="currentEditorSelected"></span>
+        <div
+          class="flex-grow-1 overflow-y-auto d-flex flex-column scrollbar-width__thin">
+          <template x-if="currentEditorSelected === 'step'">
+            {{ partial "partials/field/editor_step.html" . }}
+          </template>
+          <template x-if="currentEditorSelected === 'section'">
+            {{ partial "partials/field/editor_section.html" . }}
+          </template>
+          <template x-if="currentEditorSelected === 'field'">
+            {{ partial "partials/field/editor_field.html" . }}
+          </template>
+        </div>
+      </form>
+    </template>
+    <template x-if="showTreeEditors">
+      <form
+        @submit.prevent="saveToLocalStorage"
+        class="d-flex flex-column w-100 h-100 overflow-hidden flex-grow-1">
+        <div
+          class="flex-grow-1 overflow-y-auto d-flex flex-column scrollbar-width__thin">
+          {{ partial "partials/field/editor_form.html" . }}
+
+          {{ partial "partials/field/editor_step.html" . }}
+
+          {{ partial "partials/field/editor_section.html" . }}
+
+          {{ partial "partials/field/editor_field.html" . }}
+        </div>
+      </form>
+    </template>
   </div>
 </template>
