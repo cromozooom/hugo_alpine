@@ -241,6 +241,8 @@
                   x-for="(section, sectionIndex) in step.sections"
                   :key="sectionIndex">
                   <section
+                    :data-sectionLink-step-index="stepIndex"
+                    :data-sectionLink-section-index="sectionIndex"
                     class="d-flex flex-column mx-auto w-100  rounded-3 ring-offset--4 ring-3 ring-solid pb-2"
                     :class="{
                         'ring-selected': sectionIndex === currentSectionSelected,
@@ -248,7 +250,7 @@
                       }">
                     <div
                       class="container pb-2 pt-3 max-w-form "
-                      @click="select(stepIndex, sectionIndex, 0)">
+                      @click="select(stepIndex, sectionIndex, null)">
                       <strong class="h5" x-text="section.label"></strong>
                     </div>
                     <div
@@ -266,9 +268,9 @@
                         :key="fieldIndex">
                         <div
                           class="container rounded rounded-3 px-0 max-w-form bg-body"
-                          :data-step-index="stepIndex"
-                          :data-section-index="sectionIndex"
-                          :data-field-index="fieldIndex"
+                          :data-fieldLink-step-index="stepIndex"
+                          :data-fieldLink-section-index="sectionIndex"
+                          :data-fieldLink-field-index="fieldIndex"
                           @click="select(stepIndex, sectionIndex, fieldIndex)"
                           :style="{
                             '--bs-border-opacity': !field.readOnly ? '.5' : '1',

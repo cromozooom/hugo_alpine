@@ -32,7 +32,7 @@
       <div>
         <button
           class="btn btn-sm btn-link"
-          @click="showTreeEditors = !showTreeEditors"
+          @click="toggleShowTreeEditors()"
           :class="{
             'text-primary': showTreeEditors,
             'text-muted': !showTreeEditors
@@ -42,19 +42,36 @@
         </button>
       </div>
     </div>
+    <!-- <div>
+      <span x-text="typeof showTreeEditors  + ' | ' +  showTreeEditors"></span>
+      <span x-text="currentEditorSelected"></span>
+      <span x-text="currentStepSelected"></span>
+      <span x-text="currentSectionSelected"></span>
+      <span x-text="currentFieldSelected"></span>
+    </div> -->
 
-    <template x-if="!showTreeEditors">
+    <template x-if="showTreeEditors">
       <form
         @submit.prevent="saveToLocalStorage"
         class="d-flex flex-column w-100 h-100 overflow-hidden flex-grow-1">
-        <span x-text="currentEditorSelected"></span>
         <div
           class="flex-grow-1 overflow-y-auto d-flex flex-column scrollbar-width__thin">
+          {{ partial "partials/field/editor_form.html" . }}
+          <template x-if="showTreeEditors || currentEditorSelected === 'step'">
+            {{ partial "partials/field/editor_step_header.html" . }}
+          </template>
           <template x-if="currentEditorSelected === 'step'">
             {{ partial "partials/field/editor_step.html" . }}
           </template>
+          <template
+            x-if="showTreeEditors || currentEditorSelected === 'section'">
+            {{ partial "partials/field/editor_section_header.html" . }}
+          </template>
           <template x-if="currentEditorSelected === 'section'">
             {{ partial "partials/field/editor_section.html" . }}
+          </template>
+          <template x-if="showTreeEditors || currentEditorSelected === 'field'">
+            {{ partial "partials/field/editor_field_header.html" . }}
           </template>
           <template x-if="currentEditorSelected === 'field'">
             {{ partial "partials/field/editor_field.html" . }}
@@ -62,7 +79,7 @@
         </div>
       </form>
     </template>
-    <template x-if="showTreeEditors">
+    <template x-if="!showTreeEditors">
       <form
         @submit.prevent="saveToLocalStorage"
         class="d-flex flex-column w-100 h-100 overflow-hidden flex-grow-1">

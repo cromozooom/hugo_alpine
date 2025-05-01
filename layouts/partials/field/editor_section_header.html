@@ -1,0 +1,30 @@
+<div
+  class="border-bottom bg-light shadow-sm sticky-top d-flex align-items-center"
+  :class="{'shadow-sm' : currentEditorSelected === 'section'}">
+  <div class="flex-grow-1">
+    <button
+      class="btn btn-link btn-sm text-decoration-none w-100 text-start  text-align-start"
+      type="button"
+      @click="selectEditor('section')">
+      <strong>
+        <!-- <span x-text="currentSectionSelected"></span> -->
+        Section
+      </strong>
+    </button>
+  </div>
+  <div>
+    <div class="btn-group">
+      <button
+        :disabled="addSectionVisible === true"
+        class="btn btn-link"
+        x-tooltip="Add section"
+        @click="toggleAddSectionVisible()">
+        {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
+      </button>
+
+      <button class="btn btn-link" x-tooltip="Save section">
+        {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
+      </button>
+    </div>
+  </div>
+</div>

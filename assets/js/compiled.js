@@ -6588,7 +6588,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ''}`,
           alert('Failed to load the form. Please try again.');
         }
       },
-      navigateToField(stepIndex, sectionIndex, fieldIndex) {
+      navigateToAnything(stepIndex, sectionIndex, fieldIndex) {
         this.currentStepSelected = stepIndex;
         this.currentSectionSelected = sectionIndex;
         this.currentFieldSelected = fieldIndex;

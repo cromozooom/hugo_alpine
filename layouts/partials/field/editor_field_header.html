@@ -1,0 +1,38 @@
+<div
+  class="border-bottom bg-light  shadow-sm sticky-top d-flex align-items-center"
+  :class="{'shadow-sm' : currentEditorSelected === 'field'}">
+  <div class="flex-grow-1">
+    <button
+      class="btn btn-link btn-sm text-decoration-none w-100 text-start"
+      type="button"
+      @click="selectEditor('field')">
+      <strong>
+        <!-- <template x-if="currentFieldSelected !== null">
+                    <span x-text="currentFieldSelected"></span>
+                  </template> -->
+        Field
+        <!-- <span
+          x-text="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.name || 'N/A'"></span> -->
+      </strong>
+    </button>
+  </div>
+  <div>
+    <div class="btn-group">
+      <button
+        :disabled="addFieldVisible === true"
+        class="btn btn-link"
+        x-tooltip="Add field"
+        @click="toggleAddFieldVisible()">
+        {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
+      </button>
+      <button class="btn btn-link" x-tooltip="Save field">
+        {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
+      </button>
+    </div>
+  </div>
+  <!-- <div>
+    <span x-text="'addFieldVisible:' + addFieldVisible"></span>
+    <span x-text="'currentFieldSelected:' + currentFieldSelected"></span>
+    <span x-text="'currentEditorSelected:' + currentEditorSelected"></span>
+  </div> -->
+</div>

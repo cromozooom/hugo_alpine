@@ -1,98 +1,61 @@
-<div
-  class="border-bottom bg-light shadow-sm sticky-top d-flex align-items-center"
-  :class="{'shadow-sm' : currentEditorSelected === 'section'}">
-  <div class="flex-grow-1">
-    <button
-      class="btn btn-link btn-sm text-decoration-none w-100 text-start  text-align-start"
-      type="button"
-      @click="selectEditor('section')">
-      <strong>
-        <!-- <span x-text="currentSectionSelected"></span> -->
-        Section
-      </strong>
-    </button>
-  </div>
-  <div>
-    <div class="btn-group">
-      <button
-        :disabled="addSectionVisible === true"
-        class="btn btn-link"
-        x-tooltip="Add section"
-        @click="toggleAddSectionVisible()">
-        {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
-      </button>
-
-      <button class="btn btn-link" x-tooltip="Save section">
-        {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
-      </button>
-    </div>
-  </div>
-</div>
-
 <template x-if="currentEditorSelected === 'section'">
-  <div>
+  <section>
     <template x-if="!addSectionVisible">
-      <section class="">
-        <div class="py-2 border-top">
-          <div class="d-flex align-items-center ">
-            <div class="flex-grow-1 px-2">
-              <strong>
-                <small>Edit Selected Section</small>
-              </strong>
-            </div>
-            <div>
-              <div class="btn-group">
-                <button
-                  class="btn btn-link btn-sm"
-                  @click="trashSection(currentSectionSelected)">
-                  {{ partial "svg/fa/regular-trash.svg" (dict "class" "icon-size-s") }}
-                </button>
-                <button class="btn btn-link" x-tooltip="Section audit">
-                  {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
-                </button>
-                <button class="btn btn-link" x-tooltip="Advance JSON">
-                  {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
-                </button>
-              </div>
+      <div class=" border-top">
+        <div class="d-flex align-items-center ">
+          <div class="flex-grow-1 px-2">
+            <strong>
+              <small>Edit Selected Section</small>
+            </strong>
+          </div>
+          <div>
+            <div class="btn-group">
+              <button
+                class="btn btn-link btn-sm"
+                @click="trashSection(currentSectionSelected)">
+                {{ partial "svg/fa/regular-trash.svg" (dict "class" "icon-size-s") }}
+              </button>
+              <button class="btn btn-link" x-tooltip="Section audit">
+                {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
+              </button>
+              <button class="btn btn-link" x-tooltip="Advance JSON">
+                {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
+              </button>
             </div>
           </div>
-          <template
-            x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
-            <form class="py-2 px-2" @submit.prevent="saveToLocalStorage">
-              <div class="mb-3">
-                <label for="sectionTitle" class="form-label"
-                  >Section Title</label
-                >
-                <input
-                  type="text"
-                  id="sectionTitle"
-                  class="form-control"
-                  x-model="form.steps[currentStepSelected].sections[currentSectionSelected].title"
-                  placeholder="Enter section title"
-                  required />
-              </div>
-              <div class="mb-3">
-                <label for="sectionLabel" class="form-label"
-                  >Section Label</label
-                >
-                <input
-                  type="text"
-                  id="sectionLabel"
-                  class="form-control"
-                  x-model="form.steps[currentStepSelected].sections[currentSectionSelected].label"
-                  placeholder="Enter section label"
-                  required />
-              </div>
-            </form>
-          </template>
-          <template
-            x-if="!form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
-            <div class="alert alert-info mb-0" role="alert">
-              No section selected or available for this step.
-            </div>
-          </template>
         </div>
-      </section>
+        <template
+          x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
+          <form class="py-2 px-2" @submit.prevent="saveToLocalStorage">
+            <div class="mb-3">
+              <label for="sectionTitle" class="form-label">Section Title</label>
+              <input
+                type="text"
+                id="sectionTitle"
+                class="form-control"
+                x-model="form.steps[currentStepSelected].sections[currentSectionSelected].title"
+                placeholder="Enter section title"
+                required />
+            </div>
+            <div class="mb-3">
+              <label for="sectionLabel" class="form-label">Section Label</label>
+              <input
+                type="text"
+                id="sectionLabel"
+                class="form-control"
+                x-model="form.steps[currentStepSelected].sections[currentSectionSelected].label"
+                placeholder="Enter section label"
+                required />
+            </div>
+          </form>
+        </template>
+        <template
+          x-if="!form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
+          <div class="alert alert-info mb-0" role="alert">
+            No section selected or available for this step.
+          </div>
+        </template>
+      </div>
     </template>
     <template x-if="addSectionVisible">
       <section class="">
@@ -143,5 +106,5 @@
         </div>
       </section>
     </template>
-  </div>
+  </section>
 </template>

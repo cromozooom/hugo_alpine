@@ -76,7 +76,7 @@ export default function fieldComp() {
         this.currentFieldSelected = parsedData.currentFieldSelected || 0;
         this.addStepVisible = parsedData.addStepVisible || 0;
         this.addSectionVisible = parsedData.addSectionVisible || 0;
-        this.addFieldVisible = parsedData.addFieldVisible || 0;
+        this.addFieldVisible = parsedData.addFieldVisible || false;
         this.currentEditorSelected = parsedData.currentEditorSelected ?? 'form';
         this.showTreeEditors = parsedData.showTreeEditors || false;
       } else {
@@ -518,6 +518,7 @@ export default function fieldComp() {
         this.currentSectionSelected = 0;
         this.currentFieldSelected = 0;
         this.currentEditorSelected = 'form';
+        this.showTreeEditors = false;
       }
 
       // Ensure $watch is called after initialization
@@ -536,6 +537,7 @@ export default function fieldComp() {
       this.$watch('addStepVisible', () => this.saveToLocalStorage());
       this.$watch('addSectionVisible', () => this.saveToLocalStorage());
       this.$watch('addFieldVisible', () => this.saveToLocalStorage());
+      this.$watch('showTreeEditors', () => this.saveToLocalStorage());
     },
 
     async loadStaticForm() {
@@ -555,7 +557,72 @@ export default function fieldComp() {
       }
     },
 
-    navigateToField(stepIndex, sectionIndex, fieldIndex) {
+    toggleShowTreeEditors() {
+      this.showTreeEditors = !this.showTreeEditors;
+      if (this.showTreeEditors) {
+        this.currentStepSelected = 0;
+        this.currentSectionSelected = 0;
+        this.currentFieldSelected = 0;
+        this.currentEditorSelected = 'form';
+        this.selectAndScroll(0);
+      } else {
+        this.currentStepSelected = null;
+        this.currentSectionSelected = null;
+        this.currentFieldSelected = null;
+        this.currentEditorSelected = 'form';
+      }
+    },
+
+    navigateToAnything(stepIndex, sectionIndex, fieldIndex) {
+      if (fieldIndex === undefined || fieldIndex === null) {
+        this.navToSection(stepIndex, sectionIndex);
+      } else {
+        this.navToField(stepIndex, sectionIndex, fieldIndex);
+      }
+    },
+
+    navToSection(stepIndex, sectionIndex) {
+      if (this.showTreeEditors) {
+        this.navToField(stepIndex, sectionIndex, 0);
+      } else {
+        this.currentStepSelected = stepIndex;
+        this.currentSectionSelected = sectionIndex;
+        this.currentFieldSelected = null;
+      }
+      console.log('navToSection', stepIndex, sectionIndex);
+
+      this.$nextTick(() => {
+        const mainArea = document.querySelector('#mainArea');
+        const sectionElement = mainArea?.querySelector(
+          `[data-sectionLink-step-index="${stepIndex}"][data-sectionLink-section-index="${sectionIndex}"]`,
+        );
+
+        if (!sectionElement) {
+          console.warn('Section element not found');
+          return;
+        }
+
+        // Calculate the offset
+        const offset = 10 * parseFloat(getComputedStyle(document.documentElement).fontSize); // Convert 5rem to pixels
+        const elementTop = sectionElement.offsetTop; // Position of the element relative to the container
+
+        // Scroll the container to the element with the offset
+        mainArea.scrollTo({
+          top: elementTop - offset,
+          behavior: 'smooth',
+        });
+
+        if (!this.showTreeEditors) {
+          this.currentEditorSelected = 'section';
+        }
+      });
+
+      return;
+    },
+
+    navToField(stepIndex, sectionIndex, fieldIndex) {
+      console.log('navToField', stepIndex, sectionIndex, fieldIndex);
+
       this.currentStepSelected = stepIndex;
       this.currentSectionSelected = sectionIndex;
       this.currentFieldSelected = fieldIndex;
@@ -564,12 +631,15 @@ export default function fieldComp() {
       this.$nextTick(() => {
         const mainArea = document.querySelector('#mainArea');
         const fieldElement = mainArea?.querySelector(
-          `[data-step-index="${stepIndex}"][data-section-index="${sectionIndex}"][data-field-index="${fieldIndex}"]`,
+          `[data-fieldLink-step-index="${stepIndex}"][data-fieldLink-section-index="${sectionIndex}"][data-fieldLink-field-index="${fieldIndex}"]`,
         );
 
         if (fieldElement) {
           // Scroll the field into view within #mainArea
           fieldElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          if (!this.showTreeEditors) {
+            this.currentEditorSelected = 'field';
+          }
         } else {
           console.warn('Field element not found');
         }
@@ -668,10 +738,19 @@ export default function fieldComp() {
 
     // Method to set the current selected index
     selectEditor(editor) {
-      if (this.currentEditorSelected === editor) {
-        console.log('Editor selected:', this.currentEditorSelected);
-        console.log('Editor already selected:', editor);
-        this.currentEditorSelected = null;
+      if (editor === 'form') {
+        this.currentStepSelected = null;
+        this.currentSectionSelected = null;
+        this.currentFieldSelected = null;
+      }
+      if (this.showTreeEditors) {
+        if (this.currentEditorSelected === editor) {
+          console.log('Editor selected:', this.currentEditorSelected);
+          console.log('Editor already selected:', editor);
+          this.currentEditorSelected = null;
+        } else {
+          this.currentEditorSelected = editor;
+        }
       } else {
         this.currentEditorSelected = editor;
       }
@@ -681,19 +760,35 @@ export default function fieldComp() {
     },
 
     select(stepIndex, sectionIndex, fieldIndex) {
+      // Update the current step if it's different
       if (stepIndex !== this.currentStepSelected) {
         this.currentStepSelected = stepIndex;
-      } else {
+        this.currentEditorSelected = 'step';
       }
-      if (sectionIndex !== this.currentSectionSelected) {
+
+      // Update the current section if it's different and not null
+      if (sectionIndex !== null && sectionIndex !== this.currentSectionSelected) {
         this.currentSectionSelected = sectionIndex;
-      } else {
+        this.currentEditorSelected = 'section';
+      } else if (sectionIndex === null) {
+        this.currentSectionSelected = null; // Reset if sectionIndex is null
       }
-      if (fieldIndex !== this.currentFieldSelected) {
+
+      // Update the current field if it's different and not null
+      if (fieldIndex !== null && fieldIndex !== this.currentFieldSelected) {
         this.currentFieldSelected = fieldIndex;
-      } else {
+        this.currentEditorSelected = 'field';
+      } else if (fieldIndex === null && sectionIndex !== null) {
+        // Ensure the editor is set to 'section' if fieldIndex is null but sectionIndex is valid
+        this.currentFieldSelected = null;
+        this.currentEditorSelected = 'section';
+      } else if (fieldIndex === null && sectionIndex === null) {
+        // Reset editor to 'step' if both sectionIndex and fieldIndex are null
+        this.currentEditorSelected = 'step';
       }
-      // console.log('select 650', stepIndex, sectionIndex, fieldIndex);
+
+      // Debugging output (optional)
+      console.log('select', stepIndex, sectionIndex, fieldIndex, this.currentEditorSelected);
     },
 
     toggleAddFieldVisible() {
@@ -711,7 +806,9 @@ export default function fieldComp() {
       this.showToc = !this.showToc;
     },
     toggleEditor() {
-      this.showEditor = !this.showEditor;
+      if (showTreeEditors) {
+        this.showEditor = !this.showEditor;
+      }
     },
     togglePreview() {
       this.preview = !this.preview;
@@ -750,11 +847,13 @@ export default function fieldComp() {
     },
 
     selectAndScroll(stepIndex) {
-      this.select(stepIndex, 0, 0);
-      this.selectStep(stepIndex);
       if (!this.showTreeEditors) {
+        this.selectStep(stepIndex);
+        this.select(stepIndex, null, null);
         this.currentEditorSelected = 'step';
-        console.log('selectAndScroll', this.showTreeEditors, this.currentEditorSelected);
+      } else {
+        this.select(stepIndex, 0, 0);
+        this.selectStep(stepIndex);
       }
     },
 
