@@ -39,8 +39,10 @@
         </template>
         <template
           x-if="!form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]">
-          <div class="alert alert-info mb-0" role="alert">
-            No section selected or available for this step.
+          <div class="p-2">
+            <div class="alert alert-info mb-0" role="alert">
+              No section selected or available for this step.
+            </div>
           </div>
         </template>
       </div>

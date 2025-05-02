@@ -13,28 +13,28 @@
     </button>
   </div>
   <div>
-    <div class="btn-group">
+    <div class="d-flex">
       <button
         class="btn btn-link btn-sm"
         @click="trashStep(currentStepSelected)">
         {{ partial "svg/fa/regular-trash.svg" (dict "class" "icon-size-s") }}
       </button>
 
-      <button class="btn btn-link" x-tooltip="Step audit">
+      <button class="btn btn-link btn-sm" x-tooltip="Step audit">
         {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
       </button>
-      <button class="btn btn-link" x-tooltip="Advance JSON">
+      <button class="btn btn-link btn-sm" x-tooltip="Advance JSON">
         {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
       </button>
       <button
         @click="toggleAddStepVisible()"
         :disabled="addStepVisible === true"
-        class="btn btn-link"
+        class="btn btn-link btn-sm"
         x-tooltip="Add step">
         {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
       </button>
 
-      <button class="btn btn-link" x-tooltip="Save step">
+      <button class="btn btn-link btn-sm" x-tooltip="Save step">
         {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
       </button>
     </div>

@@ -17,27 +17,27 @@
     </button>
   </div>
   <div>
-    <div class="btn-group">
+    <div class="d-flex">
       <button
         class="btn btn-link btn-sm"
         x-tooltip="Trash field"
         @click="trashField(currentFieldSelected)">
         {{ partial "svg/fa/regular-trash.svg" (dict "class" "icon-size-s") }}
       </button>
-      <button class="btn btn-link" x-tooltip="Audit field">
+      <button class="btn btn-link btn-sm" x-tooltip="Audit field">
         {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
       </button>
-      <button class="btn btn-link" x-tooltip="Advance JSON">
+      <button class="btn btn-link btn-sm" x-tooltip="Advance JSON">
         {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
       </button>
       <button
         :disabled="addFieldVisible === true"
-        class="btn btn-link"
+        class="btn btn-link btn-sm"
         x-tooltip="Add field"
         @click="toggleAddFieldVisible()">
         {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
       </button>
-      <button class="btn btn-link" x-tooltip="Save field">
+      <button class="btn btn-link btn-sm" x-tooltip="Save field">
         {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
       </button>
     </div>

@@ -136,6 +136,7 @@ export default function fieldComp() {
                       link: 'some stuff',
                       sync: true,
                       mandatory: false,
+                      displayCondition: true,
                       help: 'We will never share your email with anyone else.',
                       label: 'Contact Category',
                       value: 'valField01',
@@ -156,6 +157,7 @@ export default function fieldComp() {
                       link: '',
                       sync: false,
                       mandatory: true,
+                      displayCondition: true,
                       label: 'Date of birth',
                       value: 'valField02',
                     },
@@ -171,6 +173,7 @@ export default function fieldComp() {
                       link: '',
                       sync: false,
                       mandatory: false,
+                      displayCondition: true,
                       label: 'Suitability Review Lookup',
                       value: 'valField03',
                     },
@@ -186,6 +189,7 @@ export default function fieldComp() {
                       link: '',
                       sync: false,
                       mandatory: false,
+                      displayCondition: true,
                       label: 'Password',
                       value: 'valField04',
                       alert: {
@@ -205,6 +209,7 @@ export default function fieldComp() {
                       link: '',
                       sync: false,
                       mandatory: true,
+                      displayCondition: true,
                       label: 'Are you a UK resident for tax purposes?',
                       value: 'valField04',
                       option: [
@@ -226,6 +231,7 @@ export default function fieldComp() {
                       link: '',
                       sync: false,
                       mandatory: false,
+                      displayCondition: true,
                       label: 'Budget',
                       value: 'valField04',
                     },
@@ -242,6 +248,7 @@ export default function fieldComp() {
                       link: '',
                       sync: false,
                       mandatory: false,
+                      displayCondition: true,
                       label: 'Are you resident in any other country for tax purposes?',
                       help: 'Are you resident in any other country for tax purposes?',
                       value: 'valField04',
@@ -262,6 +269,7 @@ export default function fieldComp() {
                       link: '',
                       sync: false,
                       mandatory: false,
+                      displayCondition: true,
                       label: 'Are you in good health 149?',
                       help: 'Please provide your tax identification or reference numbers',
                       value: 'valField04',
@@ -278,6 +286,7 @@ export default function fieldComp() {
                       link: '',
                       sync: false,
                       mandatory: false,
+                      displayCondition: true,
                       label: 'Are you in good health? - (inline)',
                       help: 'This is inline - Please provide your tax identification or reference numbers',
                       inline: true,
@@ -300,6 +309,7 @@ export default function fieldComp() {
                       link: '',
                       sync: false,
                       mandatory: false,
+                      displayCondition: true,
                       label: 'Are you in good health ?',
                       help: 'Please provide your tax identification or reference numbers',
                       inline: false,
@@ -322,6 +332,7 @@ export default function fieldComp() {
                       link: '',
                       sync: false,
                       mandatory: false,
+                      displayCondition: true,
                       label: 'Are you a smoker?',
                       help: 'Please provide additional information if you have answered ‘No’ above:',
                       value: 'valField04',
@@ -357,6 +368,7 @@ export default function fieldComp() {
                       link: '',
                       sync: false,
                       mandatory: true,
+                      displayCondition: true,
                       label: 'Date of objective',
                       value: 'valField020',
                     },
@@ -524,6 +536,7 @@ export default function fieldComp() {
         this.currentFieldSelected = 0;
         this.currentEditorSelected = 'form';
         this.showTreeEditors = false;
+        this.showEditor = false;
       }
 
       // Ensure $watch is called after initialization
@@ -938,9 +951,7 @@ export default function fieldComp() {
       this.showToc = !this.showToc;
     },
     toggleEditor() {
-      if (showTreeEditors) {
-        this.showEditor = !this.showEditor;
-      }
+      this.showEditor = !this.showEditor;
     },
     togglePreview() {
       this.preview = !this.preview;
@@ -1097,7 +1108,9 @@ export default function fieldComp() {
         id: fieldId, // Automatically generated ID
         value: '', // Default value
         mandatory: false,
+        displayCondition: true,
         readOnly: false,
+        displayCondition: true,
         help: '',
         option: [], // For selector or checkbox types
       });

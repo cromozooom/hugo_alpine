@@ -302,6 +302,7 @@
       "emailHelp",
       "fieldAlertMessage",
       "fieldAlertType",
+      "fieldDisplayCondition",
       "fieldHelp",
       "fieldId",
       "fieldInline",

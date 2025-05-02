@@ -155,6 +155,17 @@
           <label for="fieldMandatory" class="form-label">Mandatory</label>
         </div>
         <div class="mb-3 px-2">
+          <input
+            type="checkbox"
+            id="fieldDisplayCondition"
+            class="form-check-input"
+            :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.displayCondition || false"
+            @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].displayCondition = $event.target.checked)" />
+          <label for="fieldDisplayCondition" class="form-label"
+            >DisplayCondition</label
+          >
+        </div>
+        <div class="mb-3 px-2">
           <!-- <div
             class="d-flex w-100 justify-content-start align-items-center pb-2">
             <div>
@@ -190,7 +201,7 @@
           </div>
 
           <template x-if="readOnlyJsonEditorVisible">
-            <div class="json-editor-container">
+            <div class="json-editor-container mt-2">
               <div id="readOnlyJsonEditor" class="h-100"></div>
               <div class="d-flex justify-content-between mt-2">
                 <div>

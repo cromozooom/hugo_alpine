@@ -13,7 +13,7 @@
     </button>
   </div>
   <div>
-    <div class="btn-group">
+    <div class="d-flex">
       <button
         class="btn btn-link btn-sm"
         x-tooltip="Trash Section"
@@ -33,7 +33,6 @@
         @click="toggleAddSectionVisible()">
         {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
       </button>
-
       <button class="btn btn-link btn-sm" x-tooltip="Save section">
         {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
       </button>
