@@ -15,6 +15,18 @@
   <div>
     <div class="btn-group">
       <button
+        class="btn btn-link btn-sm"
+        @click="trashStep(currentStepSelected)">
+        {{ partial "svg/fa/regular-trash.svg" (dict "class" "icon-size-s") }}
+      </button>
+
+      <button class="btn btn-link" x-tooltip="Step audit">
+        {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
+      </button>
+      <button class="btn btn-link" x-tooltip="Advance JSON">
+        {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
+      </button>
+      <button
         @click="toggleAddStepVisible()"
         :disabled="addStepVisible === true"
         class="btn btn-link"

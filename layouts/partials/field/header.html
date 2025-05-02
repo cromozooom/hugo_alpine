@@ -1,0 +1,153 @@
+<div class="container-fluid bg-body shadow-sm sticky-top border-bottom">
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <strong class="h4">
+        <a href="https://solopx.com" target="_blank"> sPx </a>
+        Form editor</strong
+      >
+    </div>
+    <div class="d-flex gap-3 align-items-stretch">
+      <div class="py-2">
+        <div class="btn-group border ">
+          <!-- <button
+              class="btn btn-link"
+              @click="toggleDensity"
+              :class="{
+                'text-success bg-success-subtle': density,
+                'text-muted': !density,
+              }">
+              {{ partial "svg/fa/regular-line-height.svg" (dict "class" "size1") }}
+            </button> -->
+
+          <button
+            type="button"
+            class="btn btn-link"
+            @click="toggleValidate"
+            x-data
+            x-tooltip="Validate"
+            :class="{
+                'text-success bg-success-subtle': validateTool,
+                'text-muted bg-light': !validateTool,
+              }">
+            {{ partial "svg/fa/regular-rotate-exclamation.svg" (dict "class" "size1") }}
+          </button>
+          <template x-if="!preview">
+            <button
+              class="btn btn-link rounded-end"
+              @click="toggleDevTool"
+              :disabled="density === 'compact'"
+              x-data
+              x-tooltip="Debug"
+              :style="density === 'compact' ? '--bs-border-opacity: .5;' : '--bs-border-opacity: 1;'"
+              :class="{
+                  'text-success bg-success-subtle': devTool,
+                  'bg-light text-muted': !devTool,
+                  'text-muted opacity-25': density === 'compact',
+              }">
+              {{ partial "svg/fa/regular-code.svg" (dict "class" "size1") }}
+            </button>
+          </template>
+          <template x-if="preview">
+            <button
+              class="btn btn-link rounded-end"
+              @click="toggleAdvanced"
+              x-data
+              x-tooltip="Audit"
+              :class="{
+              'text-success bg-success-subtle': advancedTool,
+              'bg-light text-muted': !advancedTool,
+            }">
+              {{ partial "svg/fa/regular-microscope.svg" (dict "class" "size1") }}
+            </button>
+          </template>
+        </div>
+      </div>
+      <div class="align-self-stretch d-flex border-start ps-3">
+        <div class="d-flex align-items-center gap-2">
+          <span> Density </span>
+          <div class="btn-group border">
+            <button
+              class="btn"
+              x-data
+              x-tooltip="compact"
+              :class="{
+                  'text-success bg-success-subtle': density === 'compact',
+                  'bg-light text-muted': density !== 'compact',
+                }"
+              @click="density = 'compact'">
+              S
+            </button>
+            <button
+              class="btn"
+              x-data
+              x-tooltip="default"
+              :class="{
+                  'text-success bg-success-subtle': density === 'default',
+                  'bg-light text-muted': density !== 'default',
+                }"
+              @click="density = 'default'">
+              M
+            </button>
+            <button
+              class="btn"
+              x-data
+              x-tooltip="comfortable"
+              :class="{
+                  'text-success bg-success-subtle': density === 'comfortable',
+                  'bg-light text-muted': density !== 'comfortable',
+                }"
+              @click="density = 'comfortable'">
+              L
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="align-self-stretch d-flex border-start ps-3">
+        <button
+          class="btn btn-link btn-sm"
+          x-tooltip="Clone step"
+          @click="duplicateStep(currentStepSelected)">
+          {{ partial "svg/fa/regular-clone.svg" (dict "class" "icon-size-s") }}
+        </button>
+      </div>
+      <div class="align-self-stretch d-flex border-start ps-3">
+        <div class="d-flex align-items-center gap-2">
+          <div class="btn-group">
+            <button @click="downloadForm" class="btn btn-outline-primary">
+              Download
+            </button>
+            <label class="btn btn-outline-primary">
+              Load
+              <input type="file" @change="loadForm" accept=".json" hidden />
+            </label>
+
+            <button @click="loadStaticForm" class="btn btn-outline-primary">
+              KYC Charity
+            </button>
+            <button class="btn btn-primary d-flex align-items-center gap-2">
+              Save
+              {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "size1") }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="align-self-stretch d-flex border-start ps-3 d-none first-letter:2305">
+        <div class="d-flex align-items-center gap-2">
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="switchPreview"
+              :checked="preview"
+              @change="togglePreview" />
+            <label class="form-check-label text-nowrap" for="switchPreview">
+              Preview Form
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

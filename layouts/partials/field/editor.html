@@ -42,13 +42,13 @@
         </button>
       </div>
     </div>
-    <div>
+    <!-- <div>
       <span x-text="typeof showTreeEditors  + ' | ' +  showTreeEditors"></span>
       <span x-text="currentEditorSelected"></span>
       <span x-text="currentStepSelected"></span>
       <span x-text="currentSectionSelected"></span>
       <span x-text="currentFieldSelected"></span>
-    </div>
+    </div> -->
 
     <template x-if="showTreeEditors">
       <form
@@ -93,11 +93,11 @@
           </template>
           {{ partial "partials/field/editor_step.html" . }}
           <template x-if="currentEditorSelected === 'section'">
-            {{ partial "partials/field/editor_step_header_.html" . }}
+            {{ partial "partials/field/editor_section_header_.html" . }}
           </template>
           {{ partial "partials/field/editor_section.html" . }}
           <template x-if="currentEditorSelected === 'field'">
-            {{ partial "partials/field/editor_step_header_.html" . }}
+            {{ partial "partials/field/editor_field_header_.html" . }}
           </template>
           {{ partial "partials/field/editor_field.html" . }}
         </div>

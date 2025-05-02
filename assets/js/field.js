@@ -5,6 +5,8 @@ import fieldComp from './modules/fieldComp.js';
 import tippy from 'tippy.js';
 
 import storageManager from './modules/storageManager.js';
+import JSONEditor from 'jsoneditor';
+// import 'jsoneditor/dist/jsoneditor.min.css';
 
 // Register Alpine.js components and start Alpine
 document.addEventListener('alpine:init', () => {

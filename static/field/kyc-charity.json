@@ -43,7 +43,7 @@
               "id": "assets-step0-section0-field0",
               "value": "",
               "mandatory": false,
-              "readOnly": false,
+              "readOnly": true,
               "help": "",
               "option": []
             },
@@ -53,8 +53,8 @@
               "type": "text",
               "id": "please-list-all-the-assets:-step0-section0-field1",
               "value": "",
-              "mandatory": false,
-              "readOnly": false,
+              "mandatory": true,
+              "readOnly": true,
               "help": "Please provide details of any current or planned capital commitments or liabilities",
               "option": [],
               "alert": {
@@ -90,10 +90,14 @@
               "type": "textarea",
               "id": "exclusions-and-ethical-or-socially-responsible-investment-(sri)-considerations-step0-section0-field4",
               "value": "",
-              "mandatory": false,
-              "readOnly": false,
+              "mandatory": true,
+              "readOnly": true,
               "help": "Please provide any further information which you believe may be relevant to the firm in connection with the management of the investment portfolio or wider provision of our professional services. This may include any future capital commitments or liabilities or known change in income requirements",
-              "option": []
+              "option": [],
+              "alert": {
+                "type": "danger",
+                "message": "Some message"
+              }
             },
             {
               "name": "Further information on approach to investments",
@@ -106,7 +110,8 @@
               "help": "",
               "option": []
             }
-          ]
+          ],
+          "collapsed": false
         },
         {
           "title": "Charity Details",
@@ -277,7 +282,8 @@
               "help": "",
               "option": []
             }
-          ]
+          ],
+          "collapsed": false
         },
         {
           "title": "Assets",
@@ -294,7 +300,8 @@
               "help": "",
               "option": []
             }
-          ]
+          ],
+          "collapsed": false
         },
         {
           "title": "Liabilities",
@@ -344,7 +351,8 @@
               "help": "",
               "option": []
             }
-          ]
+          ],
+          "collapsed": false
         },
         {
           "title": "Income",
@@ -372,9 +380,11 @@
               "help": "",
               "option": []
             }
-          ]
+          ],
+          "collapsed": false
         }
-      ]
+      ],
+      "collapsed": false
     },
     {
       "title": "Goals and objectives",
@@ -396,12 +406,17 @@
               "type": "text",
               "id": "approach-to-investment-step1-section0-field0",
               "value": "",
-              "mandatory": false,
+              "mandatory": true,
               "readOnly": false,
               "help": "Before we can offer a personal recommendation concerning a designated investment or manage investments on your behalf, we must understand your circumstances and how they relate to the services offered. Please tick one answer for each of the following questions to help us to build a picture of your views on investment.",
-              "option": []
+              "option": [],
+              "alert": {
+                "type": "danger",
+                "message": "Test"
+              }
             }
-          ]
+          ],
+          "collapsed": false
         },
         {
           "title": "Investment Knowledge",
@@ -418,7 +433,8 @@
               "help": "",
               "option": []
             }
-          ]
+          ],
+          "collapsed": false
         },
         {
           "title": "Investment Experience",
@@ -468,7 +484,8 @@
               "help": "",
               "option": []
             }
-          ]
+          ],
+          "collapsed": false
         },
         {
           "title": "Investment Objectives",
@@ -503,7 +520,8 @@
               ],
               "inline": true
             }
-          ]
+          ],
+          "collapsed": false
         },
         {
           "title": "Investment Timescale",
@@ -520,7 +538,8 @@
               "help": "",
               "option": []
             }
-          ]
+          ],
+          "collapsed": false
         },
         {
           "title": "Risk Tolerance",
@@ -550,7 +569,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "collapsed": false
         },
         {
           "title": "Risk Profile",
@@ -589,14 +609,17 @@
               ],
               "inline": true
             }
-          ]
+          ],
+          "collapsed": false
         },
         {
           "title": "Client Specific",
           "label": "Client Specific",
-          "fields": []
+          "fields": [],
+          "collapsed": false
         }
-      ]
+      ],
+      "collapsed": false
     },
     {
       "title": "Client Specific",
@@ -656,7 +679,8 @@
               "help": "",
               "option": []
             }
-          ]
+          ],
+          "collapsed": false
         },
         {
           "title": "What investment experience do you have?",
@@ -814,9 +838,11 @@
               ],
               "inline": true
             }
-          ]
+          ],
+          "collapsed": false
         }
-      ]
+      ],
+      "collapsed": false
     },
     {
       "title": "Hidden Dynamic fields",
@@ -997,9 +1023,11 @@
                 }
               ]
             }
-          ]
+          ],
+          "collapsed": false
         }
-      ]
+      ],
+      "collapsed": false
     }
   ]
 }

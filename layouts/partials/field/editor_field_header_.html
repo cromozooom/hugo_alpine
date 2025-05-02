@@ -3,9 +3,33 @@
   :class="{'shadow-sm' : currentEditorSelected === 'field'}">
   <div class="flex-grow-1">
     <button
-      class="btn btn-link btn-sm text-decoration-none w-100 text-start"
+      class="d-flex gap-2 align-items-center btn btn-link btn-sm text-decoration-none w-100 text-start"
       type="button"
       @click="selectEditor('field')">
+      <template
+        x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.readOnly">
+        <div x-data x-tooltip="Hidden" class="py-1 d-flex align-items-center">
+          {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "icon-size-s opacity-25") }}
+        </div>
+      </template>
+      <template
+        x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.alert?.type">
+        <div
+          x-data
+          x-tooltip="Error"
+          class="py-1 d-flex align-items-center text-danger">
+          {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "icon-size-s ") }}
+        </div>
+      </template>
+      <template
+        x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.mandatory">
+        <div
+          x-data
+          x-tooltip="Mandatory"
+          class="py-1 d-flex align-items-center text-danger">
+          {{ partial "svg/fa/solid-star-of-life.svg" (dict "class" "icon-size-s ") }}
+        </div>
+      </template>
       <strong>
         <!-- <template x-if="currentFieldSelected !== null">
                     <span x-text="currentFieldSelected"></span>
@@ -24,20 +48,20 @@
         @click="trashField(currentFieldSelected)">
         {{ partial "svg/fa/regular-trash.svg" (dict "class" "icon-size-s") }}
       </button>
-      <button class="btn btn-link" x-tooltip="Audit field">
+      <button class="btn btn-link btn-sm" x-tooltip="Audit field">
         {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
       </button>
-      <button class="btn btn-link" x-tooltip="Advance JSON">
+      <button class="btn btn-link btn-sm" x-tooltip="Advance JSON">
         {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
       </button>
       <button
         :disabled="addFieldVisible === true"
-        class="btn btn-link"
+        class="btn btn-link btn-sm"
         x-tooltip="Add field"
         @click="toggleAddFieldVisible()">
         {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
       </button>
-      <button class="btn btn-link" x-tooltip="Save field">
+      <button class="btn btn-link btn-sm" x-tooltip="Save field">
         {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
       </button>
     </div>

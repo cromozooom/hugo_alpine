@@ -3,29 +3,14 @@
     <!-- Edit Current -->
     <template x-if="!addStepVisible && form.steps[currentStepSelected]">
       <div class="border-top">
-        <div class="d-flex align-items-center ">
+        <!-- <div class="d-flex align-items-center ">
           <div class="flex-grow-1 px-2">
             <strong>
               <small>Edit Step</small>
             </strong>
           </div>
-          <div>
-            <div class="btn-group">
-              <button
-                class="btn btn-link btn-sm"
-                @click="trashStep(currentStepSelected)">
-                {{ partial "svg/fa/regular-trash.svg" (dict "class" "icon-size-s") }}
-              </button>
-
-              <button class="btn btn-link" x-tooltip="Step audit">
-                {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
-              </button>
-              <button class="btn btn-link" x-tooltip="Advance JSON">
-                {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
-              </button>
-            </div>
-          </div>
-        </div>
+          <div></div>
+        </div> -->
 
         <form class="pt-2 px-2" @submit.prevent="saveToLocalStorage">
           <div class="mb-3">

@@ -2,42 +2,16 @@
   <section>
     <template x-if="!addFieldVisible">
       <div class="border-top">
-        <div class="d-flex align-items-center ">
+        <!-- <div class="d-flex align-items-center ">
           <div class="flex-grow-1 px-2">
             <strong>
               <small> Edit field </small>
             </strong>
           </div>
           <div>
-            <div class="d-flex">
-              <button
-                class="btn btn-link btn-sm"
-                @click="trashField(currentFieldSelected)">
-                {{ partial "svg/fa/regular-trash.svg" (dict "class" "icon-size-s") }}
-              </button>
-              <button class="btn btn-link" x-tooltip="Audit field">
-                {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
-              </button>
-              <button class="btn btn-link" x-tooltip="Advance JSON">
-                {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
-              </button>
-              <button
-                x-show="!showTreeEditors"
-                :disabled="addFieldVisible === true"
-                class="btn btn-link"
-                x-tooltip="Add field"
-                @click="toggleAddFieldVisible()">
-                {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
-              </button>
-              <button
-                x-show="!showTreeEditors"
-                class="btn btn-link"
-                x-tooltip="Save field">
-                {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
-              </button>
-            </div>
+            <div class="d-flex"></div>
           </div>
-        </div>
+        </div> -->
         <div class="my-2 px-2">
           <label for="fieldName" class="form-label">Name</label>
           <input
@@ -163,31 +137,79 @@
         </div>
 
         <div class="mb-3 px-2">
-          <label for="fieldInline" class="form-label">Inline</label>
           <input
             type="checkbox"
             id="fieldInline"
             class="form-check-input"
             :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.inline || false"
             @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].inline = $event.target.checked)" />
+          <label for="fieldInline" class="form-label">Inline</label>
         </div>
         <div class="mb-3 px-2">
-          <label for="fieldMandatory" class="form-label">Mandatory</label>
           <input
             type="checkbox"
             id="fieldMandatory"
             class="form-check-input"
             :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.mandatory || false"
             @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].mandatory = $event.target.checked)" />
+          <label for="fieldMandatory" class="form-label">Mandatory</label>
         </div>
         <div class="mb-3 px-2">
-          <label for="fieldReadOnly" class="form-label">Read-Only</label>
-          <input
-            type="checkbox"
-            id="fieldReadOnly"
-            class="form-check-input"
-            :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.readOnly || false"
-            @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].readOnly = $event.target.checked)" />
+          <!-- <div
+            class="d-flex w-100 justify-content-start align-items-center pb-2">
+            <div>
+              <label for="fieldReadOnly" class="">Read-Only</label>
+            </div>
+            <div>
+              <button
+                class="btn btn-link btn-sm"
+                x-tooltip="Edit JSON"
+                @click="toggleReadOnlyJsonEditor()">
+                {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
+              </button>
+            </div>
+          </div> -->
+          <div class="text-muted d-flex gap-2 align-items-center">
+            <input
+              type="checkbox"
+              id="fieldReadOnly"
+              class="form-check-input"
+              :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.readOnly || false"
+              @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].readOnly = $event.target.checked)" />
+            <label for="fieldReadOnly" class="form-label mb-0">
+              <div class="d-flex align-items-center">
+                <span> Read-Only </span>
+                <button
+                  class="btn btn-link btn-sm"
+                  x-tooltip="Edit JSON"
+                  @click="toggleReadOnlyJsonEditor()">
+                  {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
+                </button>
+              </div>
+            </label>
+          </div>
+
+          <template x-if="readOnlyJsonEditorVisible">
+            <div class="json-editor-container">
+              <div id="readOnlyJsonEditor" class="h-100"></div>
+              <div class="d-flex justify-content-between mt-2">
+                <div>
+                  <button
+                    class="btn btn-link btn-sm ms-2"
+                    @click="toggleReadOnlyJsonEditor()">
+                    Cancel
+                  </button>
+                </div>
+                <div>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    @click="saveReadOnlyJsonEditor()">
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </template>
         </div>
         <div class="mb-2 px-2">
           <label for="fieldHelp" class="form-label">Help Text</label>

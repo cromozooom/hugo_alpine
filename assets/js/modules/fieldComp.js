@@ -22,6 +22,11 @@ export default function fieldComp() {
     currentSectionSelected: 0,
     currentFieldSelected: 0,
     actionButtonsVisible: false,
+    jsonEditorVisible: false,
+    jsonEditorInstance: null,
+
+    readOnlyJsonEditorVisible: false,
+    readOnlyJsonEditorInstance: null,
 
     form: {}, // Will be initialized from localStorage
     steps: [], // Will be initialized from localStorage
@@ -571,6 +576,133 @@ export default function fieldComp() {
         this.currentFieldSelected = null;
         this.currentEditorSelected = 'form';
       }
+    },
+
+    toggleJsonEditor() {
+      this.jsonEditorVisible = !this.jsonEditorVisible;
+
+      if (this.jsonEditorVisible) {
+        this.$nextTick(() => {
+          const container = document.getElementById('jsoneditor');
+          if (!this.jsonEditorInstance) {
+            this.jsonEditorInstance = new JSONEditor(container, {
+              mode: 'code', // You can also use 'tree', 'view', or 'text'
+              modes: ['code', 'tree', 'view'], // Allowed modes
+              onChangeJSON: (updatedJson) => {
+                this.form = updatedJson; // Update the form object dynamically
+              },
+            });
+          }
+          this.jsonEditorInstance.set(this.form); // Load the current form data into the editor
+        });
+      } else {
+        if (this.jsonEditorInstance) {
+          this.jsonEditorInstance.destroy();
+          this.jsonEditorInstance = null;
+        }
+      }
+    },
+
+    saveJsonEditor() {
+      if (this.jsonEditorInstance) {
+        try {
+          const updatedForm = this.jsonEditorInstance.get(); // Get the updated JSON
+          this.form = updatedForm; // Update the form object
+          this.saveToLocalStorage(); // Save the updated form to local storage
+          this.toggleJsonEditor(); // Close the editor
+        } catch (error) {
+          console.error('Invalid JSON:', error);
+          alert('Invalid JSON. Please fix the errors before saving.');
+        }
+      }
+    },
+
+    toggleReadOnlyJsonEditor() {
+      this.readOnlyJsonEditorVisible = !this.readOnlyJsonEditorVisible;
+
+      if (this.readOnlyJsonEditorVisible) {
+        this.$nextTick(() => {
+          const container = document.getElementById('readOnlyJsonEditor');
+          if (!this.readOnlyJsonEditorInstance) {
+            this.readOnlyJsonEditorInstance = new JSONEditor(container, {
+              mode: 'code', // Default mode
+              modes: ['code', 'tree'], // Allow switching between code and tree modes
+              onChangeJSON: (updatedJson) => {
+                const field =
+                  this.form.steps?.[this.currentStepSelected]?.sections?.[this.currentSectionSelected]?.fields?.[
+                    this.currentFieldSelected
+                  ];
+                if (field) {
+                  field.readOnly = updatedJson.readOnly; // Update only the readOnly property
+                }
+              },
+            });
+          }
+
+          // Load the current readOnly property into the editor
+          const field =
+            this.form.steps?.[this.currentStepSelected]?.sections?.[this.currentSectionSelected]?.fields?.[
+              this.currentFieldSelected
+            ];
+          if (field) {
+            this.readOnlyJsonEditorInstance.set({ readOnly: field.readOnly });
+          }
+        });
+      } else {
+        if (this.readOnlyJsonEditorInstance) {
+          this.readOnlyJsonEditorInstance.destroy();
+          this.readOnlyJsonEditorInstance = null;
+        }
+      }
+    },
+
+    saveReadOnlyJsonEditor() {
+      if (this.readOnlyJsonEditorInstance) {
+        try {
+          const updatedData = this.readOnlyJsonEditorInstance.get(); // Get the updated JSON
+          const field =
+            this.form.steps?.[this.currentStepSelected]?.sections?.[this.currentSectionSelected]?.fields?.[
+              this.currentFieldSelected
+            ];
+          if (field) {
+            field.readOnly = updatedData.readOnly; // Update only the readOnly property
+          }
+          this.saveToLocalStorage(); // Save the updated form to local storage
+          this.toggleReadOnlyJsonEditor(); // Close the editor
+        } catch (error) {
+          console.error('Invalid JSON:', error);
+          alert('Invalid JSON. Please fix the errors before saving.');
+        }
+      }
+    },
+
+    duplicateStep(stepIndex) {
+      if (stepIndex === null || stepIndex === undefined) {
+        console.warn('No step selected to duplicate');
+        return;
+      }
+
+      // Get the current step
+      const currentStep = this.form.steps?.[stepIndex];
+      if (!currentStep) {
+        console.warn('Step not found');
+        return;
+      }
+
+      // Create a deep copy of the step
+      const newStep = JSON.parse(JSON.stringify(currentStep));
+
+      // Modify the new step (e.g., update the title or ID)
+      newStep.title = `${newStep.title} (Copy)`;
+      newStep.id = `${newStep.id || ''}_copy`;
+
+      // Insert the new step after the current step
+      this.form.steps.splice(stepIndex + 1, 0, newStep);
+
+      // Save the updated steps to local storage
+      this.saveToLocalStorage();
+
+      console.log('Step duplicated and saved to local storage:', newStep);
     },
 
     navigateToAnything(stepIndex, sectionIndex, fieldIndex) {

@@ -1,0 +1,641 @@
+<div
+  id="mainArea"
+  class="d-flex flex-column flex-grow-1 h-100 overflow-y-scroll scrollbar-width__thin">
+  <div class="sticky-top p-2 bg-info-subtle text-info-emphasis">
+    <small> min width 700px </small>
+  </div>
+  <div class="bg-body d-flex w-100 sticky-top">
+    <button
+      class="btn btn-link border-end rounded-0 border-bottom border__inactive"
+      :disabled="isAtStart"
+      @click="scrollSteps('prev')">
+      {{ partial "svg/fa/regular-chevron-left.svg" (dict "class" "icon-size-s") }}
+    </button>
+    <div
+      id="scrollable-steps"
+      @scroll="checkScrollPosition"
+      class="d-flex w-100 hide-scrollbar overflow-x-scroll pt-2"
+      x-sort>
+      <template x-if="form.steps.length === 0">
+        <div class="w-100 d-flex justify-content-center align-items-center">
+          <button
+            @click="toggleAddStepVisible()"
+            :disabled="addStepVisible === true"
+            class="btn btn-link text-decoration-none"
+            x-tooltip="Add step">
+            {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
+            <span>Add steps ... </span>
+          </button>
+        </div>
+      </template>
+      <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
+        <!-- @click="currentStepActive = stepIndex, currentStepSelected = stepIndex" -->
+        <span
+          x-sort:step
+          @click="selectAndScroll(stepIndex)"
+          class="border-bottom px-4 bg-transparent d-flex flex-column gap-1 flex-fill align-items-center btn-stepper"
+          :class="{
+        'text-body-tertiary bg-pattern-readOnly': step.readOnly,
+        'text-body-tertiary bg-pattern-notReadOnly': !step.readOnly,
+        'border__transparent stepSelected bg-body-tertiary rounded-top-3 xrounded-3 ring-3 ring-solid ring-offset-2 ring-selected': currentStepSelected === stepIndex,
+        'border__inactive': currentStepSelected !== stepIndex,
+      }">
+          <!-- <span class="cursor-move my-handle">
+          {{ partial "svg/fa/regular-ellipsis.svg" (dict "class" "size1") }}
+        </span> -->
+          <div
+            class="d-flex z-2 "
+            :class="{
+            'bg-body': currentStepSelected !== stepIndex,
+            'border': currentStepSelected === stepIndex,
+          }">
+            <span
+              style="width: 2.2rem;"
+              :class="{    
+            'border-dark border-2 border-doted': step.readOnly,
+            'shadow-sm': !step.readOnly,
+          }"
+              class="bg-white rounded-circle d-block ratio ratio-1x1 rounded-full border d-flex align-items-center justify-content-center">
+              <small
+                :class="{
+                'opacity-50': step.readOnly
+              }"
+                class="d-flex align-items-center justify-content-center"
+                x-text="stepIndex + 1">
+              </small>
+            </span>
+          </div>
+          <strong
+            class="text-nowrap pb-2"
+            :class="{
+            'opacity-50': step.readOnly
+          }">
+            <small x-text="step.label"> </small>
+          </strong>
+        </span>
+      </template>
+    </div>
+    <button
+      class="border-start btn btn-link rounded-0  border-bottom border__inactive"
+      :disabled="isAtEnd"
+      @click="scrollSteps('next')">
+      {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
+    </button>
+  </div>
+  <div class="flex-grow-1 d-flex flex-column justify-content-start gap-2">
+    <template x-if="!preview">
+      <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
+        <template
+          x-if="currentStepSelected === stepIndex && step?.sections?.length">
+          <template
+            x-for="(section, sectionIndex) in step.sections"
+            :key="sectionIndex">
+            <section
+              :data-sectionLink-step-index="stepIndex"
+              :data-sectionLink-section-index="sectionIndex"
+              class="d-flex flex-column mx-auto w-100  rounded-3 ring-offset--4 ring-3 ring-solid pb-2"
+              :class="{
+                'ring-selected': sectionIndex === currentSectionSelected,
+                'ring-transparent':sectionIndex !== currentSectionSelected,
+              }">
+              <div
+                class="container pb-2 pt-3 max-w-form "
+                @click="select(stepIndex, sectionIndex, null)">
+                <strong class="h5" x-text="section.label"></strong>
+              </div>
+              <div
+                class="d-flex flex-column flex-grow-1"
+                :class="{
+                'compact-noPreview py-2 gap-2': density === 'compact' && !preview,
+                'default-noPreview py-2 gap-2': density === 'default' && !preview,
+                'comfortable-noPreview py-3 gap-3': density === 'comfortable' && !preview,
+                'compact-preview py-2 gap-0': density === 'compact' && preview,
+                'default-preview py-2 gap-0': density === 'default' && preview,
+                'comfortable-preview py-3 gap-0': density === 'comfortable' && preview,
+              }">
+                <template
+                  x-for="(field, fieldIndex) in section.fields"
+                  :key="fieldIndex">
+                  <div
+                    class="container rounded rounded-3 px-0 max-w-form bg-body"
+                    :data-fieldLink-step-index="stepIndex"
+                    :data-fieldLink-section-index="sectionIndex"
+                    :data-fieldLink-field-index="fieldIndex"
+                    @click="select(stepIndex, sectionIndex, fieldIndex)"
+                    :style="{
+                    '--bs-border-opacity': !field.readOnly ? '.5' : '1',
+                  }"
+                    :class="{
+                    ...getClass(field, stepIndex, sectionIndex, fieldIndex),
+                    'opacity-50': field.readOnly
+                    
+                  }">
+                    <!-- <span
+                    x-text="stepIndex + ' - ' + sectionIndex + ' - ' + fieldIndex"></span> -->
+                    <div
+                      class="container px-0 rounded-3"
+                      :class="{
+                        'bg-warning-gradient bg-opacity-10': field.alert?.type === 'warning',
+                        'bg-danger-gradient bg-opacity-10': field.alert?.type === 'danger',
+                        'bg-info-gradient bg-opacity-10': field.alert?.type === 'info',
+                        'bg-success-gradient bg-opacity-10': field.alert?.type === 'success',
+                    }">
+                      <template x-if="density !== 'compact'">
+                        <div
+                          class="row g-0 mb-1 border-bottom"
+                          :class="{
+                          'py-0': density === 'compact',
+                          'pt-1': density === 'default',
+                          'py-2': density === 'comfortable',
+                        }">
+                          <div class="col-12">
+                            <div class="d-flex justify-content-between">
+                              <div class="d-flex">
+                                <div class="p-2 ps-3">
+                                  <template x-if="field.readOnly">
+                                    <div x-data x-tooltip="ReadOnly">
+                                      {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "size1 opacity-25") }}
+                                    </div>
+                                  </template>
+                                  <template x-if="!field.readOnly">
+                                    <div x-data x-tooltip="Visible">
+                                      {{ partial "svg/fa/regular-eye.svg" (dict "class" "size1") }}
+                                    </div>
+                                  </template>
+                                </div>
+                                <template x-if="field.mandatory">
+                                  <div
+                                    x-data
+                                    x-tooltip="Mandatory"
+                                    class="p-2 d-flex gap-2 align-items-center text-danger">
+                                    {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
+                                    <small> mandatory </small>
+                                  </div>
+                                </template>
+                              </div>
+                              <template x-if="devTool">
+                                <div class="d-flex">
+                                  <template x-if="!field.valid">
+                                    <div class="p-2" x-data x-tooltip="Invalid">
+                                      {{ partial "svg/fa/regular-check.svg" (dict "class" "size1 text-danger opacity-50") }}
+                                    </div>
+                                  </template>
+                                  <template x-if="field.valid">
+                                    <div class="p-2" x-data x-tooltip="Valid">
+                                      {{ partial "svg/fa/regular-check.svg" (dict "class" "size1 text-success") }}
+                                    </div>
+                                  </template>
+                                  <template x-if="!field.touched">
+                                    <div
+                                      class="p-2"
+                                      x-data
+                                      x-tooltip="Untouched">
+                                      {{ partial "svg/fa/hand-point-up.svg" (dict "class" "size1 text-danger opacity-50") }}
+                                    </div>
+                                  </template>
+                                  <template x-if="field.touched">
+                                    <div class="p-2" x-data x-tooltip="Touched">
+                                      {{ partial "svg/fa/hand-point-up.svg" (dict "class" "size1 text-success") }}
+                                    </div>
+                                  </template>
+                                  <template x-if="!field?.link?.length">
+                                    <div class="p-2" x-data x-tooltip="No link">
+                                      {{ partial "svg/fa/regular-link-slash.svg" (dict "class" "size1  opacity-25") }}
+                                    </div>
+                                  </template>
+                                  <template x-if="field?.link?.length">
+                                    <div class="p-2" x-data x-tooltip="Linked">
+                                      {{ partial "svg/fa/regular-link.svg" (dict "class" "size1  text-success") }}
+                                    </div>
+                                  </template>
+                                  <template x-if="!field.sync">
+                                    <div
+                                      class="p-2"
+                                      x-data
+                                      x-tooltip="Not Synced">
+                                      {{ partial "svg/fa/regular-arrows-rotate.svg" (dict "class" "size1 opacity-25") }}
+                                    </div>
+                                  </template>
+                                  <template x-if="field.sync">
+                                    <div class="p-2" x-data x-tooltip="Synced">
+                                      {{ partial "svg/fa/regular-arrows-rotate.svg" (dict "class" "size1 text-success") }}
+                                    </div>
+                                  </template>
+                                </div>
+                              </template>
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+                      <template x-if="field.type === 'form'">
+                        <div
+                          class="w-100 d-flex flex-column"
+                          :class="{
+                          'py-0': density === 'compact',
+                          'pt-1': density === 'default',
+                          'py-2': density === 'comfortable',
+                        }">
+                          <div class="w-100">
+                            {{ partial "partials/field/inline-form.html" . }}
+                          </div>
+                        </div>
+                      </template>
+                      <template x-if="field.type !== 'form'">
+                        <div
+                          class="row g-0"
+                          :class="{
+                          'py-1': density === 'compact',
+                          'pt-2': density === 'default',
+                          'py-3': density === 'comfortable',
+                        }">
+                          <label class="col-5 col-form-label" :for="field.id">
+                            <div class="d-flex gap-2 align-items-start px-2">
+                              <template
+                                x-if="density === 'compact' && field.mandatory">
+                                <div
+                                  class="btn btn-link btn-sm"
+                                  x-data
+                                  x-tooltip="Mandatory">
+                                  <span class="text-danger">
+                                    {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
+                                  </span>
+                                </div>
+                              </template>
+                              {{ partial "partials/field/iconTypes.html" . }}
+                              <strong class="pt-1"
+                                ><small x-text="field.label"></small>
+                              </strong>
+                            </div>
+                          </label>
+                          <div class="col-7">
+                            <div class="d-flex w-100 align-items-center px-1">
+                              <div
+                                class="flex-grow-1 d-flex pt-1"
+                                :class="{
+                                'gap-2 flex-column': !field.inline,
+                                'gap-3': field.inline,
+                              }">
+                                {{ partial "partials/field/fieldTypes.html" . }}
+                              </div>
+                            </div>
+                          </div>
+                          {{ partial "partials/field/help.html" . }}
+                        </div>
+                      </template>
+                      {{ partial "partials/field/alert.html" . }}
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </section>
+          </template>
+        </template>
+      </template>
+    </template>
+    <template x-if="preview">
+      <template x-for="(step, stepIndex) in form.steps" :key="stepIndex">
+        <template x-if="currentStepActive === stepIndex && step.sections">
+          <template
+            x-for="(section, sectionIndex) in step.sections"
+            :key="sectionIndex">
+            <section>
+              <span x-text="section.title"></span>
+              <div
+                class="d-flex flex-column flex-grow-1"
+                :class="{
+                'compact-noPreview py-2 gap-2': density === 'compact' && !preview,
+                'default-noPreview py-2 gap-2': density === 'default' && !preview,
+                'comfortable-noPreview py-3 gap-3': density === 'comfortable' && !preview,
+                'compact-preview py-2 gap-0': density === 'compact' && preview,
+                'default-preview py-2 gap-0': density === 'default' && preview,
+                'comfortable-preview py-3 gap-0': density === 'comfortable' && preview,
+              }">
+                <template x-for="(field, index) in step.fields" :key="index">
+                  <template x-if="!field.readOnly">
+                    <div
+                      class="container px-0 max-w-form bg-body"
+                      :class="{
+                      'rounded rounded-3 overflow-hidden ': !preview,
+                      'bg-warning-gradient': field.alert?.type === 'warning',
+                      'bg-danger-gradient': field.alert?.type === 'danger',
+                      'bg-info-gradient': field.alert?.type === 'info',
+                      'bg-success-gradient': field.alert?.type === 'success',
+                    }">
+                      <span x-text="field.readOnly"></span>
+                      <template x-if="field.type === 'form'">
+                        <div class="d-flex flex-column xxborder  ">
+                          <div
+                            class="d-flex align-items-center py-2 px-3 border-bottom">
+                            <template x-if="advancedTool">
+                              <button
+                                x-data
+                                x-tooltip="Audit"
+                                class="btn btn-link btn-sm">
+                                {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
+                              </button>
+                            </template>
+                            <strong class="h5 mb-0"> Inline form </strong>
+                            <template x-if="field.mandatory">
+                              <div
+                                class="btn btn-link btn-sm"
+                                x-data
+                                x-tooltip="Mandatory">
+                                <span class="text-danger">
+                                  {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
+                                </span>
+                              </div>
+                            </template>
+                          </div>
+                          {{ partial "partials/field/inline-form.html" . }}
+                        </div>
+                      </template>
+                      <template x-if="field.type !== 'form'">
+                        <div class="row g-0">
+                          <div class="col-5 py-2">
+                            <label class="form-label" :for="field.id">
+                              <div class="d-flex align-items-start px-2">
+                                <template x-if="advancedTool">
+                                  <button
+                                    x-data
+                                    x-tooltip="Audit"
+                                    class="btn btn-link btn-sm">
+                                    {{ partial "svg/fa/regular-timeline.svg" (dict "class" "size1") }}
+                                  </button>
+                                </template>
+                                {{ partial "partials/field/iconTypes.html" . }}
+
+
+                                <strong
+                                  class="mt-1"
+                                  :class="{
+                          'text-info': field?.alert?.type === 'info' && validateTool,
+                          'text-danger': field?.alert?.type === 'danger' && validateTool,
+                          'text-warning': field?.alert?.type === 'warning' && validateTool,
+                          'text-success': field?.alert?.type === 'success' && validateTool,
+                          
+                        }"
+                                  ><small x-text="field.label"></small>
+                                </strong>
+                                <template x-if="field.mandatory">
+                                  <div
+                                    class="btn btn-link btn-sm"
+                                    x-data
+                                    x-tooltip="Mandatory">
+                                    <span class="text-danger">
+                                      {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
+                                    </span>
+                                  </div>
+                                </template>
+                              </div>
+                            </label>
+                          </div>
+                          <div class="col-7 py-2 pe-2">
+                            <div class="d-flex w-100 align-items-center">
+                              <div
+                                class="d-flex flex-grow-1"
+                                :class="{
+                      'gap-2 flex-column': !field.inline,
+                      'gap-3': field.inline,
+                    }">
+                                {{ partial "partials/field/fieldTypes.html" . }}
+                              </div>
+                              <template x-if="advancedTool">
+                                <div>
+                                  <button
+                                    x-data
+                                    x-tooltip="Notes"
+                                    class="btn btn-link btn-sm">
+                                    {{ partial "svg/fa/regular-message.svg" (dict "class" "size1") }}
+                                  </button>
+                                </div>
+                              </template>
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+                      {{ partial "partials/field/help.html" . }}
+                      {{ partial "partials/field/alert.html" . }}
+                    </div>
+                  </template>
+                </template>
+              </div>
+            </section>
+          </template>
+        </template>
+      </template>
+    </template>
+  </div>
+
+  <template x-if="!preview && legacy">
+    <template x-for="(field, index) in fields" :key="index">
+      <div
+        class="container rounded rounded-3 px-0 max-w-form bg-body"
+        @click="selectField(index)"
+        :style="{
+        '--bs-border-opacity': !field.readOnly ? '.5' : '1',
+      }"
+        :class="{
+        ...getClass(field, index),
+        'opacity-50': field.readOnly
+        
+      }">
+        <div
+          class="container px-0 rounded-3"
+          :class="{
+          'bg-warning-gradient bg-opacity-10': field.alert?.type === 'warning',
+          'bg-danger-gradient bg-opacity-10': field.alert?.type === 'danger',
+          'bg-info-gradient bg-opacity-10': field.alert?.type === 'info',
+          'bg-success-gradient bg-opacity-10': field.alert?.type === 'success',
+      }">
+          <template x-if="density !== 'compact'">
+            <div
+              class="row g-0 mb-1 border-bottom"
+              :class="{
+            'py-0': density === 'compact',
+            'pt-1': density === 'default',
+            'py-2': density === 'comfortable',
+          }">
+              <div class="col-12">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex">
+                    <div class="p-2 ps-3">
+                      <template x-if="field.readOnly">
+                        <div x-data x-tooltip="ReadOnly">
+                          {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "size1 opacity-25") }}
+                        </div>
+                      </template>
+                      <template x-if="!field.readOnly">
+                        <div x-data x-tooltip="Visible">
+                          {{ partial "svg/fa/regular-eye.svg" (dict "class" "size1") }}
+                        </div>
+                      </template>
+                    </div>
+                    <template x-if="field.mandatory">
+                      <div
+                        x-data
+                        x-tooltip="Mandatory"
+                        class="p-2 d-flex gap-2 align-items-center text-danger">
+                        {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
+                        <small> mandatory </small>
+                      </div>
+                    </template>
+                  </div>
+                  <template x-if="devTool">
+                    <div class="d-flex">
+                      <template x-if="!field.valid">
+                        <div class="p-2" x-data x-tooltip="Invalid">
+                          {{ partial "svg/fa/regular-check.svg" (dict "class" "size1 text-danger opacity-50") }}
+                        </div>
+                      </template>
+                      <template x-if="field.valid">
+                        <div class="p-2" x-data x-tooltip="Valid">
+                          {{ partial "svg/fa/regular-check.svg" (dict "class" "size1 text-success") }}
+                        </div>
+                      </template>
+                      <template x-if="!field.touched">
+                        <div class="p-2" x-data x-tooltip="Untouched">
+                          {{ partial "svg/fa/hand-point-up.svg" (dict "class" "size1 text-danger opacity-50") }}
+                        </div>
+                      </template>
+                      <template x-if="field.touched">
+                        <div class="p-2" x-data x-tooltip="Touched">
+                          {{ partial "svg/fa/hand-point-up.svg" (dict "class" "size1 text-success") }}
+                        </div>
+                      </template>
+                      <template x-if="!field.link.length">
+                        <div class="p-2" x-data x-tooltip="No link">
+                          {{ partial "svg/fa/regular-link-slash.svg" (dict "class" "size1  opacity-25") }}
+                        </div>
+                      </template>
+                      <template x-if="field.link.length">
+                        <div class="p-2" x-data x-tooltip="Linked">
+                          {{ partial "svg/fa/regular-link.svg" (dict "class" "size1  text-success") }}
+                        </div>
+                      </template>
+                      <template x-if="!field.sync">
+                        <div class="p-2" x-data x-tooltip="Not Synced">
+                          {{ partial "svg/fa/regular-arrows-rotate.svg" (dict "class" "size1 opacity-25") }}
+                        </div>
+                      </template>
+                      <template x-if="field.sync">
+                        <div class="p-2" x-data x-tooltip="Synced">
+                          {{ partial "svg/fa/regular-arrows-rotate.svg" (dict "class" "size1 text-success") }}
+                        </div>
+                      </template>
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </template>
+          <template x-if="field.type === 'form'">
+            <div
+              class="w-100 d-flex flex-column"
+              :class="{
+            'py-0': density === 'compact',
+            'pt-1': density === 'default',
+            'py-2': density === 'comfortable',
+          }">
+              <!-- <div class="py-2 px-3 border-bottom">
+              <strong class="h5"> Inline form </strong>
+            </div> -->
+              <div class="w-100">
+                {{ partial "partials/field/inline-form.html" . }}
+              </div>
+            </div>
+          </template>
+          <template x-if="field.type !== 'form'">
+            <div
+              class="row g-0"
+              :class="{
+            'py-1': density === 'compact',
+            'pt-2': density === 'default',
+            'py-3': density === 'comfortable',
+          }">
+              <label class="col-5 col-form-label" :for="field.id">
+                <div class="d-flex gap-2 align-items-start px-2">
+                  <template x-if="density === 'compact' && field.mandatory">
+                    <div
+                      class="btn btn-link btn-sm"
+                      x-data
+                      x-tooltip="Mandatory">
+                      <span class="text-danger">
+                        {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "size1 ") }}
+                      </span>
+                    </div>
+                  </template>
+                  {{ partial "partials/field/iconTypes.html" . }}
+                  <strong class="pt-1"
+                    ><small x-text="field.label"></small>
+                  </strong>
+                </div>
+              </label>
+              <div class="col-7">
+                <div class="d-flex w-100 align-items-center px-1">
+                  <div
+                    class="flex-grow-1 d-flex pt-1"
+                    :class="{
+                      'gap-2 flex-column': !field.inline,
+                      'gap-3': field.inline,
+                    }">
+                    {{ partial "partials/field/fieldTypes.html" . }}
+                  </div>
+                </div>
+              </div>
+              {{ partial "partials/field/help.html" . }}
+            </div>
+          </template>
+
+          {{ partial "partials/field/alert.html" . }}
+        </div>
+      </div>
+    </template>
+  </template>
+  <div
+    class="bg-body border-top d-flex justify-content-between p-2 w-100 sticky-bottom">
+    <!-- Start Buttons -->
+    <section>
+      <div class="d-flex gap-2">
+        <template
+          x-for="(btn, btnIndex) in form.actionButtons.startButtons"
+          :key="btnIndex">
+          <button
+            :id="btn.id"
+            :type="btn.type"
+            class="btn"
+            :class="{
+            'btn-outline-info': btn.ui === 'outline',
+            'btn-info': btn.ui === 'solid',
+          }"
+            @click="handleButtonClick(btn)">
+            <i :class="btn.icon"></i> <span x-text="btn.label"></span>
+          </button>
+        </template>
+      </div>
+    </section>
+
+    <!-- End Buttons -->
+    <section>
+      <div>
+        <template
+          x-for="(btn, btnIndex) in form.actionButtons.endButtons"
+          :key="btnIndex">
+          <button
+            :id="btn.id"
+            :type="btn.type"
+            class="btn"
+            :class="{
+            'btn-outline-info': btn.ui === 'outline',
+            'btn-info': btn.ui === 'solid',
+          }"
+            @click="handleButtonClick(btn)">
+            <template x-if="btn.icon.length">
+              <i class="far" :class="btn.icon"></i>
+            </template>
+            <span x-text="btn.label"></span>
+          </button>
+        </template>
+      </div>
+    </section>
+  </div>
+</div>

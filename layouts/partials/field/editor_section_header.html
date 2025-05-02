@@ -15,14 +15,26 @@
   <div>
     <div class="btn-group">
       <button
+        class="btn btn-link btn-sm"
+        x-tooltip="Trash Section"
+        @click="trashSection(currentSectionSelected)">
+        {{ partial "svg/fa/regular-trash.svg" (dict "class" "icon-size-s") }}
+      </button>
+      <button class="btn btn-link btn-sm" x-tooltip="Section audit">
+        {{ partial "svg/fa/regular-rectangle-vertical-history.svg" (dict "class" "icon-size-s") }}
+      </button>
+      <button class="btn btn-link btn-sm" x-tooltip="Advance JSON">
+        {{ partial "svg/fa/regular-brackets-curly.svg" (dict "class" "icon-size-s") }}
+      </button>
+      <button
         :disabled="addSectionVisible === true"
-        class="btn btn-link"
+        class="btn btn-link btn-sm"
         x-tooltip="Add section"
         @click="toggleAddSectionVisible()">
         {{ partial "svg/fa/regular-plus.svg" (dict "class" "icon-size-s") }}
       </button>
 
-      <button class="btn btn-link" x-tooltip="Save section">
+      <button class="btn btn-link btn-sm" x-tooltip="Save section">
         {{ partial "svg/fa/regular-cloud-upload.svg" (dict "class" "icon-size-s") }}
       </button>
     </div>
