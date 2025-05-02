@@ -86,476 +86,63 @@ export default function fieldComp() {
         this.showTreeEditors = parsedData.showTreeEditors || false;
       } else {
         // Initialize with default fields if no data exists
-        this.form = {
-          name: 'KYC_Charity',
-          id: '123',
-          actionButtons: {
-            startButtons: [
-              {
-                label: 'Cancel',
-                id: 'cancel-button',
-                icon: 'fa-solid fa-play',
-                type: 'button',
-                ui: 'outline',
-              },
-            ],
-            endButtons: [
-              {
-                label: 'Save',
-                id: 'save-button',
-                icon: 'fa-solid fa-play',
-                type: 'button',
-                ui: 'solid',
-              },
-            ],
-          },
-          steps: [
-            {
-              title: 'details',
-              label: 'Details',
-              id: 'step-01',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-              sections: [
-                {
-                  title: 'details-section 1',
-                  label: 'Details Section 1',
-                  fields: [
-                    {
-                      name: 'Contact Category',
-                      id: 'field-01',
-                      readOnly: true,
-                      visible: true,
-                      disabled: false,
-                      type: 'text',
-                      valid: false,
-                      touched: true,
-                      link: 'some stuff',
-                      sync: true,
-                      mandatory: false,
-                      displayCondition: true,
-                      help: 'We will never share your email with anyone else.',
-                      label: 'Contact Category',
-                      value: 'valField01',
-                      alert: {
-                        type: 'danger',
-                        message: 'Message of the alert is this',
-                      },
-                    },
-                    {
-                      name: 'Date of birth',
-                      id: 'field-02',
-                      readOnly: false,
-                      visible: true,
-                      disabled: false,
-                      type: 'date',
-                      valid: true,
-                      touched: false,
-                      link: '',
-                      sync: false,
-                      mandatory: true,
-                      displayCondition: true,
-                      label: 'Date of birth',
-                      value: 'valField02',
-                    },
-                    {
-                      name: 'Suitability Review Lookup',
-                      id: 'field-03',
-                      readOnly: true,
-                      visible: true,
-                      disabled: false,
-                      type: 'switch',
-                      valid: true,
-                      touched: false,
-                      link: '',
-                      sync: false,
-                      mandatory: false,
-                      displayCondition: true,
-                      label: 'Suitability Review Lookup',
-                      value: 'valField03',
-                    },
-                    {
-                      name: 'Password',
-                      id: 'password-04',
-                      readOnly: false,
-                      visible: true,
-                      disabled: false,
-                      type: 'password',
-                      valid: true,
-                      touched: false,
-                      link: '',
-                      sync: false,
-                      mandatory: false,
-                      displayCondition: true,
-                      label: 'Password',
-                      value: 'valField04',
-                      alert: {
-                        type: 'warning',
-                        message: 'Message of the alert is this',
-                      },
-                    },
-                    {
-                      name: 'Are you a UK resident for tax purposes?',
-                      id: 'field-05',
-                      readOnly: true,
-                      visible: true,
-                      disabled: false,
-                      type: 'selector',
-                      valid: true,
-                      touched: false,
-                      link: '',
-                      sync: false,
-                      mandatory: true,
-                      displayCondition: true,
-                      label: 'Are you a UK resident for tax purposes?',
-                      value: 'valField04',
-                      option: [
-                        { value: 'val1', label: 'Option 1' },
-                        { value: 'val2', label: 'Option 2' },
-                        { value: 'val3', label: 'Option 3' },
-                        { value: 'val4', label: 'Option 4' },
-                      ],
-                    },
-                    {
-                      name: 'Budget',
-                      id: 'field-06',
-                      readOnly: false,
-                      visible: true,
-                      disabled: false,
-                      type: 'number',
-                      valid: true,
-                      touched: false,
-                      link: '',
-                      sync: false,
-                      mandatory: false,
-                      displayCondition: true,
-                      label: 'Budget',
-                      value: 'valField04',
-                    },
-                    {
-                      name: 'Are you resident in any other country for tax purposes?',
-                      id: 'field-07',
-                      readOnly: false,
-                      visible: true,
-                      disabled: false,
-                      type: 'textarea',
-                      rows: 6,
-                      valid: true,
-                      touched: false,
-                      link: '',
-                      sync: false,
-                      mandatory: false,
-                      displayCondition: true,
-                      label: 'Are you resident in any other country for tax purposes?',
-                      help: 'Are you resident in any other country for tax purposes?',
-                      value: 'valField04',
-                      alert: {
-                        type: 'danger',
-                        message: 'Message of the alert is this',
-                      },
-                    },
-                    {
-                      name: 'Are you in good health 149?',
-                      id: 'field-08',
-                      readOnly: false,
-                      visible: true,
-                      disabled: false,
-                      type: 'form',
-                      valid: true,
-                      touched: false,
-                      link: '',
-                      sync: false,
-                      mandatory: false,
-                      displayCondition: true,
-                      label: 'Are you in good health 149?',
-                      help: 'Please provide your tax identification or reference numbers',
-                      value: 'valField04',
-                    },
-                    {
-                      name: 'Are you in good health? - (inline)',
-                      id: 'field-09',
-                      readOnly: false,
-                      visible: true,
-                      disabled: false,
-                      type: 'checkbox',
-                      valid: true,
-                      touched: false,
-                      link: '',
-                      sync: false,
-                      mandatory: false,
-                      displayCondition: true,
-                      label: 'Are you in good health? - (inline)',
-                      help: 'This is inline - Please provide your tax identification or reference numbers',
-                      inline: true,
-                      option: [
-                        { checked: false, label: 'Option 1' },
-                        { checked: false, label: 'Option 2' },
-                        { checked: false, label: 'Option 3' },
-                        { checked: false, label: 'Option 4' },
-                      ],
-                    },
-                    {
-                      name: 'Are you in good health ?',
-                      id: 'field-09',
-                      readOnly: false,
-                      visible: true,
-                      disabled: false,
-                      type: 'checkbox',
-                      valid: true,
-                      touched: false,
-                      link: '',
-                      sync: false,
-                      mandatory: false,
-                      displayCondition: true,
-                      label: 'Are you in good health ?',
-                      help: 'Please provide your tax identification or reference numbers',
-                      inline: false,
-                      option: [
-                        { checked: false, label: 'Option 1' },
-                        { checked: false, label: 'Option 2' },
-                        { checked: false, label: 'Option 3' },
-                        { checked: false, label: 'Option 4' },
-                      ],
-                    },
-                    {
-                      name: 'Are you a smoker?',
-                      id: 'field-10',
-                      readOnly: false,
-                      visible: true,
-                      disabled: false,
-                      type: 'text',
-                      valid: true,
-                      touched: false,
-                      link: '',
-                      sync: false,
-                      mandatory: false,
-                      displayCondition: true,
-                      label: 'Are you a smoker?',
-                      help: 'Please provide additional information if you have answered ‘No’ above:',
-                      value: 'valField04',
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              title: 'financial objectives',
-              label: 'Financial Objectives',
-              id: 'step-02',
-              readOnly: true,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-              sections: [
-                {
-                  title: 'recent-financial-objective',
-                  label: 'Recent Financial objective',
+        this.loadExternalForm();
 
-                  fields: [
-                    {
-                      name: 'Date of objective',
-                      id: 'field-020',
-                      readOnly: false,
-                      visible: true,
-                      disabled: false,
-                      type: 'date',
-                      valid: true,
-                      touched: false,
-                      link: '',
-                      sync: false,
-                      mandatory: true,
-                      displayCondition: true,
-                      label: 'Date of objective',
-                      value: 'valField020',
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              title: 'communication details',
-              label: 'Communication Details',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'hidden dynamic fields',
-              label: 'Hidden Dynamic Fields',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-            {
-              title: 'client specific',
-              label: 'Client Specific',
-              id: 'step-03',
-              readOnly: false,
-              visible: true,
-              status: 'completed',
-              disabled: false,
-              formIndex: 0,
-            },
-          ],
-        };
-        this.addStepVisible = false;
-        this.addSectionVisible = false;
-        this.addFieldVisible = false;
-        this.currentStepSelected = 0;
-        this.currentSectionSelected = 0;
-        this.currentFieldSelected = 0;
-        this.currentEditorSelected = 'form';
-        this.showTreeEditors = false;
-        this.showEditor = false;
+        // this.form = parsedData.form || [];
+        // this.steps = parsedData.steps || [];
+        this.density = parsedData.density || 'default';
+        this.validateTool = parsedData.validateTool || false;
+        this.showToc = parsedData.showToc || false;
+        this.showEditor = parsedData.showEditor || false;
+        this.devTool = parsedData.devTool || false;
+        this.preview = parsedData.preview || false;
+        this.advancedTool = parsedData.advancedTool || false;
+        this.currentStepSelected = parsedData.currentStepSelected || 0;
+        this.currentSectionSelected = parsedData.currentSectionSelected || 0;
+        this.currentFieldSelected = parsedData.currentFieldSelected || 0;
+        this.addStepVisible = parsedData.addStepVisible || 0;
+        this.addSectionVisible = parsedData.addSectionVisible || 0;
+        this.addFieldVisible = parsedData.addFieldVisible || false;
+        this.currentEditorSelected = parsedData.currentEditorSelected ?? 'form';
+        this.showTreeEditors = parsedData.showTreeEditors || false;
       }
 
       // Ensure $watch is called after initialization
       this.$watch('form', () => this.saveToLocalStorage());
+      this.$watch('steps', () => this.saveToLocalStorage());
+
       this.$watch('density', () => this.saveToLocalStorage());
+      this.$watch('validateTool', () => this.saveToLocalStorage());
       this.$watch('showToc', () => this.saveToLocalStorage());
       this.$watch('showEditor', () => this.saveToLocalStorage());
-      this.$watch('preview', () => this.saveToLocalStorage());
-      this.$watch('validateTool', () => this.saveToLocalStorage());
       this.$watch('devTool', () => this.saveToLocalStorage());
+      this.$watch('preview', () => this.saveToLocalStorage());
       this.$watch('advancedTool', () => this.saveToLocalStorage());
-      this.$watch('currentEditorSelected', () => this.saveToLocalStorage());
       this.$watch('currentStepSelected', () => this.saveToLocalStorage());
       this.$watch('currentSectionSelected', () => this.saveToLocalStorage());
       this.$watch('currentFieldSelected', () => this.saveToLocalStorage());
       this.$watch('addStepVisible', () => this.saveToLocalStorage());
       this.$watch('addSectionVisible', () => this.saveToLocalStorage());
       this.$watch('addFieldVisible', () => this.saveToLocalStorage());
+      this.$watch('currentEditorSelected', () => this.saveToLocalStorage());
       this.$watch('showTreeEditors', () => this.saveToLocalStorage());
+    },
+
+    async loadExternalForm() {
+      try {
+        const response = await fetch('/field/kyc-charity.json'); // Path to the JSON file
+        if (!response.ok) {
+          throw new Error('Failed to load the form.');
+        }
+
+        const formData = await response.json();
+        this.form = formData; // Update the form with the loaded data
+        this.saveToLocalStorage(); // Save the loaded form to localStorage
+        console.log('Form loaded successfully from external JSON file.');
+      } catch (error) {
+        console.error('Error loading the form from external JSON file:', error);
+        alert('Failed to load the form. Please try again.');
+      }
     },
 
     async loadStaticForm() {
@@ -589,6 +176,7 @@ export default function fieldComp() {
         this.currentFieldSelected = null;
         this.currentEditorSelected = 'form';
       }
+      this.saveToLocalStorage();
     },
 
     toggleJsonEditor() {
@@ -863,20 +451,23 @@ export default function fieldComp() {
     // Save data to localStorage
     saveToLocalStorage() {
       const dataToStore = {
-        form: this.form,
-        steps: this.steps,
-        showToc: this.showToc,
-        showEditor: this.showEditor,
         density: this.density,
         validateTool: this.validateTool,
+        showToc: this.showToc,
+        showEditor: this.showEditor,
         devTool: this.devTool,
-        advancedTool: this.advancedTool,
         preview: this.preview,
-        currentEditorSelected: this.currentEditorSelected,
+        advancedTool: this.advancedTool,
         currentStepSelected: this.currentStepSelected,
         currentSectionSelected: this.currentSectionSelected,
         currentFieldSelected: this.currentFieldSelected,
         addStepVisible: this.addStepVisible,
+        addSectionVisible: this.addSectionVisible,
+        addFieldVisible: this.addFieldVisible,
+        currentEditorSelected: this.currentEditorSelected,
+        showTreeEditors: this.showTreeEditors,
+        form: this.form,
+        steps: this.steps,
       };
       localStorage.setItem('formData', JSON.stringify(dataToStore));
     },

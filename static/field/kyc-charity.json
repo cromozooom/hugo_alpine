@@ -35,6 +35,8 @@
         {
           "title": "Management",
           "label": "Management",
+          "displayCondition": true,
+          "readOnly": true,
           "fields": [
             {
               "name": "Assets",
@@ -43,6 +45,7 @@
               "id": "assets-step0-section0-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": true,
               "help": "",
               "option": []
@@ -54,6 +57,7 @@
               "id": "please-list-all-the-assets:-step0-section0-field1",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": true,
               "help": "Please provide details of any current or planned capital commitments or liabilities",
               "option": [],
@@ -69,6 +73,7 @@
               "id": "liabilities-step0-section0-field2",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "The information you provide in this section will help us to identify any guidelines or limits on allocation to any asset classes or to specify whether there are any asset types that you wish to avoid. This may include a minimum or maximum exposure to any particular asset class. Please note that if you choose to restrict investment in certain areas this may result in larger proportions of the portfolio being invested in other assets, thereby leading to a greater level of risk. If the founding documents or specific endowments have any restrictions, please provide details here:",
               "option": []
@@ -80,6 +85,7 @@
               "id": "asset-allocation-and-special-investment-instructions-step0-section0-field3",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "This section will provide us with the necessary information that we need to identify any areas that you DO NOT wish to invest in, such as areas with ethical constraints. Please note that if you choose to exclude investment in certain areas this will limit your investment options and may result in lower investment returns. If you have any exclusions or ethical consideration please provide details here:",
               "option": []
@@ -91,6 +97,7 @@
               "id": "exclusions-and-ethical-or-socially-responsible-investment-(sri)-considerations-step0-section0-field4",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": true,
               "help": "Please provide any further information which you believe may be relevant to the firm in connection with the management of the investment portfolio or wider provision of our professional services. This may include any future capital commitments or liabilities or known change in income requirements",
               "option": [],
@@ -106,6 +113,7 @@
               "id": "further-information-on-approach-to-investments-step0-section0-field5",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -116,6 +124,8 @@
         {
           "title": "Charity Details",
           "label": "Charity Details",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "Review Type",
@@ -124,6 +134,7 @@
               "id": "review-type-step0-section1-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -135,6 +146,7 @@
               "id": "full-name-of-charity-step0-section1-field1",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -146,6 +158,7 @@
               "id": "legal-form-of-charity-step0-section1-field2",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -157,6 +170,7 @@
               "id": "charity-purposes-/-objectives--step0-section1-field3",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -168,6 +182,7 @@
               "id": "date-charity-created-step0-section1-field4",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -179,6 +194,7 @@
               "id": "value-of-charity-when-established-(£)-step0-section1-field5",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -190,6 +206,7 @@
               "id": "principal-office-address-step0-section1-field6",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -201,6 +218,7 @@
               "id": "postcode-step0-section1-field7",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -212,6 +230,7 @@
               "id": "registered-address-country-step0-section1-field8",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -223,6 +242,7 @@
               "id": "charity-number-step0-section1-field9",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -234,6 +254,7 @@
               "id": "tax-reference-step0-section1-field10",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -245,6 +266,7 @@
               "id": "financial-year-end-day-step0-section1-field11",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -256,6 +278,7 @@
               "id": "financial-year-end-month-step0-section1-field12",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -267,6 +290,7 @@
               "id": "client-identification-code-(lei)-step0-section1-field13",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "Client Identification Code (LEI)",
               "option": []
@@ -278,6 +302,7 @@
               "id": "lei-expiry-date-step0-section1-field14",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -288,6 +313,8 @@
         {
           "title": "Assets",
           "label": "Assets",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "Add new assets",
@@ -296,6 +323,7 @@
               "id": "add-new-assets-step0-section2-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -306,6 +334,8 @@
         {
           "title": "Liabilities",
           "label": "Liabilities",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "Add new liabilities",
@@ -314,6 +344,7 @@
               "id": "add-new-liabilities-step0-section3-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -325,6 +356,7 @@
               "id": "total-liabilities-step0-section3-field1",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -336,6 +368,7 @@
               "id": "net-worth-step0-section3-field2",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -347,6 +380,7 @@
               "id": "add-new-income-step0-section3-field3",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -357,6 +391,8 @@
         {
           "title": "Income",
           "label": "Income",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "Add new Income",
@@ -365,6 +401,7 @@
               "id": "add-new-income-step0-section4-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -376,6 +413,7 @@
               "id": "expenses-step0-section4-field1",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -399,6 +437,8 @@
         {
           "title": "Approach investment",
           "label": "Approach investment",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "Approach to investment",
@@ -407,6 +447,7 @@
               "id": "approach-to-investment-step1-section0-field0",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": false,
               "help": "Before we can offer a personal recommendation concerning a designated investment or manage investments on your behalf, we must understand your circumstances and how they relate to the services offered. Please tick one answer for each of the following questions to help us to build a picture of your views on investment.",
               "option": [],
@@ -421,6 +462,8 @@
         {
           "title": "Investment Knowledge",
           "label": "Investment Knowledge",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "How much investment knowledge do you have?",
@@ -429,6 +472,7 @@
               "id": "how-much-investment-knowledge-do-you-have?-step1-section1-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -439,6 +483,8 @@
         {
           "title": "Investment Experience",
           "label": "Investment Experience",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "Purchases arranged through a Financial Adviser",
@@ -447,6 +493,7 @@
               "id": "purchases-arranged-through-a-financial-adviser-step1-section2-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -458,6 +505,7 @@
               "id": "portfolio-managed-on-a-discretionary-basis-step1-section2-field1",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -469,6 +517,7 @@
               "id": "portfolio-managed-on-an-advisory-basis-step1-section2-field2",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -480,6 +529,7 @@
               "id": "self-managed-portfolio-step1-section2-field3",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -490,6 +540,8 @@
         {
           "title": "Investment Objectives",
           "label": "Investment Objectives",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "What are your investment objectives?",
@@ -498,6 +550,7 @@
               "id": "what-are-your-investment-objectives?-step1-section3-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": [
@@ -526,6 +579,8 @@
         {
           "title": "Investment Timescale",
           "label": "Investment Timescale",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "What is your timescale for investment?",
@@ -534,6 +589,7 @@
               "id": "what-is-your-timescale-for-investment?-step1-section4-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -544,6 +600,8 @@
         {
           "title": "Risk Tolerance",
           "label": "Risk Tolerance",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "Risk tolerance",
@@ -552,6 +610,7 @@
               "id": "risk-tolerance-step1-section5-field0",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": false,
               "help": "If the stock market declined by 20%, what action would you take?",
               "option": [
@@ -575,6 +634,8 @@
         {
           "title": "Risk Profile",
           "label": "Risk Profile",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "Risk tolerance",
@@ -583,6 +644,7 @@
               "id": "risk-tolerance-step1-section6-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": [
@@ -611,12 +673,6 @@
             }
           ],
           "collapsed": false
-        },
-        {
-          "title": "Client Specific",
-          "label": "Client Specific",
-          "fields": [],
-          "collapsed": false
         }
       ],
       "collapsed": false
@@ -634,6 +690,8 @@
         {
           "title": "Approach to investment",
           "label": "Approach to investment",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "Detail",
@@ -642,6 +700,7 @@
               "id": "detail-step2-section0-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "Before we can offer a personal recommendation concerning a designated investment or manage investments on your behalf, we must understand your circumstances and how they relate to the services offered. Please tick one answer for each of the following questions to help us to build a picture of your views on investment.",
               "option": []
@@ -653,6 +712,7 @@
               "id": "investment-knowledge-step2-section0-field1",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -664,6 +724,7 @@
               "id": "how-much-investment-knowledge-do-you-have?-step2-section0-field2",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -675,6 +736,7 @@
               "id": "investment-experience-step2-section0-field3",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -685,6 +747,8 @@
         {
           "title": "What investment experience do you have?",
           "label": "What investment experience do you have?",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "Purchases arranged through a Financial Adviser",
@@ -693,6 +757,7 @@
               "id": "purchases-arranged-through-a-financial-adviser-step2-section1-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -704,6 +769,7 @@
               "id": "portfolio-managed-on-a-discretionary-basis-step2-section1-field1",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -715,6 +781,7 @@
               "id": "portfolio-managed-on-an-advisory-basis-step2-section1-field2",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -726,6 +793,7 @@
               "id": "self-managed-portfolio-step2-section1-field3",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -737,6 +805,7 @@
               "id": "investment-objectives-step2-section1-field4",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -748,6 +817,7 @@
               "id": "what-are-your-investment-objectives-step2-section1-field5",
               "value": "",
               "mandatory": true,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": [
@@ -777,6 +847,7 @@
               "id": "investment-timescale-step2-section1-field6",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "What is your timescale for investment?*",
               "option": []
@@ -788,6 +859,7 @@
               "id": "risk-tolerance-step2-section1-field7",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "Risk tolerance - If the stock market declined by 20%, what action would you take?",
               "option": [
@@ -812,6 +884,7 @@
               "id": "risk-profile-step2-section1-field8",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "Risk tolerance - What is the risk profile of the investments to be managed?",
               "option": [
@@ -857,6 +930,8 @@
         {
           "title": "Client category",
           "label": "Client category",
+          "displayCondition": true,
+          "readOnly": false,
           "fields": [
             {
               "name": "Client Sub-Category",
@@ -865,6 +940,7 @@
               "id": "client-sub-category-step3-section0-field0",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -876,6 +952,7 @@
               "id": "roles-step3-section0-field1",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -887,6 +964,7 @@
               "id": "service-types-step3-section0-field2",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -898,6 +976,7 @@
               "id": "suitability-required-step3-section0-field3",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -909,6 +988,7 @@
               "id": "kyc-complete-step3-section0-field4",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": " Used for displaying Re-Open KYC button",
               "option": []
@@ -920,6 +1000,7 @@
               "id": "user-roles-step3-section0-field5",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -931,6 +1012,7 @@
               "id": "user-teams-step3-section0-field6",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": []
@@ -942,6 +1024,7 @@
               "id": "contact-category-step3-section0-field7",
               "value": "",
               "mandatory": false,
+              "displayCondition": true,
               "readOnly": false,
               "help": "",
               "option": [

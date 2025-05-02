@@ -126,22 +126,30 @@
                         <div
                           class="d-flex align-items-center gap-2 flex-grow-1">
                           <span x-sort:handle class="cursor-move me-2">
-                            {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1 opacity-50") }}
+                            {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "icon-size-s opacity-50") }}
                           </span>
-                          <template x-if="field.readOnly">
-                            <div
-                              x-data
-                              x-tooltip="Hidden"
-                              class="py-1 d-flex align-items-center">
-                              {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "icon-size-s opacity-25") }}
-                            </div>
-                          </template>
                           <template x-if="field?.alert?.type">
                             <div
                               x-data
                               x-tooltip="Error"
                               class="py-1 d-flex align-items-center text-danger">
                               {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "icon-size-s ") }}
+                            </div>
+                          </template>
+                          <template x-if="field.displayCondition !== true">
+                            <div
+                              x-data
+                              x-tooltip="displayCondition"
+                              class="py-1 d-flex align-items-center">
+                              {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "icon-size-s opacity-25") }}
+                            </div>
+                          </template>
+                          <template x-if="field.readOnly">
+                            <div
+                              x-data
+                              x-tooltip="Hidden"
+                              class="py-1 d-flex align-items-center text-danger">
+                              {{ partial "svg/fa/regular-ban.svg" (dict "class" "icon-size-s ") }}
                             </div>
                           </template>
                           <template x-if="field.mandatory">

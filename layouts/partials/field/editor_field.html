@@ -155,15 +155,18 @@
           <label for="fieldMandatory" class="form-label">Mandatory</label>
         </div>
         <div class="mb-3 px-2">
-          <input
-            type="checkbox"
-            id="fieldDisplayCondition"
-            class="form-check-input"
-            :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.displayCondition || false"
-            @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].displayCondition = $event.target.checked)" />
-          <label for="fieldDisplayCondition" class="form-label"
-            >DisplayCondition</label
-          >
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="fieldDisplayCondition"
+              :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.displayCondition || false"
+              @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].fields[currentFieldSelected].displayCondition = $event.target.checked)" />
+            <label class="form-check-label" for="fieldDisplayCondition"
+              >DisplayCondition</label
+            >
+          </div>
         </div>
         <div class="mb-3 px-2">
           <!-- <div
