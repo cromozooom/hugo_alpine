@@ -1,6 +1,17 @@
 {
   "name": "KYC_Charity",
   "id": "123",
+  "prop1": "Value prop1",
+  "prop2": {
+    "subProp1": "Sub Value subProp1",
+    "subProp2": {
+      "subSubProp1": "Sub Sub Value subSubProp1"
+    }
+  },
+  "prop3": [
+    "Array Item 1_prop3",
+    "Array Item 2_prop3"
+  ],
   "actionButtons": {
     "startButtons": [
       {

@@ -3,6 +3,7 @@
     "tags": [
       "a",
       "body",
+      "br",
       "button",
       "div",
       "footer",
@@ -14,6 +15,7 @@
       "h6",
       "head",
       "header",
+      "hr",
       "html",
       "i",
       "input",

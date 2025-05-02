@@ -73,6 +73,76 @@
             </div>
           </div>
         </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <!-- display Level 0 -->
+        <div
+          class="bg-body d-flex flex-column w-100 sticky-top border-bottom border-top">
+          <div class="px-2">
+            <small>Prop level 0</small>
+          </div>
+          <!-- display Level 0 breadcrumbs -->
+          <div class="d-flex border-top">
+            <button
+              class="btn btn-link border-end rounded-0 border__inactive"
+              :disabled="isAtStart"
+              @click="scrollLevels('prev')">
+              {{ partial "svg/fa/regular-chevron-left.svg" (dict "class" "icon-size-s") }}
+            </button>
+            <div class="d-flex w-100 hide-scrollbar overflow-x-scroll">
+              <div class="d-flex gap-1">
+                <button class="border rounded px-2 bg-light my-2 ms-2">
+                  Prop level 1
+                </button>
+                <button class="border rounded px-2 bg-light my-2">
+                  Prop level 2
+                </button>
+                <button class="border rounded px-2 bg-light my-2 me-2">
+                  Prop level 3
+                </button>
+              </div>
+            </div>
+            <button
+              class="btn btn-link border-start rounded-0 border__inactive"
+              :disabled="isAtStart"
+              @click="scrollLevels('prev')">
+              {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
+            </button>
+          </div>
+        </div>
+        <!-- display any Level content like a form  -->
+        <div>curent Level form editor</div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <!-- Action Buttons Editor -->
         <div class="border-top">
           <div class="d-flex align-items-center ">
