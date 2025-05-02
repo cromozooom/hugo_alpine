@@ -35,6 +35,34 @@
                 placeholder="Enter section label"
                 required />
             </div>
+            <div class="mb-3 px-2">
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="sectionDisplayCondition"
+                  :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.displayCondition || false"
+                  @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].displayCondition = $event.target.checked)" />
+                <label class="form-check-label" for="sectionDisplayCondition"
+                  >DisplayCondition</label
+                >
+              </div>
+            </div>
+
+            <div class="mb-3 px-2">
+              <div class="text-muted d-flex gap-2 align-items-center">
+                <input
+                  type="checkbox"
+                  id="sectionReadOnly"
+                  class="form-check-input"
+                  :checked="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.readOnly || false"
+                  @change="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected] && (form.steps[currentStepSelected].sections[currentSectionSelected].readOnly = $event.target.checked)" />
+                <label for="sectionReadOnly" class="form-label mb-0">
+                  Read-Only
+                </label>
+              </div>
+            </div>
           </form>
         </template>
         <template

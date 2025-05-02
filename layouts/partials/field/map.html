@@ -78,11 +78,27 @@
                     'hover-primary-subtle cursor-pointer':  !(sectionIndex === currentSectionSelected && currentStepSelected === stepIndex),
                   }">
                   <div
-                    class="d-flex flex-grow-1"
+                    class="d-flex flex-grow-1 gap-1"
                     @click="navigateToAnything(stepIndex, sectionIndex, null)">
                     <span x-sort:handle class="cursor-move me-2">
                       {{ partial "svg/fa/regular-ellipsis-vertical.svg" (dict "class" "size1") }}
                     </span>
+                    <template x-if="section.displayCondition !== true">
+                      <div
+                        x-data
+                        x-tooltip="displayCondition"
+                        class="py-1 d-flex align-items-center">
+                        {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "icon-size-s opacity-25") }}
+                      </div>
+                    </template>
+                    <template x-if="section.readOnly">
+                      <div
+                        x-data
+                        x-tooltip="Hidden"
+                        class="py-1 d-flex align-items-center text-danger">
+                        {{ partial "svg/fa/regular-ban.svg" (dict "class" "icon-size-s ") }}
+                      </div>
+                    </template>
                     <div
                       class="text-primary-emphasis"
                       :class="{
