@@ -83,12 +83,14 @@
             <div class="d-flex border-top border-bottom align-items-center">
               <button
                 class="btn btn-link border-end rounded-0 border__inactive"
-                :disabled="breadcrumbs.length === 0"
-                @click="scroll('start')">
+                :disabled="!canScrollLeft"
+                @click="scrollBreadcrumbs('prev')">
                 {{ partial "svg/fa/regular-chevron-left.svg" (dict "class" "icon-size-s") }}
               </button>
+
               <div
                 id="breadcrumbs"
+                @scroll="checkBreadcrumbScrollPosition"
                 class="d-flex w-100 hide-scrollbar overflow-x-scroll">
                 <div class="d-flex gap-1">
                   <template x-for="(crumb, index) in breadcrumbs" :key="index">
@@ -121,9 +123,9 @@
               </div>
               <button
                 class="btn btn-link border-start rounded-0 border__inactive"
-                :disabled="breadcrumbs.length === 0"
-                @click="scroll('end')">
-                {{ partial "svg/fa/regular-chevron-left.svg" (dict "class" "icon-size-s") }}
+                :disabled="!canScrollRight"
+                @click="scrollBreadcrumbs('next')">
+                {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
               </button>
             </div>
           </template>

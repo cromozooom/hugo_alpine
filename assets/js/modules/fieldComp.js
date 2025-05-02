@@ -30,6 +30,8 @@ export default function fieldComp() {
 
     breadcrumbs: [],
     currentLevel: {},
+    canScrollLeft: false,
+    canScrollRight: false,
 
     form: {}, // Will be initialized from localStorage
     steps: [], // Will be initialized from localStorage
@@ -66,6 +68,10 @@ export default function fieldComp() {
 
     // Initialize the component
     init() {
+      this.$nextTick(() => {
+        this.checkBreadcrumbScrollPosition(); // Update scroll buttons on load
+      });
+
       // Load data from localStorage if it exists
       const storedData = localStorage.getItem('formData');
       if (storedData) {
@@ -168,8 +174,103 @@ export default function fieldComp() {
       }
     },
 
+    // Method to scroll the breadcrumbs
+    scrollBreadcrumbs(direction) {
+      this.$nextTick(() => {
+        const container = document.getElementById('breadcrumbs');
+        if (!container) {
+          console.warn('Breadcrumbs container not found.');
+          return;
+        }
+
+        const scrollAmount = container.offsetWidth; // Scroll by the width of the container
+
+        if (direction === 'prev') {
+          container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        } else if (direction === 'next') {
+          container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+
+        // Check scroll position after scrolling
+        this.checkBreadcrumbScrollPosition();
+      });
+    },
+
+    _scrollBreadcrumbs(direction) {
+      const container = document.getElementById('breadcrumbs');
+      if (!container) {
+        return;
+      } else {
+        const scrollAmount = container.offsetWidth; // Scroll by the width of the container
+
+        if (direction === 'prev') {
+          container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        } else if (direction === 'next') {
+          container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+
+        // Check scroll position after scrolling
+        this.checkBreadcrumbScrollPosition();
+      }
+    },
+
+    // Method to check the scroll position of breadcrumbs
+    checkBreadcrumbScrollPosition() {
+      const container = document.getElementById('breadcrumbs');
+      if (!container) {
+        console.warn('Breadcrumbs container not found.');
+        this.canScrollLeft = false;
+        this.canScrollRight = false;
+        return;
+      }
+
+      this.canScrollLeft = container.scrollLeft > 0;
+      this.canScrollRight = container.scrollLeft + container.offsetWidth < container.scrollWidth;
+    },
+
     // New methods for JSON navigation
     navigateTo(key, value) {
+      if (typeof value === 'object') {
+        // Determine the breadcrumb label
+        let breadcrumbLabel = '';
+
+        if (typeof key === 'string') {
+          breadcrumbLabel = key; // Use the string key directly
+        } else if (typeof value === 'object') {
+          // Use properties from the value object to determine the label
+          breadcrumbLabel =
+            value.label || value.title || value.name || value.Label || value.Title || value.Name || `Index ${key}`;
+        } else {
+          breadcrumbLabel = `Index ${key}`; // Fallback for numeric keys
+        }
+
+        // Push the breadcrumb
+        this.breadcrumbs.push({
+          key: breadcrumbLabel,
+          level: this.currentLevel,
+        });
+
+        // Update the current level
+        this.currentLevel = value;
+        // Scroll to the last breadcrumb
+        this.scrollBreadcrumbs('next');
+
+        // Scroll to the last breadcrumb
+        this.$nextTick(() => {
+          const container = document.getElementById('breadcrumbs');
+          container.scrollTo({
+            left: container.scrollWidth, // Scroll to the end of the container
+            behavior: 'smooth',
+          });
+
+          // Update scroll button states
+          this.checkBreadcrumbScrollPosition();
+        });
+      } else {
+        alert(`Value: ${value}`);
+      }
+    },
+    __navigateTo(key, value) {
       if (typeof value === 'object') {
         // Determine the breadcrumb label
         let breadcrumbLabel = '';
