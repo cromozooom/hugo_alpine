@@ -96,14 +96,14 @@
                   <template x-for="(crumb, index) in breadcrumbs" :key="index">
                     <button
                       :class="{
-                        'ms-2': index === 0,
-                        'me-2': index === breadcrumbs.length - 1,
+                        'ms-1': index === 0,
+                        'me-1 bg-primary-subtle bg-primary-subtle border-primary': index === breadcrumbs.length - 1,
                       }"
-                      class="border rounded px-2 bg-light my-2"
+                      class="border rounded px-2 bg-light my-1"
                       @click="goToLevel(index)">
-                      <span
+                      <small
                         class="text-nowrap text-capitalize"
-                        x-text="crumb.key?.label || crumb.key?.title || crumb.key?.name || crumb.key?.Label || crumb.key?.Title || crumb.key?.Name || (typeof crumb.key === 'number' ? 'Index ' + crumb.key : crumb.key)"></span>
+                        x-text="crumb.key?.label || crumb.key?.title || crumb.key?.name || crumb.key?.Label || crumb.key?.Title || crumb.key?.Name || (typeof crumb.key === 'number' ? 'Index ' + crumb.key : crumb.key)"></small>
                     </button>
                   </template>
 
