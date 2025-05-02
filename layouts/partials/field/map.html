@@ -86,7 +86,7 @@
                     <template x-if="section.displayCondition !== true">
                       <div
                         x-data
-                        x-tooltip="displayCondition"
+                        x-tooltip="Hidden"
                         class="py-1 d-flex align-items-center">
                         {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "icon-size-s opacity-25") }}
                       </div>
@@ -94,7 +94,7 @@
                     <template x-if="section.readOnly">
                       <div
                         x-data
-                        x-tooltip="Hidden"
+                        x-tooltip="Read Only"
                         class="py-1 d-flex align-items-center text-danger">
                         {{ partial "svg/fa/regular-ban.svg" (dict "class" "icon-size-s ") }}
                       </div>
@@ -103,7 +103,7 @@
                       class="text-primary-emphasis"
                       :class="{
                         'px-2 rounded rounded-1 bg-primary-subtle': sectionIndex === currentSectionSelected && currentStepSelected === stepIndex,
-                        'bg-light': !(sectionIndex === currentSectionSelected && currentStepSelected === stepIndex),
+                        'px-1': !(sectionIndex === currentSectionSelected && currentStepSelected === stepIndex),
                       }">
                       <span x-text="section.title"></span>
                     </div>
@@ -155,7 +155,7 @@
                           <template x-if="field.displayCondition !== true">
                             <div
                               x-data
-                              x-tooltip="displayCondition"
+                              x-tooltip="Hidden"
                               class="py-1 d-flex align-items-center">
                               {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "icon-size-s opacity-25") }}
                             </div>
@@ -163,7 +163,7 @@
                           <template x-if="field.readOnly">
                             <div
                               x-data
-                              x-tooltip="Hidden"
+                              x-tooltip="Read Only"
                               class="py-1 d-flex align-items-center text-danger">
                               {{ partial "svg/fa/regular-ban.svg" (dict "class" "icon-size-s ") }}
                             </div>
