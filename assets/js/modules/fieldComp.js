@@ -28,6 +28,9 @@ export default function fieldComp() {
     readOnlyJsonEditorVisible: false,
     readOnlyJsonEditorInstance: null,
 
+    breadcrumbs: [],
+    currentLevel: {},
+
     form: {}, // Will be initialized from localStorage
     steps: [], // Will be initialized from localStorage
     newStep: {
@@ -107,6 +110,9 @@ export default function fieldComp() {
         this.showTreeEditors = parsedData.showTreeEditors || false;
       }
 
+      // Initialize JSON navigation
+      this.currentLevel = this.form;
+
       // Ensure $watch is called after initialization
       this.$watch('form', () => this.saveToLocalStorage());
       this.$watch('steps', () => this.saveToLocalStorage());
@@ -160,6 +166,47 @@ export default function fieldComp() {
         console.error('Error loading the form:', error);
         alert('Failed to load the form. Please try again.');
       }
+    },
+
+    // New methods for JSON navigation
+    navigateTo(key, value) {
+      if (typeof value === 'object') {
+        // Determine the breadcrumb label
+        let breadcrumbLabel = '';
+
+        if (typeof key === 'string') {
+          breadcrumbLabel = key; // Use the string key directly
+        } else if (typeof value === 'object') {
+          // Use properties from the value object to determine the label
+          breadcrumbLabel =
+            value.label || value.title || value.name || value.Label || value.Title || value.Name || `Index ${key}`;
+        } else {
+          breadcrumbLabel = `Index ${key}`; // Fallback for numeric keys
+        }
+
+        // Push the breadcrumb
+        this.breadcrumbs.push({
+          key: breadcrumbLabel,
+          level: this.currentLevel,
+        });
+
+        // Update the current level
+        this.currentLevel = value;
+      } else {
+        alert(`Value: ${value}`);
+      }
+    },
+
+    goBack() {
+      if (this.breadcrumbs.length > 0) {
+        const lastBreadcrumb = this.breadcrumbs.pop();
+        this.currentLevel = lastBreadcrumb.level;
+      }
+    },
+
+    goToLevel(index) {
+      this.currentLevel = this.breadcrumbs[index].level;
+      this.breadcrumbs = this.breadcrumbs.slice(0, index);
     },
 
     toggleShowTreeEditors() {

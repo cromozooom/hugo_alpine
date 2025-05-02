@@ -1,17 +1,6 @@
 {
   "name": "KYC_Charity",
   "id": "123",
-  "prop1": "Value prop1",
-  "prop2": {
-    "subProp1": "Sub Value subProp1",
-    "subProp2": {
-      "subSubProp1": "Sub Sub Value subSubProp1"
-    }
-  },
-  "prop3": [
-    "Array Item 1_prop3",
-    "Array Item 2_prop3"
-  ],
   "actionButtons": {
     "startButtons": [
       {
@@ -58,8 +47,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": true,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Please list all the assets",
@@ -71,7 +59,6 @@
               "displayCondition": true,
               "readOnly": true,
               "help": "Please provide details of any current or planned capital commitments or liabilities",
-              "option": [],
               "alert": {
                 "type": "danger",
                 "message": "Please provide details of any current or planned capital commitments or liabilities"
@@ -86,8 +73,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "The information you provide in this section will help us to identify any guidelines or limits on allocation to any asset classes or to specify whether there are any asset types that you wish to avoid. This may include a minimum or maximum exposure to any particular asset class. Please note that if you choose to restrict investment in certain areas this may result in larger proportions of the portfolio being invested in other assets, thereby leading to a greater level of risk. If the founding documents or specific endowments have any restrictions, please provide details here:",
-              "option": []
+              "help": "The information you provide in this section will help us to identify any guidelines or limits on allocation to any asset classes or to specify whether there are any asset types that you wish to avoid. This may include a minimum or maximum exposure to any particular asset class. Please note that if you choose to restrict investment in certain areas this may result in larger proportions of the portfolio being invested in other assets, thereby leading to a greater level of risk. If the founding documents or specific endowments have any restrictions, please provide details here:"
             },
             {
               "name": "Asset Allocation and Special Investment Instructions",
@@ -98,8 +84,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "This section will provide us with the necessary information that we need to identify any areas that you DO NOT wish to invest in, such as areas with ethical constraints. Please note that if you choose to exclude investment in certain areas this will limit your investment options and may result in lower investment returns. If you have any exclusions or ethical consideration please provide details here:",
-              "option": []
+              "help": "This section will provide us with the necessary information that we need to identify any areas that you DO NOT wish to invest in, such as areas with ethical constraints. Please note that if you choose to exclude investment in certain areas this will limit your investment options and may result in lower investment returns. If you have any exclusions or ethical consideration please provide details here:"
             },
             {
               "name": "Exclusions and Ethical or Socially Responsible Investment (SRI) considerations",
@@ -111,7 +96,6 @@
               "displayCondition": true,
               "readOnly": true,
               "help": "Please provide any further information which you believe may be relevant to the firm in connection with the management of the investment portfolio or wider provision of our professional services. This may include any future capital commitments or liabilities or known change in income requirements",
-              "option": [],
               "alert": {
                 "type": "danger",
                 "message": "Some message"
@@ -126,8 +110,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             }
           ],
           "collapsed": false
@@ -147,8 +130,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Full name of Charity",
@@ -159,8 +141,7 @@
               "mandatory": true,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Legal form of Charity",
@@ -171,8 +152,7 @@
               "mandatory": true,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Charity Purposes / Objectives ",
@@ -183,8 +163,7 @@
               "mandatory": true,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Date Charity Created",
@@ -195,8 +174,7 @@
               "mandatory": true,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Value of Charity when established (£)",
@@ -207,8 +185,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Principal Office Address",
@@ -219,8 +196,7 @@
               "mandatory": true,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Postcode",
@@ -231,8 +207,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Registered address country",
@@ -243,8 +218,7 @@
               "mandatory": true,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Charity Number",
@@ -255,8 +229,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Tax Reference",
@@ -267,8 +240,7 @@
               "mandatory": true,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Financial year end day",
@@ -279,8 +251,7 @@
               "mandatory": true,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Financial year end month",
@@ -291,8 +262,7 @@
               "mandatory": true,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Client Identification Code (LEI)",
@@ -303,8 +273,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "Client Identification Code (LEI)",
-              "option": []
+              "help": "Client Identification Code (LEI)"
             },
             {
               "name": "LEI Expiry Date",
@@ -315,8 +284,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             }
           ],
           "collapsed": false
@@ -336,8 +304,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             }
           ],
           "collapsed": false
@@ -357,8 +324,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Total Liabilities",
@@ -369,8 +335,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Net Worth",
@@ -381,8 +346,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Add new income",
@@ -393,8 +357,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             }
           ],
           "collapsed": false
@@ -414,8 +377,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Expenses",
@@ -426,8 +388,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             }
           ],
           "collapsed": false
@@ -461,7 +422,6 @@
               "displayCondition": true,
               "readOnly": false,
               "help": "Before we can offer a personal recommendation concerning a designated investment or manage investments on your behalf, we must understand your circumstances and how they relate to the services offered. Please tick one answer for each of the following questions to help us to build a picture of your views on investment.",
-              "option": [],
               "alert": {
                 "type": "danger",
                 "message": "Test"
@@ -485,8 +445,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             }
           ],
           "collapsed": false
@@ -506,8 +465,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Portfolio managed on a discretionary basis",
@@ -518,8 +476,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Portfolio managed on an advisory basis",
@@ -530,8 +487,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Self managed portfolio",
@@ -542,8 +498,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             }
           ],
           "collapsed": false
@@ -602,8 +557,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             }
           ],
           "collapsed": false
@@ -713,8 +667,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "Before we can offer a personal recommendation concerning a designated investment or manage investments on your behalf, we must understand your circumstances and how they relate to the services offered. Please tick one answer for each of the following questions to help us to build a picture of your views on investment.",
-              "option": []
+              "help": "Before we can offer a personal recommendation concerning a designated investment or manage investments on your behalf, we must understand your circumstances and how they relate to the services offered. Please tick one answer for each of the following questions to help us to build a picture of your views on investment."
             },
             {
               "name": "Investment Knowledge",
@@ -725,8 +678,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "How much investment knowledge do you have?",
@@ -737,8 +689,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Investment Experience",
@@ -749,8 +700,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             }
           ],
           "collapsed": false
@@ -770,8 +720,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Portfolio managed on a discretionary basis",
@@ -782,8 +731,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Portfolio managed on an advisory basis",
@@ -794,8 +742,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Self managed portfolio",
@@ -806,8 +753,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Investment Objectives",
@@ -818,8 +764,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "What are your investment objectives?",
@@ -860,8 +805,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "What is your timescale for investment?*",
-              "option": []
+              "help": "What is your timescale for investment?*"
             },
             {
               "name": "Risk Tolerance",
@@ -953,8 +897,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Roles",
@@ -965,8 +908,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Service Types",
@@ -977,8 +919,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Suitability Required",
@@ -989,8 +930,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "KYC Complete",
@@ -1001,8 +941,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": " Used for displaying Re-Open KYC button",
-              "option": []
+              "help": " Used for displaying Re-Open KYC button"
             },
             {
               "name": "User Roles",
@@ -1013,8 +952,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "User Teams",
@@ -1025,8 +963,7 @@
               "mandatory": false,
               "displayCondition": true,
               "readOnly": false,
-              "help": "",
-              "option": []
+              "help": ""
             },
             {
               "name": "Contact Category",
