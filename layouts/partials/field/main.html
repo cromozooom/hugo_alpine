@@ -606,6 +606,7 @@
             :class="{
             'btn-outline-info': btn.ui === 'outline',
             'btn-info': btn.ui === 'solid',
+            'btn-link': btn.ui === 'link',
           }"
             @click="handleButtonClick(btn)">
             <i :class="btn.icon"></i> <span x-text="btn.label"></span>
@@ -627,6 +628,7 @@
             :class="{
             'btn-outline-info': btn.ui === 'outline',
             'btn-info': btn.ui === 'solid',
+            'btn-link': btn.ui === 'link',
           }"
             @click="handleButtonClick(btn)">
             <template x-if="btn.icon.length">

@@ -3,10 +3,34 @@
   :class="{'shadow-sm' : currentEditorSelected === 'field'}">
   <div class="flex-grow-1">
     <button
-      class="btn btn-link btn-sm text-decoration-none w-100 text-start"
+      class="btn btn-link btn-sm d-flex gap-1 align-items-center text-decoration-none w-100 text-start"
       type="button"
       @click="selectEditor('field')">
-      <strong>
+      <template
+        x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.readOnly">
+        <div x-data x-tooltip="Hidden" class="py-1 d-flex align-items-center">
+          {{ partial "svg/fa/regular-eye-slash.svg" (dict "class" "icon-size-s opacity-25") }}
+        </div>
+      </template>
+      <template
+        x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.alert?.type">
+        <div
+          x-data
+          x-tooltip="Error"
+          class="py-1 d-flex align-items-center text-danger">
+          {{ partial "svg/fa/regular-exclamation-triangle.svg" (dict "class" "icon-size-s") }}
+        </div>
+      </template>
+      <template
+        x-if="form.steps?.[currentStepSelected]?.sections?.[currentSectionSelected]?.fields?.[currentFieldSelected]?.mandatory">
+        <div
+          x-data
+          x-tooltip="Mandatory"
+          class="py-1 d-flex align-items-center text-danger">
+          {{ partial "svg/fa/solid-star-of-life.svg" (dict "class" "icon-size-s") }}
+        </div>
+      </template>
+      <strong class="ps-1">
         <!-- <template x-if="currentFieldSelected !== null">
                     <span x-text="currentFieldSelected"></span>
                   </template> -->

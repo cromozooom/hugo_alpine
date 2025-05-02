@@ -45,6 +45,7 @@
     ],
     "classes": [
       "!==",
+      "'btn-outline-info",
       "'ring-transparent':sectionIndex",
       "...getClass(field",
       "alert",
@@ -213,6 +214,7 @@
       "pb-2",
       "pb-4",
       "pe-2",
+      "ps-1",
       "ps-2",
       "ps-3",
       "ps-4",
