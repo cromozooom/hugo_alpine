@@ -83,6 +83,7 @@
             <div class="d-flex border-top border-bottom align-items-center">
               <button
                 class="btn btn-link border-end rounded-0 border__inactive"
+                x-tooltip="Scroll Left"
                 :disabled="!canScrollLeft"
                 @click="scrollBreadcrumbs('prev')">
                 {{ partial "svg/fa/regular-chevron-left.svg" (dict "class" "icon-size-s") }}
@@ -99,7 +100,8 @@
                         'ms-1': index === 0,
                         'me-1 bg-primary-subtle bg-primary-subtle border-primary': index === breadcrumbs.length - 1,
                       }"
-                      class="border rounded px-2 bg-light my-1"
+                      @mouseenter="$tooltip(crumb.key?.label || crumb.key?.title || crumb.key?.name || crumb.key?.Label || crumb.key?.Title || crumb.key?.Name || (typeof crumb.key === 'number' ? 'Index ' + crumb.key : crumb.key))"
+                      class="border rounded px-2 py-2bg-light my-2 max-w-20ch overflow-hidden text-truncate"
                       @click="goToLevel(index)">
                       <small
                         class="text-nowrap text-capitalize"
@@ -123,6 +125,7 @@
               </div>
               <button
                 class="btn btn-link border-start rounded-0 border__inactive"
+                x-tooltip="Scroll right"
                 :disabled="!canScrollRight"
                 @click="scrollBreadcrumbs('next')">
                 {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
@@ -137,9 +140,10 @@
             <div class="p-2">
               <template x-for="(item, index) in currentLevel" :key="index">
                 <button
-                  class="btn btn-outline-primary btn-sm w-100 text-start mb-1"
+                  class="btn btn-outline-primary w-100 text-start mb-1"
                   @click="navigateTo(index, item)">
                   <span
+                    class="text-capitalize"
                     x-text="item.label || item.title || item.name || item.Label || item.Title || item.Name || ('Index ' + index)"></span>
                 </button>
               </template>
@@ -157,9 +161,9 @@
                       x-if="typeof value === 'object' && value !== null">
                       <div>
                         <button
-                          class="btn text-nowrap btn-outline-primary btn-sm w-100 text-start mb-1"
+                          class="btn text-nowrap btn-outline-primary w-100 text-start mb-1"
                           @click="navigateTo(key, value)">
-                          <span x-text="key"></span>
+                          <span class="text-capitalize" x-text="key"></span>
                         </button>
                       </div>
                     </template>
