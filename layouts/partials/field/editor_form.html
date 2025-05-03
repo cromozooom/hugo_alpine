@@ -176,6 +176,13 @@
                 x-if="Object.keys(currentLevel).some(key => typeof currentLevel[key] !== 'object' || currentLevel[key] === null)">
                 <div class="mt-2">
                   <strong>Fields for direct values</strong>
+                  <div
+                    class="p-2 my-2 bg-info-subtle text-info-emphasis rounded-1"
+                    role="alert">
+                    <small>
+                      al the values should be in a form, (editable) ...</small
+                    >
+                  </div>
                   <div class="d-flex flex-column gap-2">
                     <template x-for="(value, key) in currentLevel" :key="key">
                       <template
