@@ -50,7 +50,8 @@
       </div>
     </div>
     <template x-if="!jsonEditorVisible">
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column position-relative">
+        <div id="tele" style="z-index: 1021;display: block;"></div>
         <div class="d-none p-2">
           <div class="d-flex flex-column">
             <div class="mb-3">
@@ -74,7 +75,8 @@
           </div>
         </div>
         <!-- display Level 0 -->
-        <div class="bg-body d-flex flex-column w-100 sticky-top">
+        <div
+          class="bg-body d-flex flex-column w-100 sticky-top xposition-relative">
           <!-- <div class="px-2">
             <small x-text="'Level ' + (breadcrumbs.length || 0)"></small>
           </div> -->
@@ -92,35 +94,91 @@
               <div
                 id="breadcrumbs"
                 @scroll="checkBreadcrumbScrollPosition"
-                class="d-flex w-100 hide-scrollbar overflow-x-scroll">
-                <div class="d-flex gap-1">
+                class="d-flex align-items-center w-100 hide-scrollbar overflow-x-scroll">
+                <div class="d-flex align-items-center">
                   <template x-for="(crumb, index) in breadcrumbs" :key="index">
-                    <button
+                    <div
+                      class="d-flex align-items-center"
                       :class="{
-                        'ms-1': index === 0,
-                        'me-1 bg-primary-subtle bg-primary-subtle border-primary': index === breadcrumbs.length - 1,
+                      'ms-1': index === 0,
+                      'me-1': index === breadcrumbs.length - 1,
+                    }">
+                      <button
+                        :class="{
+                        'bg-primary-subtle bg-primary-subtle border-primary': index === breadcrumbs.length - 1,
                       }"
-                      @mouseenter="$tooltip(crumb.key?.label || crumb.key?.title || crumb.key?.name || crumb.key?.Label || crumb.key?.Title || crumb.key?.Name || (typeof crumb.key === 'number' ? 'Index ' + crumb.key : crumb.key))"
-                      class="border rounded px-2 py-2bg-light my-2 max-w-20ch overflow-hidden text-truncate"
-                      @click="goToLevel(index)">
-                      <small
-                        class="text-nowrap text-capitalize"
-                        x-text="crumb.key?.label || crumb.key?.title || crumb.key?.name || crumb.key?.Label || crumb.key?.Title || crumb.key?.Name || (typeof crumb.key === 'number' ? 'Index ' + crumb.key : crumb.key)"></small>
-                    </button>
+                        @mouseenter="$tooltip(crumb.key?.label || crumb.key?.title || crumb.key?.name || crumb.key?.Label || crumb.key?.Title || crumb.key?.Name || (typeof crumb.key === 'number' ? 'Index ' + crumb.key : crumb.key))"
+                        class="border rounded px-2 py-2bg-light my-2 max-w-20ch overflow-hidden text-truncate"
+                        @click="goToLevel(index)">
+                        <small
+                          class="text-nowrap text-capitalize"
+                          x-text="crumb.key?.label || crumb.key?.title || crumb.key?.name || crumb.key?.Label || crumb.key?.Title || crumb.key?.Name || (typeof crumb.key === 'number' ? 'Index ' + crumb.key : crumb.key)"></small>
+                      </button>
+                      <!-- Chevron Icon with Dropdown -->
+                      <template x-if="index < breadcrumbs.length - 1">
+                        <div>
+                          <button
+                            class="px-1 border-0 bg-light"
+                            @click="toggleBreadcrumbsDropdown(index, $event)">
+                            {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
+                          </button>
+                        </div>
+                      </template>
+                      <template x-teleport="#tele">
+                        <!-- <template x-teleport="body"> -->
+                        <div
+                          x-show="dropdownVisible"
+                          @click.outside="closeDropdown"
+                          x-transition
+                          class="position-fixed bg-white border shadow-sm rounded-2 mt-2"
+                          :style="`top: ${dropdownPosition.top}px; left: ${dropdownPosition.left}px;`"
+                          @click.outside="closeDropdown">
+                          <ul class="list-unstyled m-0">
+                            <template
+                              x-for="(sibling, siblingIndex) in dropdownSiblings"
+                              :key="siblingIndex">
+                              <li>
+                                <button
+                                  class="xdropdown-item text-capitalize p-2 btn btn-light border-0 rounded-0 w-100 text-start"
+                                  @click="navigateTo(siblingIndex, sibling)">
+                                  <span
+                                    x-text="sibling.label || sibling.title || sibling.name || sibling.Label || sibling.Title || sibling.Name || (siblingIndex)"></span>
+                                </button>
+                              </li>
+                            </template>
+                          </ul>
+                        </div>
+                      </template>
+                      <!-- <template x-if="index < breadcrumbs.length - 1">
+                        <div class=" d-flex align-items-center">
+                          <button class="px-1 border-0 bg-light"
+                            @click="toggleBreadcrumbsDropdown(index)"
+                          >
+                            {{ partial "svg/fa/regular-chevron-right.svg" (dict "class" "icon-size-s") }}
+                          </button>
+                          <div class="border border-danger position-relative">
+                            <ul
+                              class="position-absolute d-block top-0"
+                              aria-labelledby="breadcrumbDropdown">
+                              <template
+                                x-for="(sibling, siblingIndex) in crumb.level"
+                                :key="siblingIndex">
+                                <li>
+                                  <button
+                                    class="dropdown-item text-capitalize"
+                                    @click="navigateTo(siblingIndex, sibling)">
+                                    <span
+                                      x-text="sibling.label || sibling.title || sibling.name || sibling.Label || sibling.Title || sibling.Name || ('Index ' + siblingIndex)"></span>
+                                  </button>
+                                </li>
+                              </template>
+                            </ul>
+                          </div>
+                        </div>
+                      </template> -->
+                      <!-- Teleported Dropdown -->
+                    </div>
                   </template>
-
-                  <!-- <template x-for="(crumb, index) in breadcrumbs" :key="index">
-                    <button
-                      :class="{
-                        'ms-2': index === 0,
-                        'me-2': index === breadcrumbs.length - 1,
-                      }"
-                      class="border rounded px-2 bg-light my-2"
-                      @click="goToLevel(index)">
-                      <span
-                        x-text="crumb.key.label || crumb.key.title || crumb.key.name || crumb.key.Label || crumb.key.Title || crumb.key.Name || (typeof crumb.key === 'number' ? 'Index ' + crumb.key : crumb.key)"></span>
-                    </button>
-                  </template> -->
                 </div>
               </div>
               <button

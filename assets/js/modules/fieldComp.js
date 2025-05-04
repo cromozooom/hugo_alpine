@@ -32,6 +32,9 @@ export default function fieldComp() {
     currentLevel: {},
     canScrollLeft: false,
     canScrollRight: false,
+    dropdownVisible: false,
+    dropdownPosition: { top: 0, left: 0 },
+    dropdownSiblings: [],
 
     form: {}, // Will be initialized from localStorage
     steps: [], // Will be initialized from localStorage
@@ -172,6 +175,30 @@ export default function fieldComp() {
         console.error('Error loading the form:', error);
         alert('Failed to load the form. Please try again.');
       }
+    },
+
+    toggleBreadcrumbsDropdown(index, event) {
+      const crumb = this.breadcrumbs[index];
+      if (!crumb || !crumb.level) return;
+
+      // Set the siblings for the dropdown
+      this.dropdownSiblings = crumb.level;
+
+      // Get the button's position
+      const buttonRect = event.target.getBoundingClientRect();
+
+      // Set the dropdown position
+      this.dropdownPosition = {
+        top: buttonRect.bottom + window.scrollY, // Position below the button
+        left: buttonRect.left + window.scrollX, // Align with the button
+      };
+
+      // Toggle the dropdown visibility
+      this.dropdownVisible = !this.dropdownVisible;
+    },
+
+    closeDropdown() {
+      this.dropdownVisible = false;
     },
 
     // Method to scroll the breadcrumbs
